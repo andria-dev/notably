@@ -67,12 +67,21 @@ export function reducer(state: State, action: Action) {
         ...state,
         currentPageIndex: action.payload,
       };
+    case 'SET_NOTE_TITLE':
+      state.notes[state.currentNoteIndex].title = action.payload;
+      return {
+        ...state,
+        notes: [...state.notes],
+      };
+    case 'SET_PAGE_TITLE':
+      state.notes[state.currentNoteIndex].pages[state.currentPageIndex].title =
+        action.payload;
     default:
       return state;
   }
 }
 
-export const StoreContext = createContext([initialState, null]);
+export const StoreContext = createContext(null);
 
 export function useStore(): [State, Dispatch<Action>] {
   // @ts-ignore

@@ -5,15 +5,18 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 async function loadRelativeTimeFormat() {
+  // @ts-ignore
   if (Intl.RelativeTimeFormat) {
     return;
   }
 
-  // @ts-ignore: on
-  const RelativeTimeFormat: class = await import('relative-time-format');
+  // @ts-ignore
+  const RelativeTimeFormat = await import('relative-time-format');
+  // @ts-ignore
   const en: object = await import('relative-time-format/locale/en');
 
   RelativeTimeFormat.addLocale(en);
+  // @ts-ignore
   Intl.RelativeTimeFormat = RelativeTimeFormat;
 }
 
