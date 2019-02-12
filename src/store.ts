@@ -2,23 +2,25 @@ import { useContext, createContext, ReducerState, Dispatch } from 'react';
 import Note from './models/Note';
 import Page from './models/Page';
 
-interface Action {
+export interface Action {
   type: string;
   payload: any;
 }
 
 interface State extends ReducerState<any> {
-  notes: Note[];
+  notes: { [s: string]: Note };
   loadedFromDB: boolean;
-  currentNoteIndex: number | null;
-  currentPageIndex: number | null;
+  currentNote: string | null;
+  currentPage: number | null;
+  error: string | null;
 }
 
 export const initialState: State = {
-  notes: [],
+  notes: {},
   loadedFromDB: false,
-  currentNoteIndex: null,
-  currentPageIndex: null,
+  currentNote: null,
+  currentPage: null,
+  error: null,
 };
 
 export function reducer(state: State, action: Action) {
@@ -28,60 +30,99 @@ export function reducer(state: State, action: Action) {
         ...state,
         notes: action.payload,
       };
+
     case 'ADD_NOTE':
       return {
         ...state,
-        notes: state.notes.concat(new Note()),
+        notes: { ...state.notes, [action.payload.id]: action.payload.note },
       };
+
     case 'REMOVE_NOTE':
+      const {
+        [action.payload]: {},
+        ...newNotes
+      } = state.notes;
       return {
         ...state,
-        notes: [
-          ...state.notes.slice(0, action.payload),
-          ...state.notes.slice(action.payload),
-        ],
+        notes: newNotes,
       };
+
     case 'ADD_PAGE':
-      if (state.currentNoteIndex !== null) {
-        state.notes[state.currentNoteIndex].pages.push(new Page());
-        return {
-          ...state,
-          notes: [...state.notes],
-        };
+      if (state.currentNote) {
+        state.notes[state.currentNote].pages.push(new Page());
+        return { ...state };
       }
+
     case 'REMOVE_PAGE':
-      if (state.currentPageIndex !== null) {
-        state.notes[state.currentNoteIndex].pages.splice(action.payload, 1);
-        return {
-          ...state,
-          notes: [...state.notes],
-        };
+      if (state.currentNote) {
+        state.notes[state.currentNote].pages.splice(action.payload, 1);
+        return { ...state };
       }
+
     case 'SET_CURRENT_NOTE':
       return {
         ...state,
-        currentNoteIndex: action.payload,
+        currentNote: action.payload,
       };
+
     case 'SET_CURRENT_PAGE':
       return {
         ...state,
-        currentPageIndex: action.payload,
+        currentPage: action.payload,
       };
+
     case 'SET_NOTE_TITLE':
-      state.notes[state.currentNoteIndex].title = action.payload;
+      if (state.currentNote) {
+        const note = state.notes[state.currentNote];
+        note.title = action.payload;
+        note.updateLastModified();
+
+        return { ...state };
+      }
+
+    case 'SET_PAGE_TITLE':
+      if (state.currentNote && state.currentPage) {
+        const note = state.notes[state.currentNote];
+        const page = note.pages[state.currentPage];
+
+        page.title = action.payload;
+        note.updateLastModified();
+
+        return { ...state };
+      }
+
+    case 'SET_PAGE_CONTENT':
+      if (state.currentNote && state.currentPage) {
+        const note = state.notes[state.currentNote];
+        const page = note.pages[state.currentPage];
+
+        page.state = action.payload;
+        note.updateLastModified();
+
+        return { ...state };
+      }
+
+    case 'ERROR':
       return {
         ...state,
-        notes: [...state.notes],
+        error: action.payload,
       };
-    case 'SET_PAGE_TITLE':
-      state.notes[state.currentNoteIndex].pages[state.currentPageIndex].title =
-        action.payload;
+
+    case 'CLOSE_ERROR':
+      return {
+        ...state,
+        error: null,
+      };
+
     default:
       return state;
   }
 }
 
-export const StoreContext = createContext(null);
+export const StoreContext = createContext([
+  initialState,
+  (action: Action) => {},
+]);
 
 export function useStore(): [State, Dispatch<Action>] {
   // @ts-ignore
