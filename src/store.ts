@@ -1,102 +1,82 @@
-import { useContext, createContext } from 'react';
-import { EditorState } from 'draft-js';
-
-class Note {
-  static rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
-
-  public title: string;
-  public pages: Page[];
-  private lastModified: Date;
-
-  public updateLastModified() {
-    this.lastModified = new Date();
-  }
-
-  public get daysSinceModified() {
-    const now: Date = new Date();
-    let timePassed: number = Math.floor(
-      now.getTime() - this.lastModified.getTime(),
-    );
-    const divide = (n: number) => {
-      timePassed = Math.floor(timePassed / n);
-    };
-
-    divide(1000); // seconds
-    if (timePassed < 60) {
-      return Note.rtf.format(-timePassed, 'second');
-    }
-
-    divide(60); // minutes
-    if (timePassed < 60) {
-      return Note.rtf.format(-timePassed, 'minute');
-    }
-
-    divide(60); // hours
-    if (timePassed < 24) {
-      return Note.rtf.format(-timePassed, 'hour');
-    }
-
-    divide(24); // days
-    if (timePassed < 7) {
-      return Note.rtf.format(-timePassed, 'day');
-    }
-
-    divide(7); // weeks
-    if (
-      this.lastModified.getUTCMonth() === now.getUTCMonth() ||
-      this.lastModified.getUTCDate() < now.getUTCDate()
-    ) {
-      return Note.rtf.format(-timePassed, 'week');
-    }
-
-    divide(30.4167); // months (average)
-    if (timePassed < 12) {
-      return Note.rtf.format(-timePassed, 'month');
-    }
-
-    return Note.rtf.format(-timePassed, 'year');
-  }
-
-  constructor(
-    title: string = '',
-    pages: Page[] = [],
-    lastModified: Date = new Date(),
-  ) {
-    this.title = title;
-    this.pages = pages;
-    this.lastModified = lastModified;
-  }
-}
-
-class Page {
-  public title: string;
-  public state: EditorState;
-
-  constructor(title: string, state?: EditorState) {
-    if (!state) {
-      state = EditorState.createEmpty();
-    }
-
-    this.title = title;
-    this.state = state;
-  }
-}
+import { useContext, createContext, ReducerState, Dispatch } from 'react';
+import Note from './models/Note';
+import Page from './models/Page';
 
 interface Action {
   type: string;
   payload: any;
 }
 
-function reducer(state: Note[], action: Action) {
+interface State extends ReducerState<any> {
+  notes: Note[];
+  loadedFromDB: boolean;
+  currentNoteIndex: number | null;
+  currentPageIndex: number | null;
+}
+
+export const initialState: State = {
+  notes: [],
+  loadedFromDB: false,
+  currentNoteIndex: null,
+  currentPageIndex: null,
+};
+
+export function reducer(state: State, action: Action) {
   switch (action.type) {
+    case 'SET_NOTES':
+      return {
+        ...state,
+        notes: action.payload,
+      };
+    case 'ADD_NOTE':
+      return {
+        ...state,
+        notes: state.notes.concat(new Note()),
+      };
+    case 'REMOVE_NOTE':
+      return {
+        ...state,
+        notes: [
+          ...state.notes.slice(0, action.payload),
+          ...state.notes.slice(action.payload),
+        ],
+      };
+    case 'ADD_PAGE':
+      if (state.currentNoteIndex !== null) {
+        state.notes[state.currentNoteIndex].pages.push(new Page());
+        return {
+          ...state,
+          notes: [...state.notes],
+        };
+      }
+    case 'REMOVE_PAGE':
+      if (state.currentPageIndex !== null) {
+        state.notes[state.currentNoteIndex].pages.splice(action.payload, 1);
+        return {
+          ...state,
+          notes: [...state.notes],
+        };
+      }
+    case 'SET_CURRENT_NOTE':
+      return {
+        ...state,
+        currentNoteIndex: action.payload,
+      };
+    case 'SET_CURRENT_PAGE':
+      return {
+        ...state,
+        currentPageIndex: action.payload,
+      };
     default:
       return state;
   }
 }
 
-const initialState: Note[] = [];
-export const StoreContext = createContext([]);
+export const StoreContext = createContext([initialState, null]);
 
-export function useStore() {
+export function useStore(): [State, Dispatch<Action>] {
+  // @ts-ignore
   return useContext(StoreContext);
 }
+
+export * from './actions';
