@@ -29,6 +29,7 @@ export function reducer(state: State, action: Action) {
       return {
         ...state,
         notes: action.payload,
+        loadedFromDB: true,
       };
 
     case 'ADD_NOTE':

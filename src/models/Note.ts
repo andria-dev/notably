@@ -1,6 +1,7 @@
 import Page from './Page';
 
 export default class Note {
+  // @ts-ignore
   static rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
   public title: string;
