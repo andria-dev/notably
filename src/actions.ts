@@ -54,10 +54,7 @@ export async function addNote(note: Note): Promise<Action> {
     await set(id, note);
     return {
       type: 'NEW_NOTE',
-      payload: {
-        id,
-        note,
-      },
+      payload: { id, note },
     };
   } catch {
     return {
@@ -78,12 +75,29 @@ export async function removePage(
 
     return {
       type: 'UPDATE_NOTE',
-      payload: note,
+      payload: { noteID, note },
     };
   } catch {
     return {
       type: 'ERROR',
       payload: 'Unable to remove your page from this note. Please try again',
+    };
+  }
+}
+
+export async function addPage(noteID: string): Promise<Action> {
+  try {
+    const note: Note = await getNote(noteID);
+    note.pages.push(new Page());
+
+    return {
+      type: 'UPDATE_NOTE',
+      payload: { noteID, note },
+    };
+  } catch {
+    return {
+      type: 'ERROR',
+      payload: 'Unable to add a page to this note. Please try again',
     };
   }
 }

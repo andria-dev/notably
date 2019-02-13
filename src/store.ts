@@ -48,60 +48,14 @@ export function reducer(state: State, action: Action) {
         notes: newNotes,
       };
 
-    case 'ADD_PAGE':
-      if (state.currentNote) {
-        state.notes[state.currentNote].pages.push(new Page());
-        return { ...state };
-      }
-
-    case 'REMOVE_PAGE':
-      if (state.currentNote) {
-        state.notes[state.currentNote].pages.splice(action.payload, 1);
-        return { ...state };
-      }
-
-    case 'SET_CURRENT_NOTE':
+    case 'UPDATE_NOTE':
       return {
         ...state,
-        currentNote: action.payload,
+        notes: {
+          ...state.notes,
+          [action.payload.noteID]: action.payload.note,
+        },
       };
-
-    case 'SET_CURRENT_PAGE':
-      return {
-        ...state,
-        currentPage: action.payload,
-      };
-
-    case 'SET_NOTE_TITLE':
-      if (state.currentNote) {
-        const note = state.notes[state.currentNote];
-        note.title = action.payload;
-        note.updateLastModified();
-
-        return { ...state };
-      }
-
-    case 'SET_PAGE_TITLE':
-      if (state.currentNote && state.currentPage) {
-        const note = state.notes[state.currentNote];
-        const page = note.pages[state.currentPage];
-
-        page.title = action.payload;
-        note.updateLastModified();
-
-        return { ...state };
-      }
-
-    case 'SET_PAGE_CONTENT':
-      if (state.currentNote && state.currentPage) {
-        const note = state.notes[state.currentNote];
-        const page = note.pages[state.currentPage];
-
-        page.state = action.payload;
-        note.updateLastModified();
-
-        return { ...state };
-      }
 
     case 'ERROR':
       return {
