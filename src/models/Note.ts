@@ -6,7 +6,7 @@ export default class Note {
 
   public title: string;
   public pages: Page[];
-  private lastModified: Date;
+  public lastModified: Date;
 
   public updateLastModified() {
     this.lastModified = new Date();
