@@ -3,6 +3,7 @@ import { keys, get, del, set } from 'idb-keyval';
 import Note from './models/Note';
 import Page from './models/Page';
 import uuid from 'uuid/v4';
+import { EditorState } from 'draft-js';
 
 async function getNote(id: string): Promise<Note> {
   const noteData: Note = (await get(id)) as Note;
@@ -43,7 +44,7 @@ export async function removeNote(noteID: string): Promise<Action> {
   } catch (error) {
     return {
       type: 'ERROR',
-      payload: 'Unable to remove your note. Please try again',
+      payload: 'Unable to remove your note. Please try again.',
     };
   }
 }
@@ -59,7 +60,7 @@ export async function addNote(note: Note): Promise<Action> {
   } catch {
     return {
       type: 'ERROR',
-      payload: 'Unable to add your new note to the database. Please try again',
+      payload: 'Unable to add your new note to the database. Please try again.',
     };
   }
 }
@@ -71,6 +72,8 @@ export async function removePage(
   try {
     const note: Note = await getNote(noteID);
     note.pages.splice(pageIndex, 1);
+    note.updateLastModified();
+
     await set(noteID, note);
 
     return {
@@ -80,7 +83,7 @@ export async function removePage(
   } catch {
     return {
       type: 'ERROR',
-      payload: 'Unable to remove your page from this note. Please try again',
+      payload: 'Unable to remove your page from this note. Please try again.',
     };
   }
 }
@@ -89,6 +92,9 @@ export async function addPage(noteID: string): Promise<Action> {
   try {
     const note: Note = await getNote(noteID);
     note.pages.push(new Page());
+    note.updateLastModified();
+
+    await set(noteID, note);
 
     return {
       type: 'UPDATE_NOTE',
@@ -97,7 +103,89 @@ export async function addPage(noteID: string): Promise<Action> {
   } catch {
     return {
       type: 'ERROR',
-      payload: 'Unable to add a page to this note. Please try again',
+      payload: 'Unable to add a page to this note. Please try again.',
     };
   }
+}
+
+export async function updateNoteTitle(noteID: string, newTitle: string) {
+  try {
+    const note: Note = await getNote(noteID);
+    note.title = newTitle;
+    note.updateLastModified();
+
+    await set(noteID, note);
+
+    return {
+      type: 'UPDATE_NOTE',
+      payload: { noteID, note },
+    };
+  } catch {
+    return {
+      type: 'ERROR',
+      payload: "Unable to update your note's title. Please try again.",
+    };
+  }
+}
+
+export async function updatePageTitle(
+  noteID: string,
+  pageIndex: number,
+  newTitle: string,
+) {
+  try {
+    const note: Note = await getNote(noteID);
+    note.pages[pageIndex].title = newTitle;
+    note.updateLastModified();
+
+    await set(noteID, note);
+
+    return {
+      type: 'UPDATE_NOTE',
+      payload: { noteID, note },
+    };
+  } catch {
+    return {
+      type: 'ERROR',
+      payload: "Unable to update your page's title. Please try again.",
+    };
+  }
+}
+
+export async function updatePageState(
+  noteID: string,
+  pageIndex: number,
+  newState: EditorState,
+): Promise<Action> {
+  try {
+    const note: Note = await getNote(noteID);
+    note.pages[pageIndex].state = newState;
+    note.updateLastModified();
+
+    await set(noteID, note);
+
+    return {
+      type: 'UPDATE_NOTE',
+      payload: { noteID, note },
+    };
+  } catch {
+    return {
+      type: 'ERROR',
+      payload: 'Unable to save the content of your note.',
+    };
+  }
+}
+
+export function setActiveNote(noteID: string): Action {
+  return {
+    type: 'SET_CURRENT_NOTE',
+    payload: noteID,
+  };
+}
+
+export function setActivePage(pageIndex: number): Action {
+  return {
+    type: 'SET_CURRENT_PAGE',
+    payload: pageIndex,
+  };
 }

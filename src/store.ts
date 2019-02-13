@@ -57,6 +57,18 @@ export function reducer(state: State, action: Action) {
         },
       };
 
+    case 'SET_CURRENT_NOTE':
+      return {
+        ...state,
+        currentNote: action.payload,
+      };
+
+    case 'SET_CURRENT_PAGE':
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+
     case 'ERROR':
       return {
         ...state,
