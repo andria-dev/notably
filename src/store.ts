@@ -61,6 +61,7 @@ export function reducer(state: State, action: Action) {
       return {
         ...state,
         currentNote: action.payload,
+        currentPage: 0,
       };
 
     case 'SET_CURRENT_PAGE':
