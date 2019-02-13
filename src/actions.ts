@@ -1,5 +1,5 @@
 import { Action } from './store';
-import { keys, get, del, set } from 'idb-keyval';
+import { keys, get, del, set, clear } from 'idb-keyval';
 import Note from './models/Note';
 import Page from './models/Page';
 import uuid from 'uuid/v4';
@@ -188,4 +188,18 @@ export function setActivePage(pageIndex: number): Action {
     type: 'SET_CURRENT_PAGE',
     payload: pageIndex,
   };
+}
+
+export async function removeAllNotes(): Promise<Action> {
+  try {
+    await clear();
+    return {
+      type: 'REMOVE_ALL_NOTES',
+    };
+  } catch {
+    return {
+      type: 'ERROR',
+      payload: 'Unable to remove all notes. Please try again.',
+    };
+  }
 }

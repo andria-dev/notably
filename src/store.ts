@@ -4,7 +4,7 @@ import Page from './models/Page';
 
 export interface Action {
   type: string;
-  payload: any;
+  payload?: any;
 }
 
 interface State extends ReducerState<any> {
@@ -80,6 +80,14 @@ export function reducer(state: State, action: Action) {
       return {
         ...state,
         error: null,
+      };
+
+    case 'REMOVE_ALL_NOTES':
+      return {
+        ...state,
+        notes: [],
+        currentNote: null,
+        currentPage: null,
       };
 
     default:
