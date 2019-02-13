@@ -59,7 +59,7 @@ export default class Note {
   }
 
   constructor(
-    title: string = '',
+    title: string = 'Title',
     pages?: Page[],
     lastModified: Date = new Date(),
   ) {

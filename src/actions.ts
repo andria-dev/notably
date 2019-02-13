@@ -196,14 +196,14 @@ export async function updatePageState(
   }
 }
 
-export function setActiveNote(noteID: string): Action {
+export function setCurrentNote(noteID: string | null): Action {
   return {
     type: 'SET_CURRENT_NOTE',
     payload: noteID,
   };
 }
 
-export function setActivePage(pageIndex: number): Action {
+export function setCurrentPage(pageIndex: number | null): Action {
   return {
     type: 'SET_CURRENT_PAGE',
     payload: pageIndex,
