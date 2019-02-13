@@ -3,14 +3,33 @@ import { keys, get, del, set, clear } from 'idb-keyval';
 import Note from './models/Note';
 import Page from './models/Page';
 import uuid from 'uuid/v4';
-import { EditorState } from 'draft-js';
+import { EditorState, ContentState } from 'draft-js';
 
 async function getNote(id: string): Promise<Note> {
-  const noteData: Note = (await get(id)) as Note;
+  const noteData: { [s: string]: any } = await get(id);
   noteData.pages = noteData.pages.map(
-    (pageData: Page) => new Page(pageData.title, pageData.state),
+    (pageData: { [s: string]: string }) =>
+      new Page(
+        pageData.title,
+        EditorState.createWithContent(
+          ContentState.createFromText(pageData.state),
+        ),
+      ),
   );
+
   return new Note(noteData.title, noteData.pages, noteData.lastModified);
+}
+
+function setNote(id: string, note: Note): Promise<void> {
+  const noteObj = {
+    title: note.title,
+    lastModified: note.lastModified,
+    pages: note.pages.map(page => ({
+      title: page.title,
+      state: page.state.getCurrentContent().getPlainText(),
+    })),
+  };
+  return set(id, noteObj);
 }
 
 export async function getNotes(): Promise<Action> {
@@ -52,12 +71,13 @@ export async function removeNote(noteID: string): Promise<Action> {
 export async function addNote(note: Note): Promise<Action> {
   const id = uuid();
   try {
-    await set(id, note);
+    await setNote(id, note);
     return {
-      type: 'NEW_NOTE',
+      type: 'ADD_NOTE',
       payload: { id, note },
     };
-  } catch {
+  } catch (error) {
+    console.error(error);
     return {
       type: 'ERROR',
       payload: 'Unable to add your new note to the database. Please try again.',
@@ -74,7 +94,7 @@ export async function removePage(
     note.pages.splice(pageIndex, 1);
     note.updateLastModified();
 
-    await set(noteID, note);
+    await setNote(noteID, note);
 
     return {
       type: 'UPDATE_NOTE',
@@ -94,7 +114,7 @@ export async function addPage(noteID: string): Promise<Action> {
     note.pages.push(new Page());
     note.updateLastModified();
 
-    await set(noteID, note);
+    await setNote(noteID, note);
 
     return {
       type: 'UPDATE_NOTE',
@@ -114,7 +134,7 @@ export async function updateNoteTitle(noteID: string, newTitle: string) {
     note.title = newTitle;
     note.updateLastModified();
 
-    await set(noteID, note);
+    await setNote(noteID, note);
 
     return {
       type: 'UPDATE_NOTE',
@@ -138,7 +158,7 @@ export async function updatePageTitle(
     note.pages[pageIndex].title = newTitle;
     note.updateLastModified();
 
-    await set(noteID, note);
+    await setNote(noteID, note);
 
     return {
       type: 'UPDATE_NOTE',
@@ -162,7 +182,7 @@ export async function updatePageState(
     note.pages[pageIndex].state = newState;
     note.updateLastModified();
 
-    await set(noteID, note);
+    await setNote(noteID, note);
 
     return {
       type: 'UPDATE_NOTE',

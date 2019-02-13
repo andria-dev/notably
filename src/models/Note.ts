@@ -60,11 +60,11 @@ export default class Note {
 
   constructor(
     title: string = '',
-    pages: Page[] = [],
+    pages?: Page[],
     lastModified: Date = new Date(),
   ) {
     this.title = title;
-    this.pages = pages;
+    this.pages = pages || [new Page()];
     this.lastModified = lastModified;
   }
 }
