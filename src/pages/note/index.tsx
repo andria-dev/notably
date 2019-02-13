@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useStore } from '../../store';
 import { RouteChildrenProps } from 'react-router';
-import { setCurrentPage, setCurrentNote } from '../../actions';
 
 interface NoteParams {
   id: string;
