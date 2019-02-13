@@ -85,7 +85,7 @@ export function reducer(state: State, action: Action) {
     case 'REMOVE_ALL_NOTES':
       return {
         ...state,
-        notes: [],
+        notes: {},
         currentNote: null,
         currentPage: null,
       };
