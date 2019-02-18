@@ -1,15 +1,25 @@
 import React from 'react';
+
 import { useStore, addNote } from '../../store';
-import Note from '../../models/Note';
 import { removeAllNotes } from '../../actions';
+import Note from '../../models/Note';
+
+import Header from '../../components/Header';
+import Title from '../../components/Title';
+import IconButton from '../../components/IconButton';
+import { MdSettings } from 'react-icons/md';
 
 function Home() {
-  const [state, dispatch] = useStore();
+  const [, dispatch] = useStore();
 
   return (
-    <main>
-      <h1>Test</h1>
-      <p>{JSON.stringify(state)}</p>
+    <main className="Home">
+      <Header>
+        <Title size={4}>Notably</Title>
+        <IconButton>
+          <MdSettings size={25} />
+        </IconButton>
+      </Header>
       <button onClick={() => addNote(new Note()).then(dispatch)}>
         New note
       </button>

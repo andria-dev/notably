@@ -9,21 +9,12 @@ interface NoteParams {
 function Note({ match }: RouteChildrenProps<NoteParams>) {
   const [state, dispatch] = useStore();
 
-  /* useEffect(() => {
-    if (match && state.notes[match.params.id]) {
-      dispatch(setCurrentNote(match.params.id));
-    } else {
-      dispatch(setCurrentNote(null));
-    }
-    console.log(match);
-  }, [match, state]); */
   if (!match) {
     /* Reroute to 404 */
     return null;
   }
 
   const note = state.notes[match.params.id];
-  console.log(state, note);
 
   return (
     <main>
