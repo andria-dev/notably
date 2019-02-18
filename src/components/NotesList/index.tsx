@@ -1,14 +1,17 @@
 import React, { useMemo } from 'react';
 import Note from '../../models/Note';
-import Title from '../Title';
 import classNames from '@chbphone55/classnames';
+import Hx from '../Hx';
+
+import './style.css';
 
 type NotesListProps = {
   notes: { [id: string]: Note };
   responsive?: Boolean;
+  activeID?: string;
 };
 
-function NotesList({ notes, responsive = false }: NotesListProps) {
+function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
   const sortedNotes = useMemo(
     () =>
       Object.entries(notes).sort(
@@ -19,7 +22,11 @@ function NotesList({ notes, responsive = false }: NotesListProps) {
   );
 
   return (
-    <section className={classNames('NotesList', { responsive })}>
+    <section
+      className={classNames('NotesList', {
+        'NotesList--responsive': responsive,
+      })}
+    >
       {sortedNotes.map(([noteID, note]) => {
         function openNote() {
           /* TODO: open the note */
@@ -27,9 +34,19 @@ function NotesList({ notes, responsive = false }: NotesListProps) {
         }
 
         return (
-          <article onClick={openNote} key={noteID}>
-            <Title>{note.title}</Title>
-            <p>{note.timeSinceModified}</p>
+          <article
+            className={classNames('NotesList__note', {
+              'NotesList__note--active': activeID === noteID,
+            })}
+            onClick={openNote}
+            key={noteID}
+          >
+            <Hx size={0} weight={4} className="note__title">
+              {note.title}
+            </Hx>
+            <Hx size={0} weight={3} type="h2" className="note__modified">
+              Last modified {note.timeSinceModified}
+            </Hx>
           </article>
         );
       })}

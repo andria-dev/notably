@@ -1,0 +1,35 @@
+.NotesList {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  width: 100%;
+}
+.NotesList__note {
+  padding: 1rem;
+  transition: background-color 0.15s ease-in-out;
+}
+.NotesList__note.NotesList__note--active {
+  background-color: hsl(217, 99%, 90%);
+}
+.NotesList__note--active > .note__title {
+  color: hsl(217, 99%, 30%);
+  font-weight: 600 !important;
+}
+.NotesList__note--active > .note__modified {
+  color: hsl(217, 99%, 35%);
+}
+
+.note__modified {
+  color: hsl(0, 0%, 30%);
+}
+
+.note__title,
+.note__modified {
+  transition: color 0.15s ease-in-out;
+}
+
+@media only screen and (min-width: 800px) {
+  .NotesList.NotesList--responsive {
+    grid-template-columns: 1fr 1fr;
+  }
+}
