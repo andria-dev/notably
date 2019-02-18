@@ -13,7 +13,6 @@
 }
 .NotesList__note--active > .note__title {
   color: hsl(217, 99%, 30%);
-  font-weight: 600 !important;
 }
 .NotesList__note--active > .note__modified {
   color: hsl(217, 99%, 35%);
