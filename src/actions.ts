@@ -37,7 +37,7 @@ export async function getNotes(): Promise<Action> {
     const noteIDs = await keys();
     const notes: { [s: string]: Note } = {};
 
-    for (const id of noteIDs as Array<string>) {
+    for (const id of noteIDs as string[]) {
       notes[id] = await getNote(id);
     }
 

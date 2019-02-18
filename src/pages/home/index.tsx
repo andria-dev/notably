@@ -8,9 +8,10 @@ import Header from '../../components/Header';
 import Title from '../../components/Title';
 import IconButton from '../../components/IconButton';
 import { MdSettings } from 'react-icons/md';
+import NotesList from '../../components/NotesList';
 
 function Home() {
-  const [, dispatch] = useStore();
+  const [{ notes }, dispatch] = useStore();
 
   return (
     <main className="Home">
@@ -20,6 +21,9 @@ function Home() {
           <MdSettings size={24} />
         </IconButton>
       </Header>
+
+      <NotesList notes={notes} responsive />
+
       <button onClick={() => addNote(new Note()).then(dispatch)}>
         New note
       </button>
