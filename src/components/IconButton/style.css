@@ -1,13 +1,13 @@
 .IconButton {
   display: flex;
-  padding: 0.25rem;
+  padding: 0.3rem;
 
   background: none;
 
   border: none;
   border-radius: 50%;
 
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
 }
 
@@ -16,14 +16,9 @@
 }
 
 .IconButton:active {
-  background-color: hsl(0, 0%, 80%) !important;
+  background-color: hsl(0, 0%, 70%) !important;
 }
 
 .IconButton:focus {
-  --focus-color: -webkit-focus-ring-color;
-
   background-color: hsl(0, 0%, 90%);
-  box-shadow: 0px 0px 0px 1px var(--focus-color, blue);
-
-  outline: none;
 }

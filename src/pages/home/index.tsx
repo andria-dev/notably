@@ -17,7 +17,7 @@ function Home() {
       <Header>
         <Title size={4}>Notably</Title>
         <IconButton>
-          <MdSettings size={25} />
+          <MdSettings size={24} />
         </IconButton>
       </Header>
       <button onClick={() => addNote(new Note()).then(dispatch)}>
