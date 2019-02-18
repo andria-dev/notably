@@ -9,6 +9,8 @@
 
   transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .IconButton:hover {
