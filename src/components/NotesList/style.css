@@ -1,13 +1,22 @@
 .NotesList {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
 
-  width: 100%;
+  padding: 2rem;
 }
+
 .NotesList__note {
+  width: 18rem;
   padding: 1rem;
+  margin-bottom: 1rem;
+
+  border-radius: 3px;
   transition: background-color 0.15s ease-in-out;
 }
+.NotesList__note:hover {
+  background-color: hsl(217, 99%, 98%);
+}
+
 .NotesList__note.NotesList__note--active {
   background-color: hsl(217, 99%, 90%);
 }
@@ -27,8 +36,16 @@
   transition: color 0.15s ease-in-out;
 }
 
-@media only screen and (min-width: 800px) {
-  .NotesList.NotesList--responsive {
-    grid-template-columns: 1fr 1fr;
+@media only screen and (min-width: 700px) {
+  .NotesList--responsive {
+    display: grid;
+    grid-template-columns: 18rem 18rem;
+    gap: 1rem 5%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .NotesList--responsive .NotesList__note {
+    width: auto;
   }
 }

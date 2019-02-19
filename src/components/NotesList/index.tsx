@@ -4,6 +4,7 @@ import classNames from '@chbphone55/classnames';
 import Hx from '../Hx';
 
 import './style.css';
+import { Link } from 'react-router-dom';
 
 type NotesListProps = {
   notes: { [id: string]: Note };
@@ -28,26 +29,38 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
       })}
     >
       {sortedNotes.map(([noteID, note]) => {
-        function openNote() {
-          /* TODO: open the note */
-          console.log(note);
-        }
+        const noteContentSnippet = note.pages[note.pages.length - 1].state
+          .getCurrentContent()
+          .getPlainText()
+          .slice(0, 36);
 
         return (
-          <article
+          <Link
+            to={`/note/${noteID}`}
+            style={{ color: 'unset', textDecoration: 'none' }}
             className={classNames('NotesList__note', {
               'NotesList__note--active': activeID === noteID,
             })}
-            onClick={openNote}
             key={noteID}
           >
-            <Hx size={0} weight={4} className="note__title">
-              {note.title}
-            </Hx>
-            <Hx size={0} weight={3} type="h2" className="note__modified">
-              Last modified {note.timeSinceModified}
-            </Hx>
-          </article>
+            <article>
+              <Hx size={0} weight={4} className="note__title">
+                {note.title}
+              </Hx>
+              <Hx size={0} weight={3} type="h2" className="note__modified">
+                Last modified {note.timeSinceModified}
+              </Hx>
+              <p
+                style={{
+                  color: 'hsl(0, 0%, 40%)',
+                  margin: '0',
+                  fontWeight: 200,
+                }}
+              >
+                {noteContentSnippet}
+              </p>
+            </article>
+          </Link>
         );
       })}
     </section>
