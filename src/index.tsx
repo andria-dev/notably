@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 async function loadRelativeTimeFormat() {
@@ -20,8 +20,22 @@ async function loadRelativeTimeFormat() {
   Intl.RelativeTimeFormat = RelativeTimeFormat;
 }
 
+async function loadRequestIdleCallback() {
+  // @ts-ignore
+  if (!window.requestIdleCallback) {
+    const {
+      requestIdleCallback,
+      cancelIdleCallback,
+    } = await import('./polyfills/requestIdleCallback');
+    // @ts-ignore
+    window.requestIdleCallback = requestIdleCallback;
+    // @ts-ignore
+    window.cancelIdleCallback = cancelIdleCallback;
+  }
+}
+
 // wait for polyfills
-Promise.all([loadRelativeTimeFormat()]).then(() => {
+Promise.all([loadRelativeTimeFormat(), loadRequestIdleCallback()]).then(() => {
   // then render
   ReactDOM.render(<App />, document.getElementById('root'));
 });
