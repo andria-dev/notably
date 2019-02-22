@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -19,12 +19,13 @@ function Note({ match, history }: RouteChildrenProps<NoteParams>) {
     _setCurrentPage(index);
 
     // side effect, update editor state to page
-    if (match && state.notes[match.params.id]) {
+    if (!localState && match && state.notes[match.params.id]) {
       setLocalState(state.notes[match.params.id].pages[index].state);
     }
   }
 
   const [localState, setLocalState] = useState(null as (EditorState | null));
+
   const autoSave = useDebouncedCallback(
     async value => {
       if (!match) {
@@ -91,7 +92,8 @@ function Note({ match, history }: RouteChildrenProps<NoteParams>) {
 
   function handleStateChange(value: EditorState) {
     setLocalState(value);
-    autoSave(value);
+    // @ts-ignore
+    requestIdleCallback(() => autoSave(value));
   }
 
   return (
