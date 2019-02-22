@@ -4,8 +4,9 @@ import { removeAllNotes } from '../../actions';
 import Note from '../../models/Note';
 import { addNote, useStore } from '../../store';
 
-import { MdSettings } from 'react-icons/md';
+import { MdAdd, MdSettings } from 'react-icons/md';
 import { RouteChildrenProps } from 'react-router';
+import FAB from '../../components/FAB';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
 import IconButton from '../../components/IconButton';
@@ -35,7 +36,10 @@ function Home({ history }: RouteChildrenProps) {
       <NotesList notes={notes} responsive />
 
       {/* TODO: build FAB to replace button below */}
-      <button onClick={createNote}>New note</button>
+      <FAB onClick={createNote}>
+        <MdAdd size={24} style={{ marginRight: '0.5rem' }} />
+        New note
+      </FAB>
     </main>
   );
 }
