@@ -1,5 +1,7 @@
-import React from 'react';
 import classNames from '@chbphone55/classnames';
+import React from 'react';
+
+import './style.css';
 
 interface HxProps {
   size?: number;
@@ -28,7 +30,6 @@ function Hx({
     style: {
       fontSize: `${size * 0.2 + 1}rem`,
       fontWeight: (weight + 1) * 100,
-      margin: 0,
       ...style,
     },
   });

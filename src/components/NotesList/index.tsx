@@ -1,16 +1,16 @@
+import classNames from '@chbphone55/classnames';
 import React, { useMemo } from 'react';
 import Note from '../../models/Note';
-import classNames from '@chbphone55/classnames';
 import Hx from '../Hx';
 
-import './style.css';
 import { Link } from 'react-router-dom';
+import './style.css';
 
-type NotesListProps = {
+interface NotesListProps {
   notes: { [id: string]: Note };
   responsive?: Boolean;
   activeID?: string;
-};
+}
 
 function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
   const sortedNotes = useMemo(
@@ -32,7 +32,8 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
         const noteContentSnippet = note.pages[note.pages.length - 1].state
           .getCurrentContent()
           .getPlainText()
-          .slice(0, 36);
+          .split('\n')[0]
+          .slice(0, 100);
 
         return (
           <Link
@@ -44,20 +45,19 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
             key={noteID}
           >
             <article>
-              <Hx size={0} weight={4} className="note__title">
+              <Hx size={0} weight={4} className="note__title truncate">
                 {note.title}
               </Hx>
-              <Hx size={0} weight={3} type="h2" className="note__modified">
+              <Hx
+                size={0}
+                weight={3}
+                type="h2"
+                className="note__modified truncate"
+              >
                 Last modified {note.timeSinceModified}
               </Hx>
-              <p
-                style={{
-                  color: 'hsl(0, 0%, 40%)',
-                  margin: '0',
-                  fontWeight: 200,
-                }}
-              >
-                {noteContentSnippet}
+              <p className="note__content truncate">
+                {noteContentSnippet || 'No content'}
               </p>
             </article>
           </Link>

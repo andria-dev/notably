@@ -13,7 +13,9 @@
   border-radius: 3px;
   transition: background-color 0.15s ease-in-out;
 }
-.NotesList__note:hover {
+
+.NotesList__note:hover,
+.NotesList__note:focus {
   background-color: hsl(217, 99%, 98%);
 }
 
@@ -27,12 +29,30 @@
   color: hsl(217, 99%, 35%);
 }
 
+.note__title {
+  margin-bottom: 0.25rem;
+}
+
 .note__modified {
   color: hsl(0, 0%, 30%);
 }
 
+.note__content {
+  margin: 0;
+
+  color: hsl(0, 0%, 40%);
+  font-weight: 200;
+}
+
+.truncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 .note__title,
-.note__modified {
+.note__modified,
+.note__content {
   transition: color 0.15s ease-in-out;
 }
 
