@@ -50,7 +50,7 @@
 }
 
 .NotesList__note--active .note__modified {
-  color: hsl(217, 45%, 35%);
+  color: hsl(217, 50%, 35%);
 }
 
 .NotesList__note--active .note__content {
