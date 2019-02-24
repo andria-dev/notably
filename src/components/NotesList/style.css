@@ -14,40 +14,18 @@
   transition: background-color 0.15s ease-in-out;
 }
 
-.NotesList__note:hover,
-.NotesList__note:focus {
-  background-color: hsl(217, 99%, 98%);
-}
-
-.NotesList__note.NotesList__note--active {
-  background-color: hsl(217, 99%, 90%);
-}
-.NotesList__note--active > .note__title {
-  color: hsl(217, 99%, 30%);
-}
-.NotesList__note--active > .note__modified {
-  color: hsl(217, 99%, 35%);
-}
-
 .note__title {
   margin-bottom: 0.25rem;
 }
 
 .note__modified {
-  color: hsl(0, 0%, 30%);
+  margin-bottom: 0.1rem;
 }
 
 .note__content {
   margin: 0;
 
   color: hsl(0, 0%, 40%);
-  font-weight: 200;
-}
-
-.truncate {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
 .note__title,
@@ -56,6 +34,30 @@
   transition: color 0.15s ease-in-out;
 }
 
+/* Interaction styles */
+.NotesList__note:hover,
+.NotesList__note:focus {
+  background-color: hsl(217, 99%, 98%);
+}
+
+/* Active styles */
+.NotesList__note.NotesList__note--active {
+  background-color: hsl(217, 99%, 90%);
+}
+
+.NotesList__note--active .note__title {
+  color: hsl(217, 99%, 30%);
+}
+
+.NotesList__note--active .note__modified {
+  color: hsl(217, 45%, 35%);
+}
+
+.NotesList__note--active .note__content {
+  color: hsl(217, 40%, 42%);
+}
+
+/* Responsive styles */
 @media only screen and (min-width: 700px) {
   .NotesList--responsive {
     display: grid;
@@ -68,4 +70,11 @@
   .NotesList--responsive .NotesList__note {
     width: auto;
   }
+}
+
+/* Utilities */
+.truncate {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

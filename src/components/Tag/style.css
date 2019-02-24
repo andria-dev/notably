@@ -1,0 +1,13 @@
+.Tag {
+  display: inline;
+  padding: 0.1rem 0.25rem;
+
+  color: hsl(217, 99%, 16%);
+  background-color: hsl(217, 99%, 95%);
+
+  text-transform: lowercase;
+  font-weight: normal;
+  font-size: small;
+
+  border-radius: 0.25rem;
+}

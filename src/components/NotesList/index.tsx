@@ -4,6 +4,7 @@ import Note from '../../models/Note';
 import Hx from '../Hx';
 
 import { Link } from 'react-router-dom';
+import Tag from '../Tag';
 import './style.css';
 
 interface NotesListProps {
@@ -45,7 +46,7 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
             key={noteID}
           >
             <article>
-              <Hx size={0} weight={4} className="note__title truncate">
+              <Hx size={0} weight={5} className="note__title truncate">
                 {note.title}
               </Hx>
               <Hx
@@ -56,9 +57,11 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
               >
                 Last modified {note.timeSinceModified}
               </Hx>
-              <p className="note__content truncate">
-                {noteContentSnippet || 'No content'}
-              </p>
+              {noteContentSnippet.length ? (
+                <p className="note__content truncate">{noteContentSnippet}</p>
+              ) : (
+                <Tag>No content</Tag>
+              )}
             </article>
           </Link>
         );

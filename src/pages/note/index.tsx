@@ -24,7 +24,7 @@ function Note({ match, history }: RouteChildrenProps<NoteParams>) {
     }
   }
 
-  const [localState, setLocalState] = useState(null as (EditorState | null));
+  const [localState, setLocalState] = useState<EditorState | null>(null);
 
   const autoSave = useDebouncedCallback(
     async value => {
