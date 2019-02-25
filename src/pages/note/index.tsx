@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { SyntheticEvent, useEffect, useMemo, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -6,6 +6,7 @@ import { updatePageState, useStore } from '../../store';
 
 import { Editor, EditorState } from 'draft-js';
 import { useDebouncedCallback } from 'use-debounce';
+import { updateNoteTitle } from '../../actions';
 
 interface NoteParams {
   id: string;
@@ -36,6 +37,17 @@ function Note({ match, history }: RouteChildrenProps<NoteParams>) {
     },
     100,
     [match, currentPage],
+  );
+  const saveTitle = useDebouncedCallback(
+    async (value: string) => {
+      if (!match) {
+        return;
+      }
+      const action = await updateNoteTitle(match.params.id, value);
+      dispatch(action);
+    },
+    100,
+    [match],
   );
 
   useEffect(() => {
@@ -100,7 +112,21 @@ function Note({ match, history }: RouteChildrenProps<NoteParams>) {
     <main>
       {/* TODO: add side bar here + media query for desktop only */}
       <Header>
-        <Hx size={4}>{note.title}</Hx>
+        <Hx
+          size={4}
+          contentEditable
+          suppressContentEditableWarning
+          onInput={(event: SyntheticEvent) =>
+            // @ts-ignore
+            saveTitle(event.target.textContent)
+          }
+          // Prevents newlines
+          onKeyPress={(event: KeyboardEvent) =>
+            event.key === 'Enter' && event.preventDefault()
+          }
+        >
+          {note.title}
+        </Hx>
       </Header>
       {localState && (
         <Editor editorState={localState} onChange={handleStateChange} />
