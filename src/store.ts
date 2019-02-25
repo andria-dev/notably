@@ -1,4 +1,4 @@
-import { useContext, createContext, ReducerState, Dispatch } from 'react';
+import { createContext, Dispatch, ReducerState, useContext } from 'react';
 import Note from './models/Note';
 import Page from './models/Page';
 
@@ -10,16 +10,12 @@ export interface Action {
 interface State extends ReducerState<any> {
   notes: { [s: string]: Note };
   loadedFromDB: boolean;
-  currentNote: string | null;
-  currentPage: number | null;
   error: string | null;
 }
 
 export const initialState: State = {
   notes: {},
   loadedFromDB: false,
-  currentNote: null,
-  currentPage: null,
   error: null,
 };
 
@@ -55,19 +51,6 @@ export function reducer(state: State, action: Action) {
           ...state.notes,
           [action.payload.noteID]: action.payload.note,
         },
-      };
-
-    case 'SET_CURRENT_NOTE':
-      return {
-        ...state,
-        currentNote: action.payload,
-        currentPage: 0,
-      };
-
-    case 'SET_CURRENT_PAGE':
-      return {
-        ...state,
-        currentPage: action.payload,
       };
 
     case 'ERROR':

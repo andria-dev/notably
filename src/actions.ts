@@ -196,20 +196,6 @@ export async function updatePageState(
   }
 }
 
-export function setCurrentNote(noteID: string | null): Action {
-  return {
-    type: 'SET_CURRENT_NOTE',
-    payload: noteID,
-  };
-}
-
-export function setCurrentPage(pageIndex: number | null): Action {
-  return {
-    type: 'SET_CURRENT_PAGE',
-    payload: pageIndex,
-  };
-}
-
 export async function removeAllNotes(): Promise<Action> {
   try {
     await clear();

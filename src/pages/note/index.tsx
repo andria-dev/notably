@@ -8,11 +8,12 @@ import { Editor, EditorState } from 'draft-js';
 import { useDebouncedCallback } from 'use-debounce';
 import { updateNoteTitle } from '../../actions';
 
-interface NoteParams {
+function Note({});
+
+interface NotePageParams {
   id: string;
 }
-
-function Note({ match, history }: RouteChildrenProps<NoteParams>) {
+function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
   const [state, dispatch] = useStore();
 
   const [currentPage, _setCurrentPage] = useState(0);
@@ -85,7 +86,7 @@ function Note({ match, history }: RouteChildrenProps<NoteParams>) {
     );
   }
 
-  if (!note) {
+  if (!state.loadedFromDB) {
     return (
       // TODO: replace `<main>` with `<Center>`
       <main
@@ -135,4 +136,4 @@ function Note({ match, history }: RouteChildrenProps<NoteParams>) {
   );
 }
 
-export default Note;
+export default NotePage;
