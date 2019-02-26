@@ -67,17 +67,11 @@ function Note({ note, id, dispatch }: NoteProps) {
     saveNoteTitle(value);
   }
 
-  function preventNewline(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-    }
-  }
-
   return (
     <main>
       {/* TODO: add side bar here + media query for desktop only */}
       <Header>
-        <Hx type='input' onChange={handleTitleChange} value={noteTitle} />
+        <Hx type="input" onChange={handleTitleChange} value={noteTitle} />
       </Header>
       {editorState && (
         <Editor editorState={editorState} onChange={handleEditorStateChange} />
