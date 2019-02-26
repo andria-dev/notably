@@ -76,7 +76,7 @@ function Note({ note, id, dispatch, history }: NoteProps) {
       {/* TODO: add side bar here + media query for desktop only */}
       <Header>
         <IconButton onClick={() => history.push('/')}>
-          <MdKeyboardArrowLeft size={20} />
+          <MdKeyboardArrowLeft size={24} />
         </IconButton>
         <Hx
           size={4}
@@ -86,7 +86,7 @@ function Note({ note, id, dispatch, history }: NoteProps) {
           className="Note__title"
         />
         <IconButton>
-          <MdMoreHoriz size={20} />
+          <MdMoreHoriz size={24} />
         </IconButton>
       </Header>
       {editorState && (
