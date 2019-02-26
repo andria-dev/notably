@@ -23,8 +23,9 @@ interface NoteProps {
   note: NoteModel;
   id: string;
   dispatch: React.Dispatch<Action>;
+  history: RouteChildrenProps['history'];
 }
-function Note({ note, id, dispatch }: NoteProps) {
+function Note({ note, id, dispatch, history }: NoteProps) {
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
     setEditorState(note.pages[currentPage].state);
@@ -74,7 +75,7 @@ function Note({ note, id, dispatch }: NoteProps) {
     <main>
       {/* TODO: add side bar here + media query for desktop only */}
       <Header>
-        <IconButton>
+        <IconButton onClick={() => history.push('/')}>
           <MdKeyboardArrowLeft size={20} />
         </IconButton>
         <Hx
@@ -145,7 +146,14 @@ function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
     );
   }
 
-  return <Note note={note} id={match.params.id} dispatch={dispatch} />;
+  return (
+    <Note
+      note={note}
+      id={match.params.id}
+      dispatch={dispatch}
+      history={history}
+    />
+  );
 }
 
 export default NotePage;
