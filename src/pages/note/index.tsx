@@ -1,63 +1,96 @@
-import React, { SyntheticEvent, useEffect, useMemo, useState } from 'react';
+import React, {
+  ChangeEvent,
+  SyntheticEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
-import { updatePageState, useStore } from '../../store';
+import { Action, updatePageState, useStore } from '../../store';
 
 import { Editor, EditorState } from 'draft-js';
 import { useDebouncedCallback } from 'use-debounce';
 import { updateNoteTitle } from '../../actions';
+import NoteModel from '../../models/Note';
+import { requestIdleCallback } from '../../polyfills/requestIdleCallback';
 
-function Note({});
+interface NoteProps {
+  note: NoteModel;
+  id: string;
+  dispatch: React.Dispatch<Action>;
+}
+function Note({ note, id, dispatch }: NoteProps) {
+  const [currentPage, setCurrentPage] = useState(0);
+  useEffect(() => {
+    setEditorState(note.pages[currentPage].state);
+  }, [currentPage]);
+
+  const [editorState, setEditorState] = useState(note.pages[currentPage].state);
+  const savePageState = useDebouncedCallback(
+    async (value: EditorState) =>
+      // @ts-ignore
+      requestIdleCallback(
+        async () => {
+          const action = await updatePageState(id, currentPage, value);
+          dispatch(action);
+        },
+        { timeout: 5000 },
+      ),
+    500,
+    [id, currentPage],
+  );
+
+  function handleEditorStateChange(value: EditorState) {
+    setEditorState(value);
+    savePageState(value);
+  }
+
+  const [noteTitle, setNoteTitle] = useState(note.title);
+  const saveNoteTitle = useDebouncedCallback(
+    value =>
+      // @ts-ignore
+      requestIdleCallback(
+        async () => {
+          const action = await updateNoteTitle(id, value);
+          dispatch(action);
+        },
+        { timeout: 5000 },
+      ),
+    250,
+    [id],
+  );
+  function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    setNoteTitle(value);
+    saveNoteTitle(value);
+  }
+
+  function preventNewline(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  }
+
+  return (
+    <main>
+      {/* TODO: add side bar here + media query for desktop only */}
+      <Header>
+        <Hx type='input' onChange={handleTitleChange} value={noteTitle} />
+      </Header>
+      {editorState && (
+        <Editor editorState={editorState} onChange={handleEditorStateChange} />
+      )}
+    </main>
+  );
+}
 
 interface NotePageParams {
   id: string;
 }
 function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
   const [state, dispatch] = useStore();
-
-  const [currentPage, _setCurrentPage] = useState(0);
-  function setCurrentPage(index: number) {
-    _setCurrentPage(index);
-
-    // side effect, update editor state to page
-    if (!localState && match && state.notes[match.params.id]) {
-      setLocalState(state.notes[match.params.id].pages[index].state);
-    }
-  }
-
-  const [localState, setLocalState] = useState<EditorState | null>(null);
-
-  const autoSave = useDebouncedCallback(
-    async value => {
-      if (!match) {
-        return;
-      }
-      const action = await updatePageState(match.params.id, currentPage, value);
-      dispatch(action);
-    },
-    100,
-    [match, currentPage],
-  );
-  const saveTitle = useDebouncedCallback(
-    async (value: string) => {
-      if (!match) {
-        return;
-      }
-      const action = await updateNoteTitle(match.params.id, value);
-      dispatch(action);
-    },
-    100,
-    [match],
-  );
-
-  useEffect(() => {
-    if (match) {
-      setCurrentPage(0);
-    } else {
-      setLocalState(null);
-    }
-  }, [match]);
 
   if (!match) {
     /* TODO: Display 404 Not Found */
@@ -103,37 +136,7 @@ function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
     );
   }
 
-  function handleStateChange(value: EditorState) {
-    setLocalState(value);
-    // @ts-ignore
-    requestIdleCallback(() => autoSave(value));
-  }
-
-  return (
-    <main>
-      {/* TODO: add side bar here + media query for desktop only */}
-      <Header>
-        <Hx
-          size={4}
-          contentEditable
-          suppressContentEditableWarning
-          onInput={(event: SyntheticEvent) =>
-            // @ts-ignore
-            saveTitle(event.target.textContent)
-          }
-          // Prevents newlines
-          onKeyPress={(event: KeyboardEvent) =>
-            event.key === 'Enter' && event.preventDefault()
-          }
-        >
-          {note.title}
-        </Hx>
-      </Header>
-      {localState && (
-        <Editor editorState={localState} onChange={handleStateChange} />
-      )}
-    </main>
-  );
+  return <Note note={note} id={match.params.id} dispatch={dispatch} />;
 }
 
 export default NotePage;

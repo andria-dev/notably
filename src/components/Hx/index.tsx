@@ -6,7 +6,7 @@ import './style.css';
 interface HxProps {
   size?: number;
   weight?: number;
-  type?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  type?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | string;
   className?: any;
   style?: { [s: string]: any };
   [s: string]: any;
