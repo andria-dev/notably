@@ -1,0 +1,13 @@
+.Note__title {
+  font-family: Roboto, system-ui;
+  text-align: center;
+
+  appearance: none;
+  border: none;
+  border-bottom: solid 1px transparent;
+}
+
+.Note__title:focus {
+  outline: none;
+  border-bottom: solid 1px hsl(217, 99%, 80%);
+}

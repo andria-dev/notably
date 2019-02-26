@@ -14,7 +14,8 @@ import { Editor, EditorState } from 'draft-js';
 import { useDebouncedCallback } from 'use-debounce';
 import { updateNoteTitle } from '../../actions';
 import NoteModel from '../../models/Note';
-import { requestIdleCallback } from '../../polyfills/requestIdleCallback';
+
+import './style.css';
 
 interface NoteProps {
   note: NoteModel;
@@ -71,7 +72,13 @@ function Note({ note, id, dispatch }: NoteProps) {
     <main>
       {/* TODO: add side bar here + media query for desktop only */}
       <Header>
-        <Hx type="input" onChange={handleTitleChange} value={noteTitle} />
+        <Hx
+          size={4}
+          type="input"
+          onChange={handleTitleChange}
+          value={noteTitle}
+          className="Note__title"
+        />
       </Header>
       {editorState && (
         <Editor editorState={editorState} onChange={handleEditorStateChange} />
