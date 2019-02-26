@@ -15,6 +15,8 @@ import { useDebouncedCallback } from 'use-debounce';
 import { updateNoteTitle } from '../../actions';
 import NoteModel from '../../models/Note';
 
+import { MdKeyboardArrowLeft, MdMoreHoriz } from 'react-icons/md';
+import IconButton from '../../components/IconButton';
 import './style.css';
 
 interface NoteProps {
@@ -72,6 +74,9 @@ function Note({ note, id, dispatch }: NoteProps) {
     <main>
       {/* TODO: add side bar here + media query for desktop only */}
       <Header>
+        <IconButton>
+          <MdKeyboardArrowLeft size={20} />
+        </IconButton>
         <Hx
           size={4}
           type="input"
@@ -79,6 +84,9 @@ function Note({ note, id, dispatch }: NoteProps) {
           value={noteTitle}
           className="Note__title"
         />
+        <IconButton>
+          <MdMoreHoriz size={20} />
+        </IconButton>
       </Header>
       {editorState && (
         <Editor editorState={editorState} onChange={handleEditorStateChange} />

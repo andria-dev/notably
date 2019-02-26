@@ -5,6 +5,9 @@
   appearance: none;
   border: none;
   border-bottom: solid 1px transparent;
+
+  width: 100%;
+  margin: 0 1rem;
 }
 
 .Note__title:focus {
