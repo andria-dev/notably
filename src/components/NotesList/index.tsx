@@ -88,6 +88,9 @@ function handleRemoveNote(event: Event, { id }: { id: string }) {
 function handleCopyToClipboard(event: Event, { url }: { url: string }) {
   // @ts-ignore
   navigator.clipboard.writeText(url)
+    .then(() => {
+      // TODO: notify the user of success
+    })
     .catch((error: Error) => {
       console.log(error);
       // TODO: replace with snackbar or similar
