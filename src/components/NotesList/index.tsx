@@ -1,23 +1,26 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import classNames from '@chbphone55/classnames';
 
+import classNames from '@chbphone55/classnames';
+import { removeNote } from '../../actions';
 import Note from '../../models/Note';
 
+import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
+import { Link } from 'react-router-dom';
 import Hx from '../Hx';
 import Tag from '../Tag';
-import { ContextMenuTrigger, ContextMenu, MenuItem } from 'react-contextmenu';
 
+import { useStore } from '../../store';
+import './contextmenu.css';
 import './style.css';
-import { removeNote } from '../../actions';
 
 interface NotesListProps {
-  notes: { [id: string]: Note };
   responsive?: Boolean;
   activeID?: string;
 }
 
-function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
+function NotesList({ responsive = false, activeID }: NotesListProps) {
+  const [{ notes }, dispatch] = useStore();
+
   const sortedNotes = useMemo(
     () =>
       Object.entries(notes).sort(
@@ -26,6 +29,10 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
       ),
     [notes],
   );
+
+  async function handleRemoveNote(event: Event, { id }: { id: string }) {
+    dispatch(await removeNote(id));
+  }
 
   return (
     <section
@@ -42,11 +49,15 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
         const menuID = `notes-list__${id}`;
 
         return [
-          <ContextMenuTrigger id={menuID} key={id} attributes={{
-            className: classNames('NotesList__note', {
-              'NotesList__note--active': activeID === id,
-            })
-          }}>
+          <ContextMenuTrigger
+            id={menuID}
+            key={id}
+            attributes={{
+              className: classNames('NotesList__note', {
+                'NotesList__note--active': activeID === id,
+              }),
+            }}
+          >
             <Link
               to={`/note/${id}`}
               style={{ color: 'unset', textDecoration: 'none' }}
@@ -72,22 +83,26 @@ function NotesList({ notes, responsive = false, activeID }: NotesListProps) {
             </Link>
           </ContextMenuTrigger>,
           <ContextMenu id={menuID}>
-            <MenuItem data={{ id }} onClick={handleRemoveNote}>Delete note</MenuItem>
-            <MenuItem data={{ url: `${location.origin}/note/${id}` }} onClick={handleCopyToClipboard}>Copy link</MenuItem>
-          </ContextMenu>
+            <MenuItem data={{ id }} onClick={handleRemoveNote}>
+              Delete note
+            </MenuItem>
+            <MenuItem
+              data={{ url: `${location.origin}/note/${id}` }}
+              onClick={handleCopyToClipboard}
+            >
+              Copy link
+            </MenuItem>
+          </ContextMenu>,
         ];
       })}
     </section>
   );
 }
 
-function handleRemoveNote(event: Event, { id }: { id: string }) {
-  removeNote(id);
-}
-
 function handleCopyToClipboard(event: Event, { url }: { url: string }) {
   // @ts-ignore
-  navigator.clipboard.writeText(url)
+  navigator.clipboard
+    .writeText(url)
     .then(() => {
       // TODO: notify the user of success
     })
@@ -95,7 +110,7 @@ function handleCopyToClipboard(event: Event, { url }: { url: string }) {
       console.log(error);
       // TODO: replace with snackbar or similar
       alert('Unable to copy');
-    })
+    });
 }
 
 export default NotesList;

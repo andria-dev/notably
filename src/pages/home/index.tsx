@@ -33,7 +33,7 @@ function Home({ history }: RouteChildrenProps) {
         </IconButton>
       </Header>
 
-      <NotesList notes={notes} responsive />
+      <NotesList responsive />
 
       {/* TODO: build FAB to replace button below */}
       <FAB onClick={createNote}>
