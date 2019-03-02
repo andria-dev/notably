@@ -1,8 +1,6 @@
 import React, {
   ChangeEvent,
-  SyntheticEvent,
   useEffect,
-  useMemo,
   useState,
 } from 'react';
 import { RouteChildrenProps } from 'react-router';
