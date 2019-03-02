@@ -34,8 +34,19 @@ async function loadRequestIdleCallback() {
   }
 }
 
+async function loadClipboard() {
+  // @ts-ignore
+  if (!navigator.clipboard.writeText) {
+    navigator.clipboard.writeText = (await import('./polyfills/clipboard-write')).writeText;
+  }
+}
+
 // wait for polyfills
-Promise.all([loadRelativeTimeFormat(), loadRequestIdleCallback()]).then(() => {
+Promise.all([
+  loadRelativeTimeFormat(),
+  loadRequestIdleCallback(),
+  loadClipboard(),
+]).then(() => {
   // then render
   ReactDOM.render(<App />, document.getElementById('root'));
 });
