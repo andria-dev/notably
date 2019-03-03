@@ -82,7 +82,7 @@ function NotesList({ responsive = false, activeID }: NotesListProps) {
               </article>
             </Link>
           </ContextMenuTrigger>,
-          <ContextMenu id={menuID}>
+          <ContextMenu className="shadow" id={menuID}>
             <MenuItem data={{ id }} onClick={handleRemoveNote}>
               Delete note
             </MenuItem>

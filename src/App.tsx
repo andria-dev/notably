@@ -1,10 +1,13 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Home from './pages/home';
 import Note from './pages/note';
 
-import { reducer, initialState, getNotes, StoreContext } from './store';
+import { getNotes, initialState, reducer, StoreContext } from './store';
+
+/* Global CSS + Utilities */
+import './App.css';
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
