@@ -13,11 +13,18 @@ import './contextmenu.css';
 import './style.css';
 
 interface NotesListProps {
+  className?: any;
   responsive?: Boolean;
   activeID?: string;
+  [s: string]: any;
 }
 
-function NotesList({ responsive = false, activeID }: NotesListProps) {
+function NotesList({
+  className,
+  responsive = false,
+  activeID,
+  ...props
+}: NotesListProps) {
   const [{ notes }, dispatch] = useStore();
 
   const sortedNotes = useMemo(
@@ -35,9 +42,10 @@ function NotesList({ responsive = false, activeID }: NotesListProps) {
 
   return (
     <section
-      className={classNames('NotesList', {
+      className={classNames(className, 'NotesList', {
         'NotesList--responsive': responsive,
       })}
+      {...props}
     >
       {sortedNotes.map(([id, note]) => {
         const noteContentSnippet = note.pages[note.pages.length - 1].state

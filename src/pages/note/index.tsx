@@ -1,8 +1,4 @@
-import React, {
-  ChangeEvent,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -15,6 +11,7 @@ import NoteModel from '../../models/Note';
 
 import { MdKeyboardArrowLeft, MdMoreHoriz } from 'react-icons/md';
 import IconButton from '../../components/IconButton';
+import NotesList from '../../components/NotesList';
 import './style.css';
 
 interface NoteProps {
@@ -70,26 +67,32 @@ function Note({ note, id, dispatch, history }: NoteProps) {
   }
 
   return (
-    <main>
+    <main className="Note">
       {/* TODO: add side bar here + media query for desktop only */}
-      <Header>
-        <IconButton onClick={() => history.push('/')}>
-          <MdKeyboardArrowLeft size={24} />
-        </IconButton>
-        <Hx
-          size={4}
-          type="input"
-          onChange={handleTitleChange}
-          value={noteTitle}
-          className="Note__title"
-        />
-        <IconButton>
-          <MdMoreHoriz size={24} />
-        </IconButton>
-      </Header>
-      {editorState && (
+      <section className="Note__sidebar shadow-lg">
+        <Header>
+          <Hx size={4}>Notes</Hx>
+        </Header>
+        <NotesList activeID={id} />
+      </section>
+      <section className="Note__main">
+        <Header>
+          <IconButton onClick={() => history.push('/')}>
+            <MdKeyboardArrowLeft size={24} />
+          </IconButton>
+          <Hx
+            size={4}
+            type="input"
+            onChange={handleTitleChange}
+            value={noteTitle}
+            className="Note__title"
+          />
+          <IconButton>
+            <MdMoreHoriz size={24} />
+          </IconButton>
+        </Header>
         <Editor editorState={editorState} onChange={handleEditorStateChange} />
-      )}
+      </section>
     </main>
   );
 }
