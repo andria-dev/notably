@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 
 import classNames from '@chbphone55/classnames';
 import { removeNote } from '../../actions';
-import Note from '../../models/Note';
 
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { Link } from 'react-router-dom';
