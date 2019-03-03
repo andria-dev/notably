@@ -1,18 +1,22 @@
 .react-contextmenu {
+  min-width: 160px;
+  margin: 2px 0 0;
+  padding: 5px 0;
+
   background-color: #fff;
   background-clip: padding-box;
+
+  font-size: 16px;
+  text-align: left;
+
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
-  color: #373a3c;
-  font-size: 16px;
-  margin: 2px 0 0;
-  min-width: 160px;
-  outline: none;
+
   opacity: 0;
-  padding: 5px 0;
-  pointer-events: none;
-  text-align: left;
   transition: opacity 250ms ease !important;
+
+  outline: none;
+  pointer-events: none;
 }
 
 .react-contextmenu.react-contextmenu--visible {
@@ -62,6 +66,7 @@
   margin-bottom: 3px;
   padding: 2px 0;
 }
+
 .react-contextmenu-item--divider:hover {
   background-color: transparent;
   border-color: rgba(0, 0, 0, 0.15);
