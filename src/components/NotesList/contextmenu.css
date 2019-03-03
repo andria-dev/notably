@@ -10,7 +10,7 @@
   text-align: left;
 
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0.25rem;
+  border-radius: 0.2rem;
 
   opacity: 0;
   transition: opacity 250ms ease !important;
