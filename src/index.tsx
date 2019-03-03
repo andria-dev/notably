@@ -35,7 +35,10 @@ async function loadRequestIdleCallback() {
 }
 
 async function loadClipboard() {
-  // @ts-ignore
+  if (!navigator.clipboard) {
+    navigator.clipboard = {};
+  }
+
   if (!navigator.clipboard.writeText) {
     navigator.clipboard.writeText = (await import('./polyfills/clipboard-write')).writeText;
   }
