@@ -1,5 +1,5 @@
 import classNames from '@chbphone55/classnames';
-import React from 'react';
+import React, { memo } from 'react';
 
 import './style.css';
 
@@ -13,4 +13,4 @@ function Tag({ children, className }: TagProps) {
   return <p className={classNames(className, 'Tag')}>{children}</p>;
 }
 
-export default Tag;
+export default memo(Tag);

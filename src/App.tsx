@@ -1,31 +1,29 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { memo, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Home from './pages/home';
 import Note from './pages/note';
 
-import { getNotes, initialState, reducer, StoreContext } from './store';
+import { getNotes, ReduxProvider, store } from './store';
 
 /* Global CSS + Utilities */
 import './App.css';
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
   useEffect(() => {
-    getNotes().then(dispatch);
+    getNotes().then(store.dispatch);
   }, []);
 
   return (
-    <StoreContext.Provider value={[state, dispatch]}>
+    <ReduxProvider store={store}>
       <Router>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/note/:id" component={Note} />
         </Switch>
       </Router>
-    </StoreContext.Provider>
+    </ReduxProvider>
   );
 }
 
-export default App;
+export default memo(App);

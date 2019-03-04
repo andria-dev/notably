@@ -1,6 +1,7 @@
-import { createContext, Dispatch, ReducerState, useContext } from 'react';
-import Note from './models/Note';
-import Page from './models/Page';
+import { Dispatch, ReducerState } from 'react';
+import { useReduxDispatch, useReduxState } from 'react-hooks-easy-redux';
+import { createStore } from 'redux';
+import Note from '../models/Note';
 
 export interface Action {
   type: string;
@@ -13,13 +14,13 @@ interface State extends ReducerState<any> {
   error: string | null;
 }
 
-export const initialState: State = {
+const initialState: State = {
   notes: {},
   loadedFromDB: false,
   error: null,
 };
 
-export function reducer(state: State, action: Action) {
+function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
     case 'SET_NOTES':
       return {
@@ -78,14 +79,14 @@ export function reducer(state: State, action: Action) {
   }
 }
 
-export const StoreContext = createContext([
-  initialState,
-  (action: Action) => {},
-]);
+export const store = createStore(reducer);
 
+/**
+ * Hook for getting the current state and dispatch
+ */
 export function useStore(): [State, Dispatch<Action>] {
-  // @ts-ignore
-  return useContext(StoreContext);
+  return [useReduxState(), useReduxDispatch()];
 }
 
+export { ReduxProvider } from 'react-hooks-easy-redux';
 export * from './actions';

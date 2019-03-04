@@ -1,5 +1,5 @@
 import classNames from '@chbphone55/classnames';
-import React from 'react';
+import React, { memo } from 'react';
 
 import './style.css';
 
@@ -11,4 +11,4 @@ function FAB({ className, ...props }: FABProps) {
   return <button {...props} className={classNames(className, 'FAB')} />;
 }
 
-export default FAB;
+export default memo(FAB);

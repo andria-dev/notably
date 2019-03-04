@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react';
 
 import classNames from '@chbphone55/classnames';
-import { removeNote } from '../../actions';
 
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { Link } from 'react-router-dom';
 import Hx from '../Hx';
 import Tag from '../Tag';
 
-import { useStore } from '../../store';
+import { removeNote, useStore } from '../../store';
 import './contextmenu.css';
 import './style.css';
 

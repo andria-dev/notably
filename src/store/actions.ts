@@ -1,9 +1,9 @@
-import { Action } from './store';
-import { keys, get, del, set, clear } from 'idb-keyval';
-import Note from './models/Note';
-import Page from './models/Page';
+import { ContentState, EditorState } from 'draft-js';
+import { clear, del, get, keys, set } from 'idb-keyval';
 import uuid from 'uuid/v4';
-import { EditorState, ContentState } from 'draft-js';
+import Note from '../models/Note';
+import Page from '../models/Page';
+import { Action } from './';
 
 async function getNote(id: string): Promise<Note> {
   const noteData: { [s: string]: any } = await get(id);

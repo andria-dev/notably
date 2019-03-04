@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { removeAllNotes } from '../../actions';
 import Note from '../../models/Note';
-import { addNote, useStore } from '../../store';
+import { addNote, useStore, removeAllNotes } from '../../store';
 
 import { MdAdd, MdSettings } from 'react-icons/md';
 import { RouteChildrenProps } from 'react-router';
@@ -13,7 +12,7 @@ import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 
 function Home({ history }: RouteChildrenProps) {
-  const [{ notes }, dispatch] = useStore();
+  const [, dispatch] = useStore();
 
   async function createNote() {
     const action = await addNote(new Note());

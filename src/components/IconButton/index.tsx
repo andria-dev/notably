@@ -1,5 +1,5 @@
-import React from 'react';
 import classNames from '@chbphone55/classnames';
+import React, { memo } from 'react';
 
 import './style.css';
 
@@ -12,4 +12,4 @@ function IconButton({ className, ...props }: IconButtonProps) {
   return <button {...props} className={classNames(className, 'IconButton')} />;
 }
 
-export default IconButton;
+export default memo(IconButton);

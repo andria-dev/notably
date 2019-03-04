@@ -1,5 +1,5 @@
 import classNames from '@chbphone55/classnames';
-import React from 'react';
+import React, { memo } from 'react';
 
 import './style.css';
 
@@ -35,4 +35,4 @@ function Hx({
   });
 }
 
-export default Hx;
+export default memo(Hx);

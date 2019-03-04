@@ -1,5 +1,5 @@
 import classNames from '@chbphone55/classnames';
-import React from 'react';
+import React, { memo } from 'react';
 import './style.css';
 
 interface HeaderProps {
@@ -13,4 +13,4 @@ function Header({ className, ...props }: HeaderProps) {
   );
 }
 
-export default Header;
+export default memo(Header);
