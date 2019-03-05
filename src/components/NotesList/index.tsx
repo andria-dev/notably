@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, Fragment } from 'react';
 
 import classNames from '@chbphone55/classnames';
 
@@ -54,52 +54,55 @@ function NotesList({
           .slice(0, 100);
         const menuID = `notes-list__${id}`;
 
-        return [
-          <ContextMenuTrigger
-            id={menuID}
-            key={id}
-            attributes={{
-              className: classNames('NotesList__note', {
-                'NotesList__note--active': activeID === id,
-              }),
-            }}
-          >
-            <Link
-              to={`/note/${id}`}
-              style={{ color: 'unset', textDecoration: 'none' }}
+        return (
+          <Fragment key={id}>
+            <ContextMenuTrigger
+              id={menuID}
+              attributes={{
+                className: classNames('NotesList__note', {
+                  'NotesList__note--active': activeID === id,
+                }),
+              }}
             >
-              <article>
-                <Hx size={0} weight={5} className="note__title truncate">
-                  {note.title}
-                </Hx>
-                <Hx
-                  size={0}
-                  weight={3}
-                  type="h2"
-                  className="note__modified truncate"
-                >
-                  Last modified {note.timeSinceModified}
-                </Hx>
-                {noteContentSnippet.length ? (
-                  <p className="note__content truncate">{noteContentSnippet}</p>
-                ) : (
-                  <Tag>No content</Tag>
-                )}
-              </article>
-            </Link>
-          </ContextMenuTrigger>,
-          <ContextMenu className="shadow" id={menuID}>
-            <MenuItem data={{ id }} onClick={handleRemoveNote}>
-              Delete note
-            </MenuItem>
-            <MenuItem
-              data={{ url: `${location.origin}/note/${id}` }}
-              onClick={handleCopyToClipboard}
-            >
-              Copy link
-            </MenuItem>
-          </ContextMenu>,
-        ];
+              <Link
+                to={`/note/${id}`}
+                style={{ color: 'unset', textDecoration: 'none' }}
+              >
+                <article>
+                  <Hx size={0} weight={5} className="note__title truncate">
+                    {note.title}
+                  </Hx>
+                  <Hx
+                    size={0}
+                    weight={3}
+                    type="h2"
+                    className="note__modified truncate"
+                  >
+                    Last modified {note.timeSinceModified}
+                  </Hx>
+                  {noteContentSnippet.length ? (
+                    <p className="note__content truncate">
+                      {noteContentSnippet}
+                    </p>
+                  ) : (
+                    <Tag>No content</Tag>
+                  )}
+                </article>
+              </Link>
+            </ContextMenuTrigger>
+            <ContextMenu className="shadow" id={menuID}>
+              <MenuItem data={{ id }} onClick={handleRemoveNote}>
+                Delete note
+              </MenuItem>
+              <MenuItem
+                data={{ url: `${location.origin}/note/${id}` }}
+                onClick={handleCopyToClipboard}
+              >
+                Copy link
+              </MenuItem>
+            </ContextMenu>
+          </Fragment>
+        );
       })}
     </section>
   );
