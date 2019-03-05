@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  memo,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -156,4 +150,4 @@ function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
   );
 }
 
-export default memo(NotePage);
+export default NotePage;
