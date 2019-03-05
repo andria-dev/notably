@@ -4,11 +4,6 @@ import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-if (process.env.NODE_ENV !== 'production') {
-  const whyDidYouRender = require('@welldone-software/why-did-you-render');
-  whyDidYouRender(React, { include: [/.+/] });
-}
-
 async function loadRelativeTimeFormat() {
   // @ts-ignore
   if (Intl.RelativeTimeFormat) {
