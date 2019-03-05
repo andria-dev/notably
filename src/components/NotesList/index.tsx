@@ -1,4 +1,4 @@
-import React, { useMemo, Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 
 import classNames from '@chbphone55/classnames';
 
@@ -53,6 +53,7 @@ function NotesList({
           .split('\n')[0]
           .slice(0, 100);
         const menuID = `notes-list__${id}`;
+        const isActive = activeID === id;
 
         return (
           <Fragment key={id}>
@@ -60,7 +61,7 @@ function NotesList({
               id={menuID}
               attributes={{
                 className: classNames('NotesList__note', {
-                  'NotesList__note--active': activeID === id,
+                  'NotesList__note--active': isActive,
                 }),
               }}
             >
@@ -72,14 +73,16 @@ function NotesList({
                   <Hx size={0} weight={5} className="note__title truncate">
                     {note.title}
                   </Hx>
-                  <Hx
-                    size={0}
-                    weight={3}
-                    type="h2"
-                    className="note__modified truncate"
-                  >
-                    Last modified {note.timeSinceModified}
-                  </Hx>
+                  {isActive ? null : (
+                    <Hx
+                      size={0}
+                      weight={3}
+                      type="h2"
+                      className="note__modified truncate"
+                    >
+                      Last modified {note.timeSinceModified}
+                    </Hx>
+                  )}
                   {noteContentSnippet.length ? (
                     <p className="note__content truncate">
                       {noteContentSnippet}
