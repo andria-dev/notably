@@ -11,28 +11,22 @@ import { removeNote, useStore } from '../../store';
 import './contextmenu.css';
 import './style.css';
 
-interface NotesListProps {
+interface INotesListProps {
   className?: any;
-  responsive?: Boolean;
+  responsive?: boolean;
   activeID?: string;
   [s: string]: any;
 }
 
-function NotesList({
-  className,
-  responsive = false,
-  activeID,
-  ...props
-}: NotesListProps) {
+function NotesList({ className, responsive = false, activeID, ...props }: INotesListProps) {
   const [{ notes }, dispatch] = useStore();
 
   const sortedNotes = useMemo(
     () =>
       Object.entries(notes).sort(
-        ([, noteA], [, noteB]) =>
-          noteB.lastModified.getTime() - noteA.lastModified.getTime(),
+        ([, noteA], [, noteB]) => noteB.lastModified.getTime() - noteA.lastModified.getTime()
       ),
-    [notes],
+    [notes]
   );
 
   async function handleRemoveNote(event: Event, { id }: { id: string }) {
@@ -42,7 +36,7 @@ function NotesList({
   return (
     <section
       className={classNames(className, 'NotesList', {
-        'NotesList--responsive': responsive,
+        'NotesList--responsive': responsive
       })}
       {...props}
     >
@@ -61,32 +55,22 @@ function NotesList({
               id={menuID}
               attributes={{
                 className: classNames('NotesList__note', {
-                  'NotesList__note--active': isActive,
-                }),
+                  'NotesList__note--active': isActive
+                })
               }}
             >
-              <Link
-                to={`/note/${id}`}
-                style={{ color: 'unset', textDecoration: 'none' }}
-              >
+              <Link to={`/note/${id}`} style={{ color: 'unset', textDecoration: 'none' }}>
                 <article>
                   <Hx size={0} weight={5} className="note__title truncate">
                     {note.title}
                   </Hx>
                   {isActive ? null : (
-                    <Hx
-                      size={0}
-                      weight={3}
-                      type="h2"
-                      className="note__modified truncate"
-                    >
+                    <Hx size={0} weight={3} type="h2" className="note__modified truncate">
                       Last modified {note.timeSinceModified}
                     </Hx>
                   )}
                   {noteContentSnippet.length ? (
-                    <p className="note__content truncate">
-                      {noteContentSnippet}
-                    </p>
+                    <p className="note__content truncate">{noteContentSnippet}</p>
                   ) : (
                     <Tag>No content</Tag>
                   )}
@@ -119,7 +103,6 @@ function handleCopyToClipboard(event: Event, { url }: { url: string }) {
       // TODO: notify the user of success
     })
     .catch((error: Error) => {
-      console.log(error);
       // TODO: replace with snackbar or similar
       alert('Unable to copy');
     });

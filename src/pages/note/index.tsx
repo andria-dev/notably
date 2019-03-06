@@ -2,12 +2,7 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
-import {
-  Action,
-  updateNoteTitle,
-  updatePageState,
-  useStore,
-} from '../../store';
+import { IAction, updateNoteTitle, updatePageState, useStore } from '../../store';
 
 import { Editor, EditorState } from 'draft-js';
 import { useDebouncedCallback } from 'use-debounce';
@@ -18,13 +13,13 @@ import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 import './style.css';
 
-interface NoteProps {
+interface INoteProps {
   note: NoteModel;
   id: string;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<IAction>;
   history: RouteChildrenProps['history'];
 }
-function Note({ note, id, dispatch, history }: NoteProps) {
+function Note({ note, id, dispatch, history }: INoteProps) {
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
     setEditorState(note.pages[currentPage].state);
@@ -39,10 +34,10 @@ function Note({ note, id, dispatch, history }: NoteProps) {
           const action = await updatePageState(id, currentPage, value);
           dispatch(action);
         },
-        { timeout: 5000 },
+        { timeout: 5000 }
       ),
     500,
-    [id, currentPage],
+    [id, currentPage]
   );
 
   const handleEditorStateChange = useCallback(
@@ -50,7 +45,7 @@ function Note({ note, id, dispatch, history }: NoteProps) {
       setEditorState(value);
       savePageState(value);
     },
-    [setEditorState, savePageState],
+    [setEditorState, savePageState]
   );
 
   async function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -90,10 +85,10 @@ function Note({ note, id, dispatch, history }: NoteProps) {
   );
 }
 
-interface NotePageParams {
+interface INotePageParams {
   id: string;
 }
-function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
+function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
   const [state, dispatch] = useStore();
 
   if (!match) {
@@ -113,7 +108,7 @@ function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100vh',
+          height: '100vh'
         }}
       >
         <Hx size={4}>Note not found</Hx>
@@ -132,7 +127,7 @@ function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100vh',
+          height: '100vh'
         }}
       >
         <Hx size={2}>Loading...</Hx>
@@ -140,14 +135,7 @@ function NotePage({ match, history }: RouteChildrenProps<NotePageParams>) {
     );
   }
 
-  return (
-    <Note
-      note={note}
-      id={match.params.id}
-      dispatch={dispatch}
-      history={history}
-    />
-  );
+  return <Note note={note} id={match.params.id} dispatch={dispatch} history={history} />;
 }
 
 export default NotePage;

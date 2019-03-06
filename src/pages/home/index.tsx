@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Note from '../../models/Note';
-import { addNote, useStore, removeAllNotes } from '../../store';
+import { addNote, removeAllNotes, useStore } from '../../store';
 
 import { MdAdd, MdSettings } from 'react-icons/md';
 import { RouteChildrenProps } from 'react-router';

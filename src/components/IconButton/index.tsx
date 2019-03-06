@@ -3,12 +3,12 @@ import React, { memo } from 'react';
 
 import './style.css';
 
-interface IconButtonProps {
+interface IIconButtonProps {
   className?: any;
   [s: string]: any;
 }
 
-function IconButton({ className, ...props }: IconButtonProps) {
+function IconButton({ className, ...props }: IIconButtonProps) {
   return <button {...props} className={classNames(className, 'IconButton')} />;
 }
 

@@ -1,18 +1,16 @@
-interface requestIdleCallbackProps {
+interface IrequestIdleCallbackProps {
   didTimeout: boolean;
   timeRemaining: () => number;
 }
 
-export function requestIdleCallback(
-  cb: (props: requestIdleCallbackProps) => {},
-) {
+export function requestIdleCallback(cb: (props: IrequestIdleCallbackProps) => {}) {
   const start = Date.now();
-  return setTimeout(function() {
+  return setTimeout(() => {
     cb({
       didTimeout: false,
       timeRemaining() {
         return Math.max(0, 50 - (Date.now() - start));
-      },
+      }
     });
   }, 1);
 }
