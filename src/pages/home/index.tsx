@@ -34,7 +34,6 @@ function Home({ history }: RouteChildrenProps) {
 
       <NotesList responsive />
 
-      {/* TODO: build FAB to replace button below */}
       <FAB onClick={createNote}>
         <MdAdd size={24} style={{ marginRight: '0.5rem' }} />
         New note

@@ -56,7 +56,6 @@ function Note({ note, id, dispatch, history }: INoteProps) {
 
   return (
     <main className="Note">
-      {/* TODO: add side bar here + media query for desktop only */}
       <section className="Note__sidebar shadow-lg">
         <Header>
           <Hx size={4}>Notes</Hx>
