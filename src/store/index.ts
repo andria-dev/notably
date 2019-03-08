@@ -77,7 +77,11 @@ function reducer(state: IState = initialState, action: IAction) {
   }
 }
 
-export const store = createStore(reducer);
+export const store = createStore(
+  reducer,
+  // @ts-ignore
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 /**
  * Hook for getting the current state and dispatch

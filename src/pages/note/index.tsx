@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -25,33 +25,9 @@ function Note({ note, id, dispatch, history }: INoteProps) {
     setEditorState(note.pages[currentPage].state);
   }, [currentPage, id]);
 
-  const [editorState, setEditorState] = useState(note.pages[currentPage].state);
-  const savePageState = useDebouncedCallback(
-    async (value: EditorState) =>
-      // @ts-ignore
-      requestIdleCallback(
-        async () => {
-          const action = await updatePageState(id, currentPage, value);
-          dispatch(action);
-        },
-        { timeout: 5000 }
-      ),
-    500,
-    [id, currentPage]
-  );
-
-  const handleEditorStateChange = useCallback(
-    (value: EditorState) => {
-      setEditorState(value);
-      savePageState(value);
-    },
-    [setEditorState, savePageState]
-  );
-
-  async function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
-    const action = await updateNoteTitle(id, value);
-    dispatch(action);
+    updateNoteTitle(id, value).then(dispatch);
   }
 
   return (

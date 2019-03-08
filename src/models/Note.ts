@@ -1,12 +1,22 @@
-import Page from './Page';
+import { EditorState } from 'draft-js';
 
 export default class Note {
   // @ts-ignore
-  static rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  private static rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
   public title: string;
-  public pages: Page[];
+  public state: EditorState;
   public lastModified: Date;
+
+  constructor(
+    title: string = 'Title',
+    state: EditorState = EditorState.createEmpty(),
+    lastModified: Date = new Date()
+  ) {
+    this.title = title;
+    this.state = state;
+    this.lastModified = lastModified;
+  }
 
   public updateLastModified() {
     this.lastModified = new Date();
@@ -14,9 +24,7 @@ export default class Note {
 
   public get timeSinceModified() {
     const now: Date = new Date();
-    let timePassed: number = Math.floor(
-      now.getTime() - this.lastModified.getTime(),
-    );
+    let timePassed: number = Math.floor(now.getTime() - this.lastModified.getTime());
     const divide = (n: number) => {
       timePassed = Math.floor(timePassed / n);
     };
@@ -56,15 +64,5 @@ export default class Note {
 
     // years
     return Note.rtf.format(-timePassed, 'year');
-  }
-
-  constructor(
-    title: string = 'Title',
-    pages?: Page[],
-    lastModified: Date = new Date(),
-  ) {
-    this.title = title;
-    this.pages = pages || [new Page()];
-    this.lastModified = lastModified;
   }
 }

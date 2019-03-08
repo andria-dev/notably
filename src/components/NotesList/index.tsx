@@ -41,7 +41,7 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
       {...props}
     >
       {sortedNotes.map(([id, note]) => {
-        const noteContentSnippet = note.pages[note.pages.length - 1].state
+        const noteContentSnippet = note.state
           .getCurrentContent()
           .getPlainText()
           .split('\n')[0]
