@@ -2,33 +2,29 @@ import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 're
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
-import { IAction, updateNoteTitle, updatePageState, useStore } from '../../store';
+import { IAction, setActiveNoteID, useStore } from '../../store';
 
-import { Editor, EditorState } from 'draft-js';
-import { useDebouncedCallback } from 'use-debounce';
 import NoteModel from '../../models/Note';
 
 import { MdKeyboardArrowLeft, MdMoreHoriz } from 'react-icons/md';
+import Editor from '../../components/Editor';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 import './style.css';
 
 interface INoteProps {
-  note: NoteModel;
   id: string;
-  dispatch: React.Dispatch<IAction>;
   history: RouteChildrenProps['history'];
 }
-function Note({ note, id, dispatch, history }: INoteProps) {
-  const [currentPage, setCurrentPage] = useState(0);
-  useEffect(() => {
-    setEditorState(note.pages[currentPage].state);
-  }, [currentPage, id]);
+function Note({ id, history }: INoteProps) {
+  // useEffect(() => {
+  //   setEditorState(note.pages[currentPage].state);
+  // }, [id]);
 
-  function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-    updateNoteTitle(id, value).then(dispatch);
-  }
+  // function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
+  //   const value = event.target.value;
+  //   updateNoteTitle(id, value).then(dispatch);
+  // }
 
   return (
     <main className="Note">
@@ -46,15 +42,15 @@ function Note({ note, id, dispatch, history }: INoteProps) {
           <Hx
             size={4}
             type="input"
-            onChange={handleTitleChange}
-            value={note.title}
+            // onChange={handleTitleChange}
+            // value={note.title}
             className="Note__title"
           />
           <IconButton>
             <MdMoreHoriz size={24} />
           </IconButton>
         </Header>
-        <Editor editorState={editorState} onChange={handleEditorStateChange} />
+        <Editor />
       </section>
     </main>
   );
@@ -72,9 +68,11 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
   }
 
   const id = match.params.id;
-  const note = state.notes[id];
+  if (state.activeNoteID !== id) {
+    dispatch(setActiveNoteID(id));
+  }
 
-  if (state.loadedFromDB && !note) {
+  if (state.loadedFromDB && !(id in state.notes)) {
     return (
       // TODO: replace `<main>` with a new component named `<Center>`
       <main
@@ -110,7 +108,7 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
     );
   }
 
-  return <Note note={note} id={match.params.id} dispatch={dispatch} history={history} />;
+  return <Note id={match.params.id} history={history} />;
 }
 
 export default NotePage;

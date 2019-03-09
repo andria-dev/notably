@@ -1,43 +1,52 @@
 import { Editor as DraftEditor, EditorState } from 'draft-js';
-import Note from '../../models/Note';
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import { updatePageState, IAction } from '../../store';
+import { updateState, useStore } from '../../store';
 
-interface IEditorProps {
-  note: Note;
-  id: string;
-  dispatch: React.Dispatch<IAction>;
-}
+function Editor() {
+  const [state, dispatch] = useStore();
 
-function Editor({ note, dispatch, ...props }: IEditorProps) {
-  const [editorState, setEditorState] = useState(note.state);
+  const id = state.activeNoteID;
+  const note = state.notes[id];
+
   const idleCallbackID = useRef(-1);
-  const savePageState = useDebouncedCallback(
-    async (value: EditorState) =>
+  const [editorState, setEditorState] = useState(note.state);
+  const editorStateRef = useRef(editorState);
+
+  const saveEditorState = useDebouncedCallback(
+    async (value: EditorState) => {
       // @ts-ignore
-      (idleCallbackID.current = requestIdleCallback(
-        () => updatePageState(id, currentPage, value, true).then(dispatch),
+      idleCallbackID.current = requestIdleCallback(
+        () => {
+          updateState(id, value, true).then(dispatch);
+        },
         { timeout: 5000 }
-      )),
+      );
+    },
     2000,
-    [id, currentPage]
+    [id]
+  );
+
+  const handleEditorStateChange = useCallback(
+    (value: EditorState) => {
+      editorStateRef.current = value;
+      setEditorState(value);
+      saveEditorState(value);
+    },
+    [setEditorState, saveEditorState]
   );
 
   useEffect(() => {
     return () => {
-      // @ts-ignore
-      cancelIdleCallback(idleCallbackID.current);
-      updatePageState(id, currentPage, editorState).then(dispatch);
+      if (editorStateRef.current !== note.state) {
+        // @ts-ignore
+        cancelIdleCallback(idleCallbackID.current);
+        updateState(id, editorStateRef.current).then(dispatch);
+      }
     };
-  });
-
-  const handleEditorStateChange = useCallback((value: EditorState) => {
-    setEditorState(value);
-    savePageState(value);
   }, []);
 
-  return <DraftEditor />;
+  return <DraftEditor editorState={editorState} onChange={handleEditorStateChange} />;
 }
 
 export default Editor;
