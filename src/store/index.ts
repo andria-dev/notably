@@ -12,12 +12,14 @@ interface IState extends ReducerState<any> {
   error: string | null;
   loadedFromDB: boolean;
   notes: { [s: string]: Note };
+  activeNoteID: string;
 }
 
 const initialState: IState = {
   error: null,
   loadedFromDB: false,
-  notes: {}
+  notes: {},
+  activeNoteID: ''
 };
 
 function reducer(state: IState = initialState, action: IAction) {
@@ -70,6 +72,12 @@ function reducer(state: IState = initialState, action: IAction) {
       return {
         ...state,
         notes: {}
+      };
+
+    case 'SET_ACTIVE_NOTE_ID':
+      return {
+        ...state,
+        activeNoteID: action.payload
       };
 
     default:

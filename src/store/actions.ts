@@ -136,3 +136,10 @@ export async function removeAllNotes(): Promise<IAction> {
     };
   }
 }
+
+export function setActiveNoteID(id: string): IAction {
+  return {
+    type: 'SET_ACTIVE_NOTE_ID',
+    payload: id
+  };
+}
