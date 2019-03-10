@@ -11,6 +11,7 @@
     "clipboard-polyfill": "^2.7.0",
     "draft-js": "^0.10.5",
     "idb-keyval": "^3.1.0",
+    "mini-debounce": "1.0.3",
     "react": "^16.8.1",
     "react-contextmenu": "^2.10.0",
     "react-dom": "^16.8.1",
