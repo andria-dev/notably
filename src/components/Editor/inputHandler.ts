@@ -6,6 +6,9 @@ const values = new Map();
 type Setter<T> = (newValue: T) => void;
 type Unmounted = () => void;
 
+/**
+ * @param ...args passed to `actionCreator` after `id` and `newValue`
+ */
 export function inputHandler<T>(
   debounceDelay: number,
   id: string,
