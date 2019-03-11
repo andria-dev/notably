@@ -1,12 +1,10 @@
-import React, { ChangeEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
-import { IAction, setActiveNoteID, useStore } from '../../store';
+import { setActiveNoteID, useStore } from '../../store';
 
-import NoteModel from '../../models/Note';
-
-import { MdKeyboardArrowLeft, MdMoreHoriz } from 'react-icons/md';
+import { MdClose } from 'react-icons/md';
 import Editor from '../../components/Editor';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
@@ -27,11 +25,11 @@ const Note = memo(({ id, history }: INoteProps) => {
         <NotesList activeID={id} />
       </section>
       <section className="Note__main">
-        <div style={{ display: 'flex' }}>
-          <IconButton onClick={() => history.push('/')}>
-            <MdKeyboardArrowLeft size={24} />
-          </IconButton>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           <NoteTitle />
+          <IconButton onClick={() => history.push('/')}>
+            <MdClose size={24} />
+          </IconButton>
         </div>
         <Editor />
       </section>
