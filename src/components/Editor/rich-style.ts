@@ -1,4 +1,4 @@
-import { EditorState, RichUtils } from 'draft-js';
+import Draft, { EditorState, RichUtils } from 'draft-js';
 const { toggleInlineStyle } = RichUtils;
 
 function inlineStyle(name: string): (editorState: EditorState) => void {
@@ -18,3 +18,13 @@ export const styleMap = {
     textDecoration: 'line-through'
   }
 };
+
+export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge({
+  'header-one': {},
+  'header-two': {},
+  'header-three': {},
+  'header-four': {},
+  'header-five': {},
+  'header-six': {},
+  'check-list': {}
+});
