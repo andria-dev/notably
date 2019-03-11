@@ -20,22 +20,19 @@ interface INoteProps {
 const Note = memo(({ id, history }: INoteProps) => {
   return (
     <main className="Note">
-      <section className="Note__sidebar shadow-lg">
-        <Header>
+      <section className="Note__sidebar">
+        <Header className="Note__sidebar-header">
           <Hx size={4}>Notes</Hx>
         </Header>
         <NotesList activeID={id} />
       </section>
       <section className="Note__main">
-        <Header>
+        <div style={{ display: 'flex' }}>
           <IconButton onClick={() => history.push('/')}>
             <MdKeyboardArrowLeft size={24} />
           </IconButton>
           <NoteTitle />
-          <IconButton>
-            <MdMoreHoriz size={24} />
-          </IconButton>
-        </Header>
+        </div>
         <Editor />
       </section>
     </main>
