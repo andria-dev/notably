@@ -3,6 +3,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { updateState, useStore } from '../../store';
 
+import './style.css';
+
 function Editor() {
   const [state] = useStore();
 
@@ -21,13 +23,15 @@ function Editor() {
   }, [id]);
 
   return (
-    <DraftEditor
-      editorState={editorState}
-      onChange={newState => {
-        setEditorState(newState);
-        setter(newState);
-      }}
-    />
+    <div className="Editor">
+      <DraftEditor
+        editorState={editorState}
+        onChange={newState => {
+          setEditorState(newState);
+          setter(newState);
+        }}
+      />
+    </div>
   );
 }
 
