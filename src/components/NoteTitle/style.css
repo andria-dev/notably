@@ -1,16 +1,23 @@
 .NoteTitle {
-  font-family: Roboto, system-ui;
-  text-align: center;
-
-  appearance: none;
-  border: none;
-  border-bottom: solid 1px transparent;
-
   width: 100%;
-  margin: 0 1rem;
+  padding: 0.25rem 0;
+
+  border: none;
+  border-radius: 0.25rem;
+
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  appearance: none;
 }
 
 .NoteTitle:focus {
   outline: none;
-  border-bottom: solid 1px hsl(217, 99%, 80%);
+}
+
+.NoteTitle__label {
+  height: 100%;
+  margin-right: 0.75rem;
+
+  color: grey;
+  line-height: 2.8rem;
+  font-variant: small-caps;
 }

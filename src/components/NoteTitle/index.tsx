@@ -20,17 +20,23 @@ function NoteTitle() {
   }, [id]);
 
   return (
-    <Hx
-      size={4}
-      type="input"
-      value={title}
-      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        setTitle(value);
-        setter(value);
-      }}
-      className="NoteTitle"
-    />
+    <>
+      <label className="NoteTitle__label" htmlFor={id}>
+        H1
+      </label>
+      <Hx
+        size={4}
+        type="input"
+        value={title}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          const value = event.target.value;
+          setTitle(value);
+          setter(value);
+        }}
+        className="NoteTitle"
+        id={id}
+      />
+    </>
   );
 }
 

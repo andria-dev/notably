@@ -25,12 +25,12 @@ const Note = memo(({ id, history }: INoteProps) => {
         <NotesList activeID={id} />
       </section>
       <section className="Note__main">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Header style={{ boxShadow: 'none' }}>
           <NoteTitle />
           <IconButton onClick={() => history.push('/')}>
             <MdClose size={24} />
           </IconButton>
-        </div>
+        </Header>
         <Editor />
       </section>
     </main>
