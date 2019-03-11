@@ -1,5 +1,8 @@
 .Note {
+  --sidebar-width: calc(13rem + 8vw);
+
   display: flex;
+  padding-left: var(--sidebar-width);
 }
 
 .Note__main {
@@ -9,11 +12,14 @@
 }
 
 .Note__sidebar {
-  --width: calc(13rem + 8vw);
   --margin-top: calc(2.25rem + (0.75rem * 2));
 
+  position: fixed;
+  top: 0;
+  left: 0;
+
   height: calc(100vh - var(--margin-top));
-  width: var(--width);
+  width: var(--sidebar-width);
   margin-top: var(--margin-top);
 
   overflow-y: scroll;
@@ -27,7 +33,7 @@
   top: 0;
   left: 0;
 
-  width: calc(var(--width) - 3rem);
+  width: calc(var(--sidebar-width) - 3rem);
 
   background-color: hsl(0, 0%, 98%);
 
@@ -45,6 +51,10 @@
 }
 
 @media (max-width: 800px) {
+  .Note {
+    padding-left: 0;
+  }
+
   .Note__sidebar {
     display: none;
   }
