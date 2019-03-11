@@ -1,0 +1,16 @@
+.NoteTitle {
+  font-family: Roboto, system-ui;
+  text-align: center;
+
+  appearance: none;
+  border: none;
+  border-bottom: solid 1px transparent;
+
+  width: 100%;
+  margin: 0 1rem;
+}
+
+.NoteTitle:focus {
+  outline: none;
+  border-bottom: solid 1px hsl(217, 99%, 80%);
+}

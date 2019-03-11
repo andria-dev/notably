@@ -3,6 +3,8 @@ import { updateTitle, useStore } from '../../store';
 import { inputHandler } from '../Editor/inputHandler';
 import Hx from '../Hx';
 
+import './style.css';
+
 function NoteTitle() {
   const [state] = useStore();
 
@@ -27,7 +29,7 @@ function NoteTitle() {
         setTitle(value);
         setter(value);
       }}
-      className="Note__title"
+      className="NoteTitle"
     />
   );
 }
