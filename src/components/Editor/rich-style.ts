@@ -1,24 +1,25 @@
 import Draft, { EditorState, RichUtils } from 'draft-js';
-const { toggleInlineStyle } = RichUtils;
 
-function inlineStyle(name: string): (editorState: EditorState) => void {
-  return (editorState: EditorState) => {
-    toggleInlineStyle(editorState, name);
-  };
+function createInlineStyle(name: string): (editorState: EditorState) => EditorState {
+  return (editorState: EditorState) => RichUtils.toggleInlineStyle(editorState, name);
 }
 
-export const bold = inlineStyle('BOLD');
-export const italicize = inlineStyle('ITALIC');
-export const underline = inlineStyle('UNDERLINE');
-export const code = inlineStyle('CODE');
-export const strikethrough = inlineStyle('STRIKETHROUGH');
+export const inlineStyles = [
+  ['bold', createInlineStyle('BOLD')],
+  ['italics', createInlineStyle('ITALIC')],
+  ['underline', createInlineStyle('UNDERLINE')],
+  ['code', createInlineStyle('CODE')],
+  ['strikethrough', createInlineStyle('STRIKETHROUGH')]
+];
 
 export const styleMap = {
+  ...Draft.DefaultDraftInlineStyle,
   STRIKETHROUGH: {
     textDecoration: 'line-through'
   }
 };
 
+// @ts-ignore
 export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge({
   'header-one': {},
   'header-two': {},
