@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -10,22 +10,14 @@ import { MdKeyboardArrowLeft, MdMoreHoriz } from 'react-icons/md';
 import Editor from '../../components/Editor';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
+import NoteTitle from '../../components/NoteTitle';
 import './style.css';
 
 interface INoteProps {
   id: string;
   history: RouteChildrenProps['history'];
 }
-function Note({ id, history }: INoteProps) {
-  // useEffect(() => {
-  //   setEditorState(note.pages[currentPage].state);
-  // }, [id]);
-
-  // function handleTitleChange(event: ChangeEvent<HTMLInputElement>) {
-  //   const value = event.target.value;
-  //   updateNoteTitle(id, value).then(dispatch);
-  // }
-
+const Note = memo(({ id, history }: INoteProps) => {
   return (
     <main className="Note">
       <section className="Note__sidebar shadow-lg">
@@ -39,13 +31,7 @@ function Note({ id, history }: INoteProps) {
           <IconButton onClick={() => history.push('/')}>
             <MdKeyboardArrowLeft size={24} />
           </IconButton>
-          <Hx
-            size={4}
-            type="input"
-            // onChange={handleTitleChange}
-            // value={note.title}
-            className="Note__title"
-          />
+          <NoteTitle />
           <IconButton>
             <MdMoreHoriz size={24} />
           </IconButton>
@@ -54,7 +40,7 @@ function Note({ id, history }: INoteProps) {
       </section>
     </main>
   );
-}
+});
 
 interface INotePageParams {
   id: string;

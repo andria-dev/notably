@@ -9,7 +9,7 @@ export interface IAction {
 }
 
 interface IState extends ReducerState<any> {
-  error: string | null;
+  error: { message: string; instance: Error } | null;
   loadedFromDB: boolean;
   notes: { [s: string]: Note };
   activeNoteID: string;

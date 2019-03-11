@@ -25,6 +25,13 @@ function setNote(id: string, note: Note): Promise<void> {
   return set(id, noteObj);
 }
 
+function createError(message: string, instance: Error): IAction {
+  return {
+    type: 'ERROR',
+    payload: { message, instance }
+  };
+}
+
 export async function getNotes(): Promise<IAction> {
   try {
     const noteIDs = await keys();
@@ -38,11 +45,8 @@ export async function getNotes(): Promise<IAction> {
       type: 'SET_NOTES',
       payload: notes
     };
-  } catch {
-    return {
-      type: 'ERROR',
-      payload: 'Unable to get your saved notes from your database.'
-    };
+  } catch (error) {
+    return createError('Unable to get your saved notes from your database.', error);
   }
 }
 
@@ -54,10 +58,7 @@ export async function removeNote(noteID: string): Promise<IAction> {
       payload: noteID
     };
   } catch (error) {
-    return {
-      type: 'ERROR',
-      payload: 'Unable to remove your note. Please try again.'
-    };
+    return createError('Unable to remove your note. Please try again.', error);
   }
 }
 
@@ -70,10 +71,7 @@ export async function addNote(note: Note): Promise<IAction> {
       payload: { id, note }
     };
   } catch (error) {
-    return {
-      type: 'ERROR',
-      payload: 'Unable to add your new note to the database. Please try again.'
-    };
+    return createError('Unable to add your new note to the database. Please try again.', error);
   }
 }
 
@@ -88,11 +86,8 @@ export async function updateTitle(noteID: string, newTitle: string) {
       type: 'UPDATE_NOTE',
       payload: { noteID, note }
     };
-  } catch {
-    return {
-      type: 'ERROR',
-      payload: "Unable to update your note's title. Please try again."
-    };
+  } catch (error) {
+    return createError("Unable to update your note's title. Please try again.", error);
   }
 }
 
@@ -115,11 +110,8 @@ export async function updateState(
       type: 'UPDATE_NOTE',
       payload: { noteID, note }
     };
-  } catch {
-    return {
-      type: 'ERROR',
-      payload: 'Unable to save the content of your note.'
-    };
+  } catch (error) {
+    return createError('Unable to save the content of your note.', error);
   }
 }
 
@@ -129,11 +121,8 @@ export async function removeAllNotes(): Promise<IAction> {
     return {
       type: 'REMOVE_ALL_NOTES'
     };
-  } catch {
-    return {
-      type: 'ERROR',
-      payload: 'Unable to remove all notes. Please try again.'
-    };
+  } catch (error) {
+    return createError('Unable to remove all notes. Please try again.', error);
   }
 }
 

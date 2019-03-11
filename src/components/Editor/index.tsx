@@ -1,4 +1,4 @@
-import { Editor as DraftEditor } from 'draft-js';
+import { Editor as DraftEditor, EditorState } from 'draft-js';
 import React, { useEffect, useMemo, useState } from 'react';
 import { updateState, useStore } from '../../store';
 import { inputHandler } from './inputHandler';
@@ -10,9 +10,15 @@ function Editor() {
   const note = state.notes[id];
 
   const [editorState, setEditorState] = useState(note.state);
-  const [setter, unmounted] = useMemo(() => inputHandler(2000, id, updateState, true), [id]);
+  const [setter, unmounted] = useMemo(
+    () => inputHandler<EditorState>(2000, id, updateState, true),
+    [id]
+  );
 
-  useEffect(() => unmounted, []);
+  useEffect(() => {
+    setEditorState(note.state);
+    return unmounted;
+  }, [id]);
 
   return (
     <DraftEditor

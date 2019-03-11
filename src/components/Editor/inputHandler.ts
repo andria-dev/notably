@@ -1,8 +1,6 @@
 import { debounce } from 'mini-debounce';
 import { store } from '../../store';
 
-const values = new Map();
-
 type Setter<T> = (newValue: T) => void;
 type Unmounted = () => void;
 
@@ -16,8 +14,12 @@ export function inputHandler<T>(
   actionCreator: Function,
   ...args: any[]
 ): [Setter<T>, Unmounted] {
+  let value: T;
+  let timeoutID: number | NodeJS.Timeout;
+
   async function updateStore(newValue: T) {
-    store.dispatch(await actionCreator(id, newValue, ...args));
+    const action = await actionCreator(id, newValue, ...args);
+    store.dispatch(action);
   }
   updateStore.debounced = debounce(updateStore, debounceDelay);
 
@@ -26,7 +28,8 @@ export function inputHandler<T>(
    * Starts debounce and keeps track of value + timeoutID
    */
   const setter = (newValue: T) => {
-    values.set(id, { value: newValue, timeoutID: updateStore.debounced(newValue) });
+    value = newValue;
+    timeoutID = updateStore.debounced(newValue);
   };
 
   /**
@@ -34,14 +37,9 @@ export function inputHandler<T>(
    * Cancels previous updates and saves everything immediately
    */
   const unmounted = () => {
-    if (values.has(id)) {
-      const { value, timeoutID } = values.get(id);
-
-      clearTimeout(timeoutID);
+    if (timeoutID !== undefined) {
+      clearTimeout(timeoutID as number);
       updateStore(value);
-
-      // cleanup
-      values.delete(id);
     }
   };
 
