@@ -1,5 +1,5 @@
 import { debounce } from 'mini-debounce';
-import { store } from '../../store';
+import { store } from './store';
 
 type Setter<T> = (newValue: T) => void;
 type Unmounted = () => void;

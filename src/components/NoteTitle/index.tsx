@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { updateTitle, useStore } from '../../store';
-import { inputHandler } from '../Editor/inputHandler';
+import { inputHandler } from '../../inputHandler';
 import Hx from '../Hx';
 
 import './style.css';

@@ -1,7 +1,7 @@
 import { Editor as DraftEditor, EditorState } from 'draft-js';
 import React, { useEffect, useMemo, useState } from 'react';
+import { inputHandler } from '../../inputHandler';
 import { updateState, useStore } from '../../store';
-import { inputHandler } from './inputHandler';
 
 function Editor() {
   const [state] = useStore();
