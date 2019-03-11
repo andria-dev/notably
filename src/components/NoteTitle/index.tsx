@@ -25,6 +25,7 @@ function NoteTitle() {
         H1
       </label>
       <Hx
+        aria-label="Title"
         size={4}
         type="input"
         value={title}
