@@ -1,9 +1,12 @@
 .Tag {
-  display: inline;
-  padding: 0.1rem 0.25rem;
+  --color: hsl(217, 99%, 16%);
+  --background-color: hsl(217, 99%, 95%);
 
-  color: hsl(217, 99%, 16%);
-  background-color: hsl(217, 99%, 95%);
+  display: inline;
+  padding: 0.125rem 0.25rem;
+
+  color: var(--color);
+  background-color: var(--background-color);
 
   text-transform: lowercase;
   font-weight: normal;

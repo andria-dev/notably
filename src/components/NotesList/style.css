@@ -19,7 +19,7 @@
 }
 
 .note__modified {
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.2rem;
 }
 
 .note__content {
@@ -42,7 +42,7 @@
 
 /* Active styles */
 .NotesList__note.NotesList__note--active {
-  background-color: hsl(217, 99%, 90%);
+  background-color: hsl(217, 99%, 95%);
 }
 
 .NotesList__note--active .note__title {
@@ -55,6 +55,11 @@
 
 .NotesList__note--active .note__content {
   color: hsl(217, 40%, 42%);
+}
+
+.NotesList__note--active .Tag {
+  color: hsl(217, 40%, 35%);
+  background-color: hsl(217, 65%, 87.5%);
 }
 
 /* Responsive styles */
@@ -70,11 +75,4 @@
   .NotesList--responsive .NotesList__note {
     width: auto;
   }
-}
-
-/* Utilities */
-.truncate {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
