@@ -64,11 +64,9 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
                   <Hx size={0} weight={5} className="note__title truncate">
                     {note.title}
                   </Hx>
-                  {isActive ? null : (
-                    <Hx size={0} weight={3} type="h2" className="note__modified truncate">
-                      Last modified {note.timeSinceModified}
-                    </Hx>
-                  )}
+                  <Hx size={0} weight={3} type="h2" className="note__modified truncate">
+                    {responsive ? 'Last modified' : ''} {note.timeSinceModified()}
+                  </Hx>
                   {noteContentSnippet.length ? (
                     <p className="note__content truncate">{noteContentSnippet}</p>
                   ) : (
