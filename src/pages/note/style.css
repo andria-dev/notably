@@ -10,12 +10,11 @@
 
 .Note__sidebar {
   --width: calc(13rem + 8vw);
+  --margin-top: calc(2.25rem + (0.75rem * 2));
 
-  position: relative;
-
-  height: calc(100vh - 2.5rem);
+  height: calc(100vh - var(--margin-top));
   width: var(--width);
-  padding-top: 2.5rem;
+  margin-top: var(--margin-top);
 
   overflow-y: scroll;
   overflow-x: hidden;
@@ -33,6 +32,7 @@
   background-color: hsl(0, 0%, 98%);
 
   box-shadow: none !important;
+  border-right: solid 1px rgba(0, 0, 0, 0.15);
   border-bottom: solid 1px lightgrey;
 }
 
