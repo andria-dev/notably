@@ -2,6 +2,8 @@
   margin: 0;
   padding: 1px 7px 2px;
 
+  background-color: white;
+
   font: 400 11px system-ui;
 
   border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
