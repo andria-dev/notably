@@ -33,7 +33,7 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
   const y = useScrollYPosition();
 
   return (
-    <section className={classNames('Controls', { shadow: y >= 42 }, className)} {...props}>
+    <section className={classNames('Controls', { 'shadow-md': y >= 42 }, className)} {...props}>
       {inlineStyles.map(({ label, style }) => (
         <StyleButton onToggle={handleInline} style={style} active={currentInlineStyles.has(style)}>
           {label}

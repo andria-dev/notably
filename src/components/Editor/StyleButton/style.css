@@ -8,9 +8,13 @@
   font-size: 1rem;
 
   cursor: pointer;
-  transition: border-radius 0.1s ease-out;
+  transition: border-radius 0.1s ease-out, color 0.2s ease-out;
+}
+
+.StyleButton:active {
+  color: hsl(217, 99%, 30%);
 }
 
 .StyleButton--active {
-  color: hsl(217, 99%, 50%);
+  color: hsl(217, 99%, 55%);
 }
