@@ -14,9 +14,7 @@ export const inlineStyles: Array<{
 export const styleMap = {
   ...Draft.DefaultDraftInlineStyle,
   STRIKETHROUGH: {
-    textDecoration: 'line-through',
-    textDecorationColor: 'black',
-    color: 'hsl(0, 0%, 70%)'
+    textDecoration: 'line-through'
   },
   CODE: {
     backgroundColor: 'hsl(0, 0%, 95%)',
