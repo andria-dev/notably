@@ -4,7 +4,7 @@ function createInlineStyle(name: string): (editorState: EditorState) => EditorSt
   return (editorState: EditorState) => RichUtils.toggleInlineStyle(editorState, name);
 }
 
-export const inlineStyles = [
+export const inlineStyles: Array<[string, (editorState: EditorState) => EditorState]> = [
   ['bold', createInlineStyle('BOLD')],
   ['italics', createInlineStyle('ITALIC')],
   ['underline', createInlineStyle('UNDERLINE')],
