@@ -5,7 +5,7 @@
 }
 
 .DraftEditor-root {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   min-height: calc(100% - 2rem);
 }
 

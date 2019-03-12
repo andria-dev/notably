@@ -19,7 +19,6 @@ export const styleMap = {
     color: 'hsl(0, 0%, 70%)'
   },
   CODE: {
-    padding: '0 0.2rem',
     backgroundColor: 'hsl(0, 0%, 95%)',
     fontSize: '1rem',
     fontFamily: 'Menlo,Monaco,"Courier New",Courier,monospace',
