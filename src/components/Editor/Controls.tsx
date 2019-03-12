@@ -17,17 +17,17 @@ function Controls({ dispatch, editorState }: IControlsProps) {
     .getBlockForKey(selection.getStartKey())
     .getType();
 
-  const handleToggle = useCallback(
+  const handleInline = useCallback(
     (style: string) => {
-      RichUtils.toggleInlineStyle(editorState, style);
+      dispatch({ type: 'change', payload: RichUtils.toggleInlineStyle(editorState, style) });
     },
-    [editorState]
+    [editorState, dispatch]
   );
 
   return (
     <section className="Controls">
       {inlineStyles.map(({ label, style }) => (
-        <StyleButton onToggle={handleToggle} style={style} active={currentInlineStyles.has(style)}>
+        <StyleButton onToggle={handleInline} style={style} active={currentInlineStyles.has(style)}>
           {label}
         </StyleButton>
       ))}
