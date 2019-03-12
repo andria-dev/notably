@@ -3,10 +3,11 @@ import React, { useCallback } from 'react';
 
 interface IStyleButtonProps {
   active: boolean;
-  onToggle: () => any;
+  onToggle: (name: string) => any;
+  style: string;
   children: string;
 }
-function StyleButton({ active = false, onToggle, children, ...props }: IStyleButtonProps) {
+function StyleButton({ active = false, onToggle, children, style, ...props }: IStyleButtonProps) {
   const handleToggle = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       /* If not left click do nothing */
@@ -15,7 +16,7 @@ function StyleButton({ active = false, onToggle, children, ...props }: IStyleBut
       }
 
       event.preventDefault();
-      onToggle();
+      onToggle(style);
     },
     [onToggle]
   );

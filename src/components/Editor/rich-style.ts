@@ -1,15 +1,14 @@
 import Draft, { EditorState, RichUtils } from 'draft-js';
 
-function createInlineStyle(name: string): (editorState: EditorState) => EditorState {
-  return (editorState: EditorState) => RichUtils.toggleInlineStyle(editorState, name);
-}
-
-export const inlineStyles: Array<[string, (editorState: EditorState) => EditorState]> = [
-  ['bold', createInlineStyle('BOLD')],
-  ['italics', createInlineStyle('ITALIC')],
-  ['underline', createInlineStyle('UNDERLINE')],
-  ['code', createInlineStyle('CODE')],
-  ['strikethrough', createInlineStyle('STRIKETHROUGH')]
+export const inlineStyles: Array<{
+  label: string;
+  style: string;
+}> = [
+  { label: 'Bold', style: 'BOLD' },
+  { label: 'Italics', style: 'ITALIC' },
+  { label: 'Underline', style: 'UNDERLINE' },
+  { label: 'Code', style: 'CODE' },
+  { label: 'Strikethrough', style: 'STRIKETHROUGH' }
 ];
 
 export const styleMap = {
