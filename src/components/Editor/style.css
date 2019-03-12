@@ -1,8 +1,15 @@
 .Editor {
   padding: 0 1.5rem;
   font-size: 1.15rem;
+  height: 100%;
 }
 
 .DraftEditor-root {
   margin-top: 2rem;
+  min-height: calc(100% - 2rem);
+}
+
+.DraftEditor-editorContainer,
+.public-DraftEditor-content {
+  min-height: 100%;
 }
