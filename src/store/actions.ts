@@ -1,4 +1,4 @@
-import { ContentState, EditorState } from 'draft-js';
+import { convertFromRaw, convertToRaw, EditorState, RawDraftContentState } from 'draft-js';
 import { clear, del, get, keys, set } from 'idb-keyval';
 import uuid from 'uuid/v4';
 import Note from '../models/Note';
@@ -7,11 +7,11 @@ import { IAction } from './';
 interface INoteData {
   title: string;
   lastModified: Date;
-  state: string;
+  state: RawDraftContentState;
 }
 async function getNote(id: string): Promise<Note> {
   const noteData: INoteData = await get(id);
-  const state = EditorState.createWithContent(ContentState.createFromText(noteData.state));
+  const state = EditorState.createWithContent(convertFromRaw(noteData.state));
 
   return new Note(noteData.title, state, noteData.lastModified);
 }
@@ -20,7 +20,7 @@ function setNote(id: string, note: Note): Promise<void> {
   const noteObj: INoteData = {
     title: note.title,
     lastModified: note.lastModified,
-    state: note.state.getCurrentContent().getPlainText()
+    state: convertToRaw(note.state.getCurrentContent())
   };
   return set(id, noteObj);
 }
