@@ -15,7 +15,16 @@ export const inlineStyles: Array<[string, (editorState: EditorState) => EditorSt
 export const styleMap = {
   ...Draft.DefaultDraftInlineStyle,
   STRIKETHROUGH: {
-    textDecoration: 'line-through'
+    textDecoration: 'line-through',
+    textDecorationColor: 'black',
+    color: 'hsl(0, 0%, 70%)'
+  },
+  CODE: {
+    padding: '0 0.2rem',
+    backgroundColor: 'hsl(0, 0%, 95%)',
+    fontSize: '1rem',
+    fontFamily: 'Menlo,Monaco,"Courier New",Courier,monospace',
+    borderRadius: '0.12rem'
   }
 };
 
