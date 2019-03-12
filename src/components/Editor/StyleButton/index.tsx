@@ -1,6 +1,8 @@
 import classNames from '@chbphone55/classnames';
 import React, { useCallback } from 'react';
 
+import './style.css';
+
 interface IStyleButtonProps {
   active: boolean;
   onToggle: (name: string) => any;

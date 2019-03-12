@@ -1,8 +1,10 @@
 import { EditorState, RichUtils } from 'draft-js';
 import React, { useCallback } from 'react';
-import { IAction } from '../../store';
-import { inlineStyles } from './rich-style';
-import StyleButton from './StyleButton';
+import { IAction } from '../../../store';
+import { inlineStyles } from '../rich-style';
+import StyleButton from '../StyleButton';
+
+import './style.css';
 
 interface IControlsProps {
   dispatch: React.Dispatch<IAction>;

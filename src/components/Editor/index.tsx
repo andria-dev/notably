@@ -1,7 +1,7 @@
 import { Editor as DraftEditor, EditorState, RichUtils } from 'draft-js';
-import React, { useEffect, useMemo, useRef, useState, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
-import { updateState, useStore, IAction } from '../../store';
+import { IAction, updateState, useStore } from '../../store';
 
 import Controls from './Controls';
 import { blockRenderMap, styleMap } from './rich-style';
