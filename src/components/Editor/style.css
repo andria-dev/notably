@@ -4,12 +4,12 @@
   height: 100%;
 }
 
-.DraftEditor-root {
-  /* margin-top: 2rem; */
-  min-height: calc(100% - 2rem);
+.DraftEditor-root,
+.DraftEditor-editorContainer {
+  display: inline;
 }
 
-.DraftEditor-editorContainer,
 .public-DraftEditor-content {
-  min-height: 100%;
+  /* 100% - height-of(.Controls) - margin-bottom-of(.Controls) */
+  min-height: calc(100% - 2.625rem - 1rem);
 }
