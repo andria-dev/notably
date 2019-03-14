@@ -2,5 +2,8 @@
   "files.exclude": {
     "**/.vscode": true,
     "**/node_modules": true
-  }
+  },
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "'Roboto Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.formatOnType": true
 }

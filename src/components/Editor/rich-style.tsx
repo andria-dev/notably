@@ -1,4 +1,6 @@
-import Draft from 'draft-js';
+import Draft, { DraftHandleValue, EditorState, getDefaultKeyBinding } from 'draft-js';
+import React, { KeyboardEvent } from 'react';
+import { IAction } from '../../store';
 
 export const inlineStyles: Array<{
   label: string;
@@ -23,3 +25,21 @@ export const styleMap = {
     borderRadius: '0.12rem'
   }
 };
+
+export function keyBindingFn(event: KeyboardEvent<{}>): string | null {
+  return getDefaultKeyBinding(event);
+}
+
+export function generateHandleKeyCommand(dispatch: React.Dispatch<IAction>) {
+  return (command: string, editorState: EditorState): DraftHandleValue => {
+    switch (command) {
+      case 'bold':
+        break;
+
+      default:
+        break;
+    }
+
+    return 'not-handled';
+  };
+}

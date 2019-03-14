@@ -1,10 +1,10 @@
-import { ContentBlock, Editor as DraftEditor, EditorState, Modifier, RichUtils } from 'draft-js';
-import React, { useEffect, useMemo, useReducer } from 'react';
+import { Editor as DraftEditor, EditorState, RichUtils } from 'draft-js';
+import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
 import Controls from './Controls';
-import { styleMap } from './rich-style';
+import { generateHandleKeyCommand, keyBindingFn, styleMap } from './rich-style';
 import './style.css';
 
 function EditorStateReducer(state: EditorState, action: IAction): EditorState {
@@ -15,25 +15,6 @@ function EditorStateReducer(state: EditorState, action: IAction): EditorState {
       return RichUtils.toggleInlineStyle(state, action.payload);
     case 'block':
       return RichUtils.toggleBlockType(state, action.payload);
-    case 'set-type':
-      const [key] = action.payload.offsetKey.split('-');
-      const { contentState, type } = action.payload;
-
-      if (
-        contentState
-          .getBlockMap()
-          .get(key)
-          .getType() === action.payload.type
-      ) {
-        return state;
-      }
-
-      const newContentState = Modifier.setBlockType(
-        state.getCurrentContent(),
-        state.getSelection(),
-        action.payload.type
-      );
-      return EditorState.push(state, newContentState, 'change-block-type');
     default:
       throw new Error(`Invalid action: ${action.type}`);
   }
@@ -60,6 +41,8 @@ function Editor() {
     return unmounted;
   }, [id]);
 
+  const handleKeyCommand = useCallback(generateHandleKeyCommand(dispatch), [dispatch]);
+
   return (
     <div className="Editor">
       <Controls editorState={editorState} dispatch={dispatch} />
@@ -70,6 +53,8 @@ function Editor() {
           setter(newState);
         }}
         customStyleMap={styleMap}
+        keyBindingFn={keyBindingFn}
+        handleKeyCommand={handleKeyCommand}
       />
     </div>
   );
