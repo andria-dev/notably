@@ -4,7 +4,7 @@ import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
 import Controls from './Controls';
-import { blockRenderMap, styleMap } from './rich-style';
+import { blockRenderMap, decorator, styleMap } from './rich-style';
 import './style.css';
 
 function EditorStateReducer(state: EditorState, action: IAction): EditorState {
@@ -33,7 +33,7 @@ function Editor() {
   );
 
   useEffect(() => {
-    dispatch({ type: 'change', payload: note.state });
+    dispatch({ type: 'change', payload: EditorState.set(note.state, { decorator }) });
     return unmounted;
   }, [id]);
 

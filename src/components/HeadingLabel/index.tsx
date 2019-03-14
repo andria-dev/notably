@@ -9,7 +9,7 @@ export interface IHeadingLabelProps {
 }
 function HeadingLabel({ className, size, ...props }: IHeadingLabelProps) {
   return (
-    <label className={classNames('HeadingLabel', className)} {...props}>
+    <label contentEditable={false} className={classNames('HeadingLabel', className)} {...props}>
       H<small>{size}</small>
     </label>
   );
