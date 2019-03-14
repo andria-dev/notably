@@ -61,10 +61,10 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
             >
               <Link to={`/note/${id}`} style={{ color: 'unset', textDecoration: 'none' }}>
                 <article>
-                  <Hx size={0} weight={5} className="note__title truncate">
+                  <Hx size={6} weight={2} className="note__title truncate">
                     {note.title}
                   </Hx>
-                  <Hx size={0} weight={3} type="h2" className="note__modified truncate">
+                  <Hx size={6} weight={3} type="h2" className="note__modified truncate">
                     {responsive ? 'Last modified' : ''} {note.timeSinceModified()}
                   </Hx>
                   {noteContentSnippet.length ? (

@@ -1,0 +1,8 @@
+.HeadingLabel {
+  height: 100%;
+  margin-right: 0.75rem;
+
+  color: grey;
+  line-height: 2.8rem;
+  font-variant: small-caps;
+}

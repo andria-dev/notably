@@ -3,21 +3,8 @@
   padding: 0.25rem 0;
 
   border: none;
-  border-radius: 0.25rem;
-
-  transition: background-color 0.2s ease-out, color 0.2s ease-out;
-  appearance: none;
 }
 
 .NoteTitle:focus {
   outline: none;
-}
-
-.NoteTitle__label {
-  height: 100%;
-  margin-right: 0.75rem;
-
-  color: grey;
-  line-height: 2.8rem;
-  font-variant: small-caps;
 }

@@ -20,7 +20,7 @@ const Note = memo(({ id, history }: INoteProps) => {
     <main className="Note">
       <section className="Note__sidebar">
         <Header className="Note__sidebar-header">
-          <Hx size={4}>Notes</Hx>
+          <Hx size={1}>Notes</Hx>
         </Header>
         <NotesList activeID={id} />
       </section>
@@ -65,7 +65,7 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
           height: '100vh'
         }}
       >
-        <Hx size={4}>Note not found</Hx>
+        <Hx size={1}>Note not found</Hx>
         {/* TODO: Replace with styled component button */}
         <button onClick={() => history.push('/')}>Return to home page</button>
       </main>

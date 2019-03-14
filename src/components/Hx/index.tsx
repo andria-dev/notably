@@ -13,16 +13,16 @@ interface IHxProps {
 }
 
 /**
- * @param props.size size determines font-size: 0-5 -> 1rem-2rem
- * @param props.weight weight determines font-weight: 0-5 -> 100-600
+ * @param props.size size determines font-size: 1-6 -> 2rem-1rem
+ * @param props.weight weight determines font-weight: 1-6 -> 600-100
  */
-function Hx({ size = 5, weight = size, type = 'h1', className, style, ...props }: IHxProps) {
+function Hx({ size = 1, weight = size, type = 'h1', className, style, ...props }: IHxProps) {
   return React.createElement(type, {
     ...props,
     className: classNames(className, 'Hx'),
     style: {
-      fontSize: `${size * 0.2 + 1}rem`,
-      fontWeight: (weight + 1) * 100,
+      fontSize: `${2 - (size - 1) * 0.2}rem`,
+      fontWeight: (7 - weight) * 100,
       ...style
     }
   });

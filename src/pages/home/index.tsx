@@ -24,7 +24,7 @@ function Home({ history }: RouteChildrenProps) {
   return (
     <main className="Home">
       <Header>
-        <Hx size={4}>Notably</Hx>
+        <Hx size={1}>Notably</Hx>
         {/* TODO: build menu component that pops up from bottom of screen */}
         {/* TODO: hook up settings button to said menu component */}
         <IconButton>
