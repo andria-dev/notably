@@ -1,7 +1,7 @@
 import { EditorState, RichUtils } from 'draft-js';
 import React, { useCallback } from 'react';
 import { IAction } from '../../../store';
-import { inlineStyles } from '../rich-style';
+import { inlineStyles, blockStyles } from '../rich-style';
 import StyleButton from '../StyleButton';
 
 import { useScrollYPosition } from 'react-use-scroll-position';
@@ -25,9 +25,15 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
 
   const handleInline = useCallback(
     (style: string) => {
-      dispatch({ type: 'change', payload: RichUtils.toggleInlineStyle(editorState, style) });
+      dispatch({ type: 'inline', payload: style });
     },
-    [editorState, dispatch]
+    [dispatch]
+  );
+  const handleBlock = useCallback(
+    (type: string) => {
+      dispatch({ type: 'block', payload: type });
+    },
+    [dispatch]
   );
 
   const y = useScrollYPosition();
@@ -35,7 +41,22 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
   return (
     <section className={classNames('Controls', { 'shadow-md': y >= 42 }, className)} {...props}>
       {inlineStyles.map(({ label, style }) => (
-        <StyleButton onToggle={handleInline} style={style} active={currentInlineStyles.has(style)}>
+        <StyleButton
+          key={label}
+          onToggle={handleInline}
+          style={style}
+          active={currentInlineStyles.has(style)}
+        >
+          {label}
+        </StyleButton>
+      ))}
+      {blockStyles.map(({ label, type }) => (
+        <StyleButton
+          key={label}
+          onToggle={handleBlock}
+          style={type}
+          active={currentBlockStyle === type}
+        >
           {label}
         </StyleButton>
       ))}

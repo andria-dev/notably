@@ -1,11 +1,20 @@
-import { Editor as DraftEditor, EditorState, RichUtils } from 'draft-js';
+import {
+  BlockMap,
+  ContentBlock,
+  ContentState,
+  Editor as DraftEditor,
+  EditorState,
+  RichUtils,
+  Modifier
+} from 'draft-js';
 import React, { useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
 import Controls from './Controls';
-import { blockRenderMap, decorator, styleMap } from './rich-style';
+import { decorator, styleMap } from './rich-style';
 import './style.css';
+import { headerX } from './custom-blocks/header-x';
 
 function EditorStateReducer(state: EditorState, action: IAction): EditorState {
   switch (action.type) {
@@ -15,10 +24,32 @@ function EditorStateReducer(state: EditorState, action: IAction): EditorState {
       return RichUtils.toggleInlineStyle(state, action.payload);
     case 'block':
       return RichUtils.toggleBlockType(state, action.payload);
+    case 'set-type':
+      const [key] = action.payload.offsetKey.split('-');
+      const { contentState, type } = action.payload;
+
+      if (
+        contentState
+          .getBlockMap()
+          .get(key)
+          .getType() === action.payload.type
+      ) {
+        return state;
+      }
+
+      const newContentState = Modifier.setBlockType(
+        state.getCurrentContent(),
+        state.getSelection(),
+        action.payload.type
+      );
+      return EditorState.push(state, newContentState, 'change-block-type');
     default:
       throw new Error(`Invalid action: ${action.type}`);
   }
 }
+
+let exportedDispatch: React.Dispatch<IAction>;
+export { exportedDispatch as dispatch };
 
 function Editor() {
   const [state] = useStore();
@@ -27,6 +58,7 @@ function Editor() {
   const note = state.notes[id];
 
   const [editorState, dispatch] = useReducer(EditorStateReducer, note.state);
+  exportedDispatch = dispatch;
   const [setter, unmounted] = useMemo(
     () => inputHandler<EditorState>(2000, id, updateState, true),
     [id]
@@ -47,8 +79,18 @@ function Editor() {
           setter(newState);
         }}
         customStyleMap={styleMap}
-        // @ts-ignore
-        blockRenderMap={blockRenderMap}
+        blockRendererFn={function blockRenderer(contentBlock: ContentBlock) {
+          switch (contentBlock.getType()) {
+            case 'header-one':
+              return {
+                component: headerX(1),
+                editable: true,
+                props: {
+                  test: '1234'
+                }
+              };
+          }
+        }}
       />
     </div>
   );

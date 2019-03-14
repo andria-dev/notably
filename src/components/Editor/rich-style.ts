@@ -1,6 +1,6 @@
-import Draft, { EditorState, RichUtils, CompositeDecorator } from 'draft-js';
+import Draft, { CompositeDecorator } from 'draft-js';
 import { headerX } from './custom-blocks/header-x';
-import { bold, headings } from './strategies';
+import { bold, code, headings, italics } from './strategies';
 
 export const inlineStyles: Array<{
   label: string;
@@ -26,27 +26,16 @@ export const styleMap = {
   }
 };
 
-// @ts-ignore
-export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge({
-  'header-one': {
-    element: headerX(1)
-  },
-  'header-two': {
-    element: headerX(2)
-  },
-  'header-three': {
-    element: headerX(3)
-  },
-  'header-four': {
-    element: headerX(4)
-  },
-  'header-five': {
-    element: headerX(5)
-  },
-  'header-six': {
-    element: headerX(6)
-  },
-  'check-list': {}
-});
+export const blockStyles: Array<{
+  label: string;
+  type: string;
+}> = [
+  { label: 'H1', type: 'header-one' },
+  { label: 'H2', type: 'header-two' },
+  { label: 'H3', type: 'header-three' },
+  { label: 'H4', type: 'header-four' },
+  { label: 'H5', type: 'header-five' },
+  { label: 'H6', type: 'header-six' }
+];
 
-export const decorator = new CompositeDecorator([bold, ...headings]);
+export const decorator = new CompositeDecorator([bold, italics, code, ...headings]);
