@@ -2,7 +2,7 @@
   height: 100%;
   margin-right: 0.75rem;
 
-  color: grey;
+  color: hsl(0, 0%, 70%);
+  font-weight: 600;
   line-height: 2.8rem;
-  font-variant: small-caps;
 }
