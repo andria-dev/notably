@@ -2,6 +2,8 @@ import React from 'react';
 import HeadingLabel from '../../../HeadingLabel';
 import Hx from '../../../Hx';
 
+import './style.css';
+
 interface ILabelledHxProps {
   size: 1 | 2 | 3 | 4 | 5 | 6;
   labelProps?: { [s: string]: any };
@@ -9,7 +11,7 @@ interface ILabelledHxProps {
 }
 export function LabelledHx({ size, labelProps, ...props }: ILabelledHxProps) {
   return (
-    <span>
+    <span className="LabelledHx">
       <HeadingLabel size={size} {...labelProps} />
       <Hx size={size} {...props} />
     </span>
@@ -17,5 +19,5 @@ export function LabelledHx({ size, labelProps, ...props }: ILabelledHxProps) {
 }
 
 export function headerX(size: 1 | 2 | 3 | 4 | 5 | 6) {
-  return () => <LabelledHx size={size} />;
+  return ({ ...props }) => <LabelledHx size={size} {...props} />;
 }
