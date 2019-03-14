@@ -1,7 +1,7 @@
 import { EditorState, RichUtils } from 'draft-js';
 import React, { useCallback } from 'react';
 import { IAction } from '../../../store';
-import { inlineStyles, blockStyles } from '../rich-style';
+import { inlineStyles } from '../rich-style';
 import StyleButton from '../StyleButton';
 
 import { useScrollYPosition } from 'react-use-scroll-position';
@@ -46,16 +46,6 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
           onToggle={handleInline}
           style={style}
           active={currentInlineStyles.has(style)}
-        >
-          {label}
-        </StyleButton>
-      ))}
-      {blockStyles.map(({ label, type }) => (
-        <StyleButton
-          key={label}
-          onToggle={handleBlock}
-          style={type}
-          active={currentBlockStyle === type}
         >
           {label}
         </StyleButton>

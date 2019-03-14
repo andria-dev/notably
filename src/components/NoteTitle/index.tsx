@@ -1,10 +1,8 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { updateTitle, useStore } from '../../store';
-import Hx from '../Hx';
 
-import { LabelledHx } from '../Editor/custom-blocks/header-x';
-import HeadingLabel from '../HeadingLabel';
+import { LabelledHx } from '../LabelledHx';
 import './style.css';
 
 function NoteTitle() {

@@ -1,20 +1,11 @@
-import {
-  BlockMap,
-  ContentBlock,
-  ContentState,
-  Editor as DraftEditor,
-  EditorState,
-  RichUtils,
-  Modifier
-} from 'draft-js';
+import { ContentBlock, Editor as DraftEditor, EditorState, Modifier, RichUtils } from 'draft-js';
 import React, { useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
 import Controls from './Controls';
-import { decorator, styleMap } from './rich-style';
+import { styleMap } from './rich-style';
 import './style.css';
-import { headerX } from './custom-blocks/header-x';
 
 function EditorStateReducer(state: EditorState, action: IAction): EditorState {
   switch (action.type) {
@@ -65,7 +56,7 @@ function Editor() {
   );
 
   useEffect(() => {
-    dispatch({ type: 'change', payload: EditorState.set(note.state, { decorator }) });
+    dispatch({ type: 'change', payload: note.state });
     return unmounted;
   }, [id]);
 
@@ -79,18 +70,6 @@ function Editor() {
           setter(newState);
         }}
         customStyleMap={styleMap}
-        blockRendererFn={function blockRenderer(contentBlock: ContentBlock) {
-          switch (contentBlock.getType()) {
-            case 'header-one':
-              return {
-                component: headerX(1),
-                editable: true,
-                props: {
-                  test: '1234'
-                }
-              };
-          }
-        }}
       />
     </div>
   );
