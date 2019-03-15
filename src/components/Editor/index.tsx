@@ -12,7 +12,7 @@ function EditorStateReducer(state: EditorState, action: IAction): EditorState {
     case 'change':
       return action.payload;
     case 'inline':
-      return RichUtils.toggleInlineStyle(state, action.payload);
+    // return RichUtils.toggleInlineStyle(state, action.payload);
     case 'block':
       return RichUtils.toggleBlockType(state, action.payload);
     default:
