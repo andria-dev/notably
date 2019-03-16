@@ -102,6 +102,7 @@ function findAllMatchesInCurrentLine(
   const selection = editorState.getSelection();
 
   const blockKey = selection.getStartKey();
+  debugger;
   const start = selection.getStartOffset();
   const end = selection.getEndOffset();
 

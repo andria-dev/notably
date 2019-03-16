@@ -12,12 +12,11 @@ function EditorStateReducer(state: EditorState, action: IAction): EditorState {
     case 'change':
       return action.payload;
     case 'inline':
-      const {
-        key,
-        start = state.getSelection().getStartOffset(),
-        end = state.getSelection().getEndOffset(),
-        style
-      } = action.payload;
+      const { key, start, end, style } = action.payload;
+
+      if (key === undefined || start === undefined || end === undefined) {
+        return RichUtils.toggleInlineStyle(state, style);
+      }
 
       const content = state.getCurrentContent();
       const selection = new SelectionState({
