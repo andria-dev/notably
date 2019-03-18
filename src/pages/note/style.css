@@ -12,6 +12,14 @@
 
   width: 100%;
   min-height: 100vh;
+
+  color: black;
+  background-color: white;
+}
+
+.dark-mode .Note__main {
+  color: hsl(0, 0%, 99%);
+  background-color: hsl(0, 0%, 10%);
 }
 
 .Note__sidebar {

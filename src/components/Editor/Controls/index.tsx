@@ -1,7 +1,7 @@
 import { EditorState, RichUtils } from 'draft-js';
 import React, { useCallback } from 'react';
 import { IAction } from '../../../store';
-import { inlineStyles } from '../rich-style';
+// import { inlineStyles } from '../rich-style';
 import StyleButton from '../StyleButton';
 
 import { useScrollYPosition } from 'react-use-scroll-position';
@@ -40,7 +40,7 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
 
   return (
     <section className={classNames('Controls', { 'shadow-md': y >= 42 }, className)} {...props}>
-      {inlineStyles.map(({ label, style }) => (
+      {/* {inlineStyles.map(({ label, style }) => (
         <StyleButton
           key={label}
           onToggle={handleInline}
@@ -49,7 +49,7 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
         >
           {label}
         </StyleButton>
-      ))}
+      ))} */}
     </section>
   );
 }

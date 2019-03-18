@@ -4,12 +4,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/home';
 import Note from './pages/note';
 
+import useDarkMode from 'use-dark-mode';
 import { getNotes, ReduxProvider, store } from './store';
 
 /* Global CSS + Utilities */
 import './App.css';
 
 function App() {
+  const darkMode = useDarkMode(true);
+
   useEffect(() => {
     getNotes().then(store.dispatch);
   }, []);

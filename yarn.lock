@@ -992,6 +992,11 @@
     "@types/unist" "*"
     "@types/vfile-message" "*"
 
+"@use-it/event-listener@^0.1.2":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@use-it/event-listener/-/event-listener-0.1.3.tgz#a9920b2819d211cf55e68e830997546eec6886d3"
+  integrity sha512-UCHkLOVU+xj3/1R8jXz8GzDTowkzfIDPESOBlVC2ndgwUSBEqiFdwCoUEs2lcGhJOOiEdmWxF+T23C5+60eEew==
+
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.7.11.tgz#b988582cafbb2b095e8b556526f30c90d057cace"
@@ -6242,10 +6247,10 @@ mini-css-extract-plugin@0.5.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
-mini-debounce@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/mini-debounce/-/mini-debounce-1.0.3.tgz#201b1ffede3b70a53e7dc2e843f76ee36190e1b9"
-  integrity sha512-w6h01t/R91reAf+MCw1XG3ZRcSfLsnFMr+Al8D9Q58E0N04WIqIwcxQQkRU04cFk9sJWi5n2mNKnLsU87WmupQ==
+mini-debounce@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/mini-debounce/-/mini-debounce-1.0.4.tgz#0710f7be08be342b5370d22b828ae278c783f362"
+  integrity sha512-PbDqvVsudcyiJlF54oqph8nPvdMWmk9z0133GQyCcMr5fQWc1n/MDp+v5BXMdZhlEZYRZeSPpgpWsM1Tk5sO+A==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -9766,10 +9771,25 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-dark-mode@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/use-dark-mode/-/use-dark-mode-2.3.1.tgz#d506349c7b7e09e9977cb8a6ab4470896aa3779a"
+  integrity sha512-hmcdJR96tTustRQdaQwe6jMrZHnmPqXBxgy4jaQ4gsfhwajsCpjECuq9prgDe9XxMx/f9r96o2/md6O4Lwhwjg==
+  dependencies:
+    "@use-it/event-listener" "^0.1.2"
+    use-persisted-state "^0.3.0"
+
 use-debounce@^0.0.9:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-0.0.9.tgz#4181c7fd1ca42ed860f9dae664b49d0f334f620c"
   integrity sha512-JRUNjYOcJ1wmaSYnSq2DlODPH3FZ7EAcx0OtV8/ryPpVyIkj3MgHSgXETAWUG2hfJ7NFuxQn1A5BQ276ZI+2yg==
+
+use-persisted-state@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/use-persisted-state/-/use-persisted-state-0.3.0.tgz#f8e3d2fd8eee67e0c86fd596c3ea3e8121c07402"
+  integrity sha512-UlWEq0JYg7NbvcRBZ1g6Bwe4SEbYfr1wr/D5mrmfCzSxXSwsPRYygGLlsxHcW58Rf7gGwRPBT23sNVvyVn4WYg==
+  dependencies:
+    "@use-it/event-listener" "^0.1.2"
 
 use@^3.1.0:
   version "3.1.1"

@@ -14,3 +14,11 @@
   /* 100% - height-of(.Controls) - margin-bottom-of(.Controls) */
   min-height: calc(100% - 2.625rem - 1rem);
 }
+
+.faded {
+  color: hsl(0, 0%, 70%);
+}
+
+.dark-mode .faded {
+  color: hsl(0, 0%, 60%);
+}

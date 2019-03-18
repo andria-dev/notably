@@ -11,7 +11,7 @@
     "clipboard-polyfill": "^2.7.0",
     "draft-js": "^0.10.5",
     "idb-keyval": "^3.1.0",
-    "mini-debounce": "1.0.3",
+    "mini-debounce": "^1.0.4",
     "react": "^16.8.1",
     "react-contextmenu": "^2.10.0",
     "react-dom": "^16.8.1",
@@ -24,6 +24,7 @@
     "redux": "^4.0.1",
     "relative-time-format": "^0.1.3",
     "typescript": "^3.3.3",
+    "use-dark-mode": "^2.3.1",
     "use-debounce": "^0.0.9",
     "uuid": "^3.3.2"
   },
