@@ -11,7 +11,15 @@ import { getNotes, ReduxProvider, store } from './store';
 import './App.css';
 
 function App() {
-  const darkMode = useDarkMode(false);
+  useDarkMode(false, {
+    onChange: (isDark?: boolean) => {
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    }
+  });
 
   useEffect(() => {
     getNotes().then(store.dispatch);
