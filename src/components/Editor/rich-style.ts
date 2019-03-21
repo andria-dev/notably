@@ -1,3 +1,5 @@
+import { DefaultDraftInlineStyle } from 'draft-js';
+
 export const inlineStyles: Array<{
   label: string;
   style: string;
@@ -10,7 +12,7 @@ export const inlineStyles: Array<{
 ];
 
 export const styleMap = {
-  ...Draft.DefaultDraftInlineStyle,
+  ...DefaultDraftInlineStyle,
   STRIKETHROUGH: {
     textDecoration: 'line-through'
   },

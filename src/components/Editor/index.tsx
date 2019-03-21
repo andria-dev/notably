@@ -43,14 +43,14 @@ function Editor() {
   );
   const handleChange = useCallback(
     newState => {
-      dispatch({ type: 'change', payload: newState });
+      dispatch({ type: types.CHANGE, payload: newState });
       setter(newState);
     },
     [dispatch, setter]
   );
 
   useEffect(() => {
-    dispatch({ type: 'change', payload: note.state });
+    dispatch({ type: types.CHANGE, payload: note.state });
     return unmounted;
   }, [id]);
 
