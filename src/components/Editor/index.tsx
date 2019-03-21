@@ -49,6 +49,18 @@ function Editor() {
     [dispatch, setter]
   );
 
+  const handleKeyCommand = useCallback(
+    (command: string, currentEditorState: EditorState) => {
+      const newState = RichUtils.handleKeyCommand(currentEditorState, command);
+      if (newState) {
+        dispatch({ type: types.CHANGE, payload: newState });
+        return 'handled';
+      }
+      return 'not-handled';
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     dispatch({ type: types.CHANGE, payload: note.state });
     return unmounted;
@@ -57,7 +69,12 @@ function Editor() {
   return (
     <div className="Editor">
       <Controls editorState={editorState} dispatch={dispatch} />
-      <DraftEditor editorState={editorState} onChange={handleChange} customStyleMap={styleMap} />
+      <DraftEditor
+        editorState={editorState}
+        onChange={handleChange}
+        customStyleMap={styleMap}
+        handleKeyCommand={handleKeyCommand}
+      />
     </div>
   );
 }
