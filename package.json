@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chbphone55/classnames": "^1.0.3",
     "clipboard-polyfill": "^2.7.0",
     "draft-js": "^0.10.5",
     "idb-keyval": "^3.1.0",
@@ -42,7 +43,6 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@chbphone55/classnames": "^1.0.2",
     "@types/dom-inputevent": "^1.0.4",
     "@types/draft-js": "^0.10.29",
     "@types/jest": "^24.0.11",

@@ -755,10 +755,10 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@chbphone55/classnames@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@chbphone55/classnames/-/classnames-1.0.2.tgz#42f51918a0d5561cfb0ae4f796ac3de764034bec"
-  integrity sha512-CHhjCootZq2eE2QVLVBIDQ6XEfakKQbYdgch8EZSRLJJ09GPhAt7ZcfhNOQcc0HAPQbFdblZYH5WE9YisOF/bA==
+"@chbphone55/classnames@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@chbphone55/classnames/-/classnames-1.0.3.tgz#f0a6d73bae71e2b4018f5f4ed1f10325af611192"
+  integrity sha512-E1pLvFxCtwvZMUp6Ap//3MPYhW4QrYsj0Ev4fEJSrVXN2rnHmarNim1Kpk376FsEib8/pKEiwxCy5xI3LuXKVg==
 
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
