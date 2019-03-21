@@ -4,7 +4,7 @@ import { createStore } from 'redux';
 import Note from '../models/Note';
 
 export interface IAction {
-  type: string;
+  type: string | number;
   payload?: any;
 }
 

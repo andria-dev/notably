@@ -1,5 +1,7 @@
 import { EditorState } from 'draft-js';
 import React, { useCallback } from 'react';
+
+import { types } from '../';
 import { IAction } from '../../../store';
 
 import classNames from '@chbphone55/classnames';
@@ -26,13 +28,13 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
 
   const handleInline = useCallback(
     (style: string) => {
-      dispatch({ type: 'inline', payload: style });
+      dispatch({ type: types.INLINE, payload: style });
     },
     [dispatch]
   );
   const handleBlock = useCallback(
     (type: string) => {
-      dispatch({ type: 'block', payload: type });
+      dispatch({ type: types.BLOCK, payload: type });
     },
     [dispatch]
   );

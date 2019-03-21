@@ -4,13 +4,23 @@ import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
 import Controls from './Controls';
-// import { generateKeyBindingFn, styleMap } from './rich-style';
+import { styleMap } from './rich-style';
 import './style.css';
+
+export const types = {
+  CHANGE: 0,
+  INLINE: 1,
+  BLOCK: 2
+};
 
 function EditorStateReducer(state: EditorState, action: IAction): EditorState {
   switch (action.type) {
-    case 'change':
+    case types.CHANGE:
       return action.payload;
+    case types.INLINE:
+      return RichUtils.toggleInlineStyle(state, action.payload);
+    case types.BLOCK:
+      return RichUtils.toggleBlockType(state, action.payload);
     default:
       throw new Error(`Invalid action: ${action.type}`);
   }
@@ -46,8 +56,8 @@ function Editor() {
 
   return (
     <div className="Editor">
-      {/* <Controls editorState={editorState} dispatch={dispatch} /> */}
-      <DraftEditor editorState={editorState} onChange={handleChange} />
+      <Controls editorState={editorState} dispatch={dispatch} />
+      <DraftEditor editorState={editorState} onChange={handleChange} customStyleMap={styleMap} />
     </div>
   );
 }
