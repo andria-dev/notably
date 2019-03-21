@@ -10,8 +10,7 @@ type Unmounted = () => void;
 export function inputHandler<T>(
   debounceDelay: number,
   id: string,
-  // tslint:disable-next-line: ban-types
-  actionCreator: Function,
+  actionCreator: CallableFunction,
   ...args: any[]
 ): [Setter<T>, Unmounted] {
   let value: T;
