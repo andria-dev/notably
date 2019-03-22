@@ -43,7 +43,7 @@ export const decorator = new PrismDecorator({
 });
 
 const CodeBlock = (props: any) => {
-  return <pre className="language-javascript">{props.children}</pre>;
+  return <pre className="language-javascript Editor__code-block">{props.children}</pre>;
 };
 
 export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(

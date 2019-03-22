@@ -15,10 +15,8 @@
   min-height: calc(100% - 2.625rem - 1rem);
 }
 
-.faded {
-  color: hsl(0, 0%, 70%);
-}
-
-.dark-mode .faded {
-  color: hsl(0, 0%, 60%);
+.Editor__code-block > pre {
+  margin: 0;
+  font-family: 'Roboto Mono', Menlo, Monaco, 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
 }
