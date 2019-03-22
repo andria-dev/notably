@@ -21,6 +21,9 @@ export const inlineStyles: Array<{
 
 export const styleMap = {
   ...DefaultDraftInlineStyle,
+  BOLD: {
+    fontWeight: '800'
+  },
   STRIKETHROUGH: {
     textDecoration: 'line-through'
   },
