@@ -1,4 +1,5 @@
 import { EditorState } from 'draft-js';
+import { decorator } from '../components/Editor/rich-style';
 
 export default class Note {
   // @ts-ignore
@@ -12,7 +13,7 @@ export default class Note {
 
   constructor(
     title: string = 'Title',
-    state: EditorState = EditorState.createEmpty(),
+    state: EditorState = EditorState.createEmpty(decorator),
     lastModified: Date = new Date()
   ) {
     this.title = title;

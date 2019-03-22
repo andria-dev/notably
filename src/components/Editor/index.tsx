@@ -3,8 +3,11 @@ import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
+// @ts-ignore
+import CodeUtils from 'draft-js-code';
 import Controls from './Controls';
-import { hasCommandModifier, styleMap } from './rich-style';
+import { blockRenderMap, decorator, hasCommandModifier, styleMap } from './rich-style';
+
 import './style.css';
 
 export const types = {
@@ -16,7 +19,7 @@ export const types = {
 function EditorStateReducer(state: EditorState, action: IAction): EditorState {
   switch (action.type) {
     case types.CHANGE:
-      return action.payload;
+      return EditorState.set(action.payload, { decorator });
     case types.INLINE:
       return RichUtils.toggleInlineStyle(state, action.payload);
     case types.BLOCK:
@@ -47,12 +50,24 @@ function Editor() {
 
   const handleKeyCommand = useCallback(
     (command: string, currentEditorState: EditorState) => {
-      const newState = RichUtils.handleKeyCommand(currentEditorState, command);
+      let newState;
+
+      // try code key command
+      if (CodeUtils.hasSelectionInBlock(editorState)) {
+        newState = CodeUtils.handleKeyCommand(editorState, command);
+      }
+
+      // try default key command
+      if (!newState) {
+        newState = RichUtils.handleKeyCommand(currentEditorState, command);
+      }
+
       if (newState) {
         dispatch({ type: types.CHANGE, payload: newState });
         return 'handled';
       }
 
+      // strikethrough key command
       if (command === 'STRIKETHROUGH') {
         dispatch({ type: types.INLINE, payload: 'STRIKETHROUGH' });
         return 'handled';
@@ -64,6 +79,13 @@ function Editor() {
   );
 
   const keyBindingFn = useCallback((event: React.KeyboardEvent<{}>): string | null => {
+    if (CodeUtils.hasSelectionInBlock(editorState)) {
+      const command = CodeUtils.getKeyBinding(event);
+      if (command) {
+        return command;
+      }
+    }
+
     const defaultBinding = getDefaultKeyBinding(event);
     if (defaultBinding) {
       return defaultBinding;
@@ -75,6 +97,30 @@ function Editor() {
 
     return null;
   }, []);
+
+  const handleReturn = useCallback(
+    event => {
+      if (!CodeUtils.hasSelectionInBlock(editorState)) {
+        return 'not-handled';
+      }
+
+      dispatch({ type: types.CHANGE, payload: CodeUtils.handleReturn(event, editorState) });
+      return 'handled';
+    },
+    [dispatch]
+  );
+
+  const onTab = useCallback(
+    event => {
+      if (!CodeUtils.hasSelectionInBlock(editorState)) {
+        return 'not-handled';
+      }
+
+      dispatch({ type: types.CHANGE, payload: CodeUtils.onTab(event, editorState) });
+      return 'handled';
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     dispatch({ type: types.CHANGE, payload: note.state });
@@ -90,6 +136,10 @@ function Editor() {
         customStyleMap={styleMap}
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={keyBindingFn}
+        handleReturn={handleReturn}
+        onTab={onTab}
+        // @ts-ignore
+        blockRenderMap={blockRenderMap}
       />
     </div>
   );

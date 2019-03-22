@@ -1,9 +1,8 @@
-import { DefaultDraftInlineStyle, getDefaultKeyBinding } from 'draft-js';
+import Draft, { DefaultDraftInlineStyle, ContentBlock } from 'draft-js';
 import React from 'react';
 
 // @ts-ignore
 import MultiDecorator from 'draft-js-multidecorators';
-import CodeUtils from 'draft-js-code';
 // @ts-ignore
 import PrismDecorator from 'draft-js-prism';
 import Prism from 'prismjs';
@@ -39,8 +38,19 @@ export function hasCommandModifier(event: React.KeyboardEvent<{}>): boolean {
   return isOSX ? event.metaKey && !event.altKey : event.ctrlKey && !event.altKey;
 }
 
-export const decorator = new MultiDecorator([
-  new PrismDecorator({
-    prism: Prism
-  })
-]);
+export const decorator = new PrismDecorator({
+  prism: Prism,
+  defaultSyntax: 'javascript'
+});
+
+const CodeBlock = (props: any) => {
+  console.log(props, 'CodeBlock rendered');
+  return <pre className="language-javascript">{props.children}</pre>;
+};
+
+export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge({
+  // 'code-block': {
+  //   element: 'pre',
+  //   wrapper: <CodeBlock />
+  // }
+});
