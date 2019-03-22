@@ -55,21 +55,35 @@ function Editor() {
       // try code key command
       if (CodeUtils.hasSelectionInBlock(editorState)) {
         newState = CodeUtils.handleKeyCommand(editorState, command);
+
+        if (newState) {
+          dispatch({ type: types.CHANGE, payload: newState });
+          return 'handled';
+        }
       }
 
-      // try default key command
-      if (!newState) {
-        newState = RichUtils.handleKeyCommand(currentEditorState, command);
+      // inline code
+      if (command === 'code') {
+        dispatch({ type: types.INLINE, payload: 'CODE' });
+        return 'handled';
       }
 
-      if (newState) {
-        dispatch({ type: types.CHANGE, payload: newState });
+      // code block
+      if (command === 'code-block') {
+        dispatch({ type: types.BLOCK, payload: 'code-block' });
         return 'handled';
       }
 
       // strikethrough key command
-      if (command === 'STRIKETHROUGH') {
+      if (command === 'strikethrough') {
         dispatch({ type: types.INLINE, payload: 'STRIKETHROUGH' });
+        return 'handled';
+      }
+
+      // try default key command
+      newState = RichUtils.handleKeyCommand(currentEditorState, command);
+      if (newState) {
+        dispatch({ type: types.CHANGE, payload: newState });
         return 'handled';
       }
 
@@ -86,13 +100,25 @@ function Editor() {
       }
     }
 
+    if (hasCommandModifier(event)) {
+      if (event.shiftKey) {
+        if (event.key === 's') {
+          return 'strikethrough';
+        }
+
+        if (event.key === 'j') {
+          return 'code-block';
+        }
+      } else {
+        if (event.key === 'j') {
+          return 'code';
+        }
+      }
+    }
+
     const defaultBinding = getDefaultKeyBinding(event);
     if (defaultBinding) {
       return defaultBinding;
-    }
-
-    if (hasCommandModifier(event) && event.shiftKey && event.key === 's') {
-      return 'STRIKETHROUGH';
     }
 
     return null;
