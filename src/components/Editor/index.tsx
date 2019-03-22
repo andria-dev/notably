@@ -1,10 +1,10 @@
-import { Editor as DraftEditor, EditorState, Modifier, RichUtils, SelectionState } from 'draft-js';
+import { Editor as DraftEditor, EditorState, getDefaultKeyBinding, RichUtils } from 'draft-js';
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
 import Controls from './Controls';
-import { styleMap } from './rich-style';
+import { hasCommandModifier, styleMap } from './rich-style';
 import './style.css';
 
 export const types = {
@@ -26,9 +26,6 @@ function EditorStateReducer(state: EditorState, action: IAction): EditorState {
   }
 }
 
-let exportedDispatch: React.Dispatch<IAction>;
-export { exportedDispatch as dispatch };
-
 function Editor() {
   const [state] = useStore();
 
@@ -36,7 +33,6 @@ function Editor() {
   const note = state.notes[id];
 
   const [editorState, dispatch] = useReducer(EditorStateReducer, note.state);
-  exportedDispatch = dispatch;
   const [setter, unmounted] = useMemo(
     () => inputHandler<EditorState>(2000, id, updateState, true),
     [id]
@@ -56,10 +52,29 @@ function Editor() {
         dispatch({ type: types.CHANGE, payload: newState });
         return 'handled';
       }
+
+      if (command === 'STRIKETHROUGH') {
+        dispatch({ type: types.INLINE, payload: 'STRIKETHROUGH' });
+        return 'handled';
+      }
+
       return 'not-handled';
     },
     [dispatch]
   );
+
+  const keyBindingFn = useCallback((event: React.KeyboardEvent<{}>): string | null => {
+    const defaultBinding = getDefaultKeyBinding(event);
+    if (defaultBinding) {
+      return defaultBinding;
+    }
+
+    if (hasCommandModifier(event) && event.shiftKey && event.key === 's') {
+      return 'STRIKETHROUGH';
+    }
+
+    return null;
+  }, []);
 
   useEffect(() => {
     dispatch({ type: types.CHANGE, payload: note.state });
@@ -74,6 +89,7 @@ function Editor() {
         onChange={handleChange}
         customStyleMap={styleMap}
         handleKeyCommand={handleKeyCommand}
+        keyBindingFn={keyBindingFn}
       />
     </div>
   );

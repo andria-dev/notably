@@ -1,4 +1,14 @@
-import { DefaultDraftInlineStyle } from 'draft-js';
+import { DefaultDraftInlineStyle, getDefaultKeyBinding } from 'draft-js';
+import React from 'react';
+
+// @ts-ignore
+import MultiDecorator from 'draft-js-multidecorators';
+import CodeUtils from 'draft-js-code';
+// @ts-ignore
+import PrismDecorator from 'draft-js-prism';
+import Prism from 'prismjs';
+
+import 'prismjs/themes/prism-okaidia.css';
 
 export const inlineStyles: Array<{
   label: string;
@@ -19,7 +29,18 @@ export const styleMap = {
   CODE: {
     backgroundColor: 'hsl(0, 0%, 95%)',
     fontSize: '1rem',
-    fontFamily: 'Menlo,Monaco,"Courier New",Courier,monospace',
+    fontFamily: '"Roboto Mono",Menlo,Monaco,"Courier New",Courier,monospace',
     borderRadius: '0.12rem'
   }
 };
+
+const isOSX = navigator.platform.includes('Mac');
+export function hasCommandModifier(event: React.KeyboardEvent<{}>): boolean {
+  return isOSX ? event.metaKey && !event.altKey : event.ctrlKey && !event.altKey;
+}
+
+export const decorator = new MultiDecorator([
+  new PrismDecorator({
+    prism: Prism
+  })
+]);
