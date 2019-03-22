@@ -1,4 +1,10 @@
-import { Editor as DraftEditor, EditorState, getDefaultKeyBinding, RichUtils } from 'draft-js';
+import {
+  Editor as DraftEditor,
+  EditorState,
+  getDefaultKeyBinding,
+  RichUtils,
+  Modifier
+} from 'draft-js';
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
@@ -57,7 +63,7 @@ function Editor() {
         newState = CodeUtils.handleKeyCommand(editorState, command);
 
         if (newState) {
-          dispatch({ type: types.CHANGE, payload: newState });
+          handleChange(newState);
           return 'handled';
         }
       }
@@ -83,7 +89,7 @@ function Editor() {
       // try default key command
       newState = RichUtils.handleKeyCommand(currentEditorState, command);
       if (newState) {
-        dispatch({ type: types.CHANGE, payload: newState });
+        handleChange(newState);
         return 'handled';
       }
 
@@ -130,7 +136,7 @@ function Editor() {
         return 'not-handled';
       }
 
-      dispatch({ type: types.CHANGE, payload: CodeUtils.handleReturn(event, editorState) });
+      handleChange(CodeUtils.handleReturn(event, editorState));
       return 'handled';
     },
     [dispatch]
@@ -138,11 +144,16 @@ function Editor() {
 
   const onTab = useCallback(
     event => {
-      if (!CodeUtils.hasSelectionInBlock(editorState)) {
-        return 'not-handled';
-      }
+      event.preventDefault();
 
-      dispatch({ type: types.CHANGE, payload: CodeUtils.onTab(event, editorState) });
+      // insert tab
+      const newContent = Modifier.replaceText(
+        editorState.getCurrentContent(),
+        editorState.getSelection(),
+        '  '
+      );
+      handleChange(EditorState.push(editorState, newContent, 'insert-characters'));
+
       return 'handled';
     },
     [dispatch]
@@ -164,7 +175,6 @@ function Editor() {
         keyBindingFn={keyBindingFn}
         handleReturn={handleReturn}
         onTab={onTab}
-        // @ts-ignore
         blockRenderMap={blockRenderMap}
       />
     </div>

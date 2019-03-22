@@ -4,6 +4,10 @@ import React from 'react';
 
 // @ts-ignore
 import PrismDecorator from 'draft-js-prism';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-tsx';
 import Prism from 'prismjs';
 
 import 'prismjs/themes/prism-okaidia.css';
@@ -42,11 +46,11 @@ export function hasCommandModifier(event: React.KeyboardEvent<{}>): boolean {
 
 export const decorator = new PrismDecorator({
   prism: Prism,
-  defaultSyntax: 'javascript'
+  defaultSyntax: 'tsx'
 });
 
 const CodeBlock = (props: any) => {
-  return <pre className="language-javascript Editor__code-block">{props.children}</pre>;
+  return <pre className="language-tsx Editor__code-block">{props.children}</pre>;
 };
 
 export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(
