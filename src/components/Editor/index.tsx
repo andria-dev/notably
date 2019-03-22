@@ -1,9 +1,11 @@
 import {
+  DraftHandleValue,
   Editor as DraftEditor,
   EditorState,
   getDefaultKeyBinding,
+  Modifier,
   RichUtils,
-  Modifier
+  ContentState
 } from 'draft-js';
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
@@ -69,21 +71,29 @@ function Editor() {
       }
 
       // inline code
-      if (command === 'code') {
-        dispatch({ type: types.INLINE, payload: 'CODE' });
-        return 'handled';
-      }
+      switch (command) {
+        case 'code':
+          dispatch({ type: types.INLINE, payload: 'CODE' });
+          return 'handled';
 
-      // code block
-      if (command === 'code-block') {
-        dispatch({ type: types.BLOCK, payload: 'code-block' });
-        return 'handled';
-      }
+        // code block
+        case 'code-block':
+          dispatch({ type: types.BLOCK, payload: 'code-block' });
+          return 'handled';
 
-      // strikethrough key command
-      if (command === 'strikethrough') {
-        dispatch({ type: types.INLINE, payload: 'STRIKETHROUGH' });
-        return 'handled';
+        // strikethrough key command
+        case 'strikethrough':
+          dispatch({ type: types.INLINE, payload: 'STRIKETHROUGH' });
+          return 'handled';
+
+        case 'tab':
+          if (CodeUtils.hasSelectionInBlock(currentEditorState)) {
+            handleChange(CodeUtils.onTab(new Event('keydown'), currentEditorState));
+            return 'handled';
+          }
+
+        default:
+          break;
       }
 
       // try default key command
@@ -120,6 +130,11 @@ function Editor() {
           return 'code';
         }
       }
+    } else {
+      if (event.key === 'Tab') {
+        event.preventDefault();
+        return 'tab';
+      }
     }
 
     const defaultBinding = getDefaultKeyBinding(event);
@@ -131,30 +146,13 @@ function Editor() {
   }, []);
 
   const handleReturn = useCallback(
-    event => {
-      if (!CodeUtils.hasSelectionInBlock(editorState)) {
-        return 'not-handled';
+    (event, currentEditorState): DraftHandleValue => {
+      if (CodeUtils.hasSelectionInBlock(currentEditorState)) {
+        handleChange(CodeUtils.handleReturn(event, currentEditorState));
+        return 'handled';
       }
 
-      handleChange(CodeUtils.handleReturn(event, editorState));
-      return 'handled';
-    },
-    [dispatch]
-  );
-
-  const onTab = useCallback(
-    event => {
-      event.preventDefault();
-
-      // insert tab
-      const newContent = Modifier.replaceText(
-        editorState.getCurrentContent(),
-        editorState.getSelection(),
-        '  '
-      );
-      handleChange(EditorState.push(editorState, newContent, 'insert-characters'));
-
-      return 'handled';
+      return 'not-handled';
     },
     [dispatch]
   );
@@ -174,7 +172,6 @@ function Editor() {
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={keyBindingFn}
         handleReturn={handleReturn}
-        onTab={onTab}
         blockRenderMap={blockRenderMap}
       />
     </div>
