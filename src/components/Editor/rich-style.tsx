@@ -1,8 +1,7 @@
-import Draft, { DefaultDraftInlineStyle, ContentBlock } from 'draft-js';
+import Draft, { ContentBlock, DefaultDraftInlineStyle } from 'draft-js';
+import { Map } from 'immutable';
 import React from 'react';
 
-// @ts-ignore
-import MultiDecorator from 'draft-js-multidecorators';
 // @ts-ignore
 import PrismDecorator from 'draft-js-prism';
 import Prism from 'prismjs';
@@ -44,13 +43,14 @@ export const decorator = new PrismDecorator({
 });
 
 const CodeBlock = (props: any) => {
-  console.log(props, 'CodeBlock rendered');
   return <pre className="language-javascript">{props.children}</pre>;
 };
 
-export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge({
-  // 'code-block': {
-  //   element: 'pre',
-  //   wrapper: <CodeBlock />
-  // }
-});
+export const blockRenderMap = Draft.DefaultDraftBlockRenderMap.merge(
+  Map({
+    'code-block': {
+      element: 'pre',
+      wrapper: <CodeBlock />
+    }
+  })
+);
