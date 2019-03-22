@@ -166,6 +166,7 @@ function Editor() {
     <div className="Editor">
       <Controls editorState={editorState} dispatch={dispatch} />
       <DraftEditor
+        placeholder="Write a tutorial, or create a diary..."
         editorState={editorState}
         onChange={handleChange}
         customStyleMap={styleMap}

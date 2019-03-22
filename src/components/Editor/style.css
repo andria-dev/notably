@@ -15,6 +15,12 @@
   min-height: calc(100% - 2.625rem - 1rem);
 }
 
+.public-DraftEditorPlaceholder-inner {
+  position: absolute;
+  opacity: 0.35;
+  user-select: none;
+}
+
 .Editor__code-block > pre {
   margin: 0;
   font-family: 'Roboto Mono', Menlo, Monaco, 'Courier New', Courier, monospace;
