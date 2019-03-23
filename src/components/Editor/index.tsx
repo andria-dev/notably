@@ -124,10 +124,12 @@ function Editor() {
         }
 
         if (event.key === 'j') {
+          event.preventDefault();
           return 'code-block';
         }
       } else {
         if (event.key === 'j') {
+          event.preventDefault();
           return 'code';
         }
       }
