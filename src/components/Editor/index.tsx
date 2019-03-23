@@ -119,16 +119,21 @@ function Editor() {
 
     if (hasCommandModifier(event)) {
       if (event.shiftKey) {
-        if (event.key === 's') {
+        if (event.key.toLocaleLowerCase() === 's') {
           event.preventDefault();
           return 'strikethrough';
         }
 
-        if (event.key === 'j') {
+        if (event.key.toLocaleLowerCase() === 'j') {
           event.preventDefault();
           return 'code-block';
         }
       } else {
+        if (event.key === 's') {
+          event.preventDefault();
+          // TODO: save
+        }
+
         if (event.key === 'j') {
           event.preventDefault();
           return 'code';
