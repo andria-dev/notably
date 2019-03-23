@@ -120,6 +120,7 @@ function Editor() {
     if (hasCommandModifier(event)) {
       if (event.shiftKey) {
         if (event.key === 's') {
+          event.preventDefault();
           return 'strikethrough';
         }
 
