@@ -32,6 +32,7 @@
   br[data-text]:first-child:last-child::after {
   content: 'Write a tutorial, or create a diary...';
   opacity: 0.5;
+  pointer-events: none;
 }
 
 .Editor__code-block > pre {
