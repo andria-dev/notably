@@ -181,6 +181,7 @@ function Editor() {
         editorState={editorState}
         onChange={handleChange}
         customStyleMap={styleMap}
+        // @ts-ignore
         blockRenderMap={blockRenderMap}
         handleKeyCommand={handleEditorKeyCommand}
         keyBindingFn={keyBindingFn}
