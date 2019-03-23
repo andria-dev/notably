@@ -3060,6 +3060,11 @@ destroy@~1.0.4:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
+detect-indent@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-5.0.0.tgz#3871cc0a6a002e8c3e5b3cf7f336264675f06b9d"
+  integrity sha1-OHHMCmoALow+Wzz38zYmRnXwa50=
+
 detect-indent@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-4.0.0.tgz#f76d064352cdf43a1cb6ce619c4ee3a9475de208"
@@ -3231,15 +3236,13 @@ dotenv@6.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
   integrity sha512-FlWbnhgjtwD+uNLUGHbMykMOYQaTivdHEmYwAKFjn6GKe/CqY0fNae93ZHTd20snh9ZLr8mTzIL9m0APQ1pjQg==
 
-draft-js-code@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/draft-js-code/-/draft-js-code-0.3.0.tgz#d955d134367baeee5844b57f897c8d848bc979c5"
-  integrity sha512-e/Rblaj1FvYzvQK45QHt8qAl5lBLFSHWPzNrF8Avv/8Bx0ZtPHD8ykCdazM2NjTvinZmPJ5dLoRHphgFQycasg==
+draft-js-code-custom@^0.10.2:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/draft-js-code-custom/-/draft-js-code-custom-0.10.2.tgz#a1531bd03ccbe164d99c357de0a7fcd4adf412bc"
+  integrity sha512-IYMlVvB0QJqReyyxGQetovq9UNwlktJcSHr3SjaBervcRNWBb6vfPwp039cRuwWrSlME1UjA6RTeKb0FTjSwxQ==
   dependencies:
-    detect-indent "^4.0.0"
-    detect-newline "^2.1.0"
-    ends-with "^0.2.0"
-    immutable "3.x"
+    detect-indent "5.0.0"
+    immutable "~3.7.4"
 
 draft-js-prism@^1.0.6:
   version "1.0.6"
@@ -3337,11 +3340,6 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   integrity sha512-1MkrZNvWTKCaigbn+W15elq2BB/L22nqrSY5DKlo3X6+vclJm8Bb5djXJBmEX6fS3+zCh/F4VBK5Z2KxJt4s2Q==
   dependencies:
     once "^1.4.0"
-
-ends-with@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/ends-with/-/ends-with-0.2.0.tgz#2f9da98d57a50cfda4571ce4339000500f4e6b8a"
-  integrity sha1-L52pjVelDP2kVxzkM5AAUA9Oa4o=
 
 enhanced-resolve@^4.1.0:
   version "4.1.0"
@@ -4748,7 +4746,7 @@ immer@1.10.0:
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.10.0.tgz#bad67605ba9c810275d91e1c2a47d4582e98286d"
   integrity sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
 
-immutable@*, immutable@3.x, immutable@^3.8.1:
+immutable@*, immutable@^3.8.1:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
   integrity sha1-wkOZUUVbs5kT2vKBN28VMOEErfM=
