@@ -15,10 +15,23 @@
   min-height: calc(100% - 2.625rem - 1rem);
 }
 
-.public-DraftEditorPlaceholder-inner {
-  position: absolute;
-  opacity: 0.35;
-  user-select: none;
+.public-DraftEditor-content
+  > [data-contents]
+  > [data-block]:first-child:last-child
+  > div[data-offset-key]:first-child:last-child
+  > span[data-offset-key]:first-child:last-child
+  br[data-text]:first-child:last-child {
+  content: '';
+}
+
+.public-DraftEditor-content
+  > [data-contents]
+  > [data-block]:first-child:last-child
+  > div[data-offset-key]:first-child:last-child
+  > span[data-offset-key]:first-child:last-child
+  br[data-text]:first-child:last-child::after {
+  content: 'Write a tutorial, or create a diary...';
+  opacity: 0.5;
 }
 
 .Editor__code-block > pre {
