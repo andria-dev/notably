@@ -33,8 +33,10 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
     dispatch(await removeNote(id));
   }
 
+  const Component = responsive ? 'main' : 'section';
+
   return (
-    <section
+    <Component
       className={classNames(className, 'NotesList', {
         'NotesList--responsive': responsive
       })}
@@ -89,7 +91,7 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
           </Fragment>
         );
       })}
-    </section>
+    </Component>
   );
 }
 

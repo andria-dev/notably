@@ -22,23 +22,23 @@ function Home({ history }: RouteChildrenProps) {
   }
 
   return (
-    <main className="Home">
+    <div className="Home">
       <Header>
         <Hx size={1}>Notably</Hx>
         {/* TODO: build menu component that pops up from bottom of screen */}
         {/* TODO: hook up settings button to said menu component */}
-        <IconButton>
+        <IconButton title="Open settings">
           <MdSettings size={24} />
         </IconButton>
       </Header>
 
       <NotesList responsive />
 
-      <FAB onClick={createNote}>
+      <FAB title="Create a new note" onClick={createNote}>
         <MdAdd size={24} style={{ marginRight: '0.5rem' }} />
         New note
       </FAB>
-    </main>
+    </div>
   );
 }
 
