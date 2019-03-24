@@ -13,17 +13,12 @@
   width: 100%;
   min-height: 100vh;
 
-  color: black;
-  background-color: white;
-}
-
-.dark-mode .Note__main {
-  color: hsl(0, 0%, 99%);
-  background-color: hsl(0, 0%, 10%);
+  color: var(--color);
+  background-color: var(--background);
 }
 
 .Note__sidebar {
-  --margin-top: calc(2.25rem + (0.75rem * 2));
+  --margin-top: calc(2.25rem + (0.75rem * 2) + 1px);
 
   position: fixed;
   top: 0;
@@ -32,6 +27,8 @@
   height: calc(100vh - var(--margin-top));
   width: var(--sidebar-width);
   margin-top: var(--margin-top);
+
+  background-color: var(--background-light);
 
   overflow-y: overlay;
   overflow-x: hidden;
@@ -45,6 +42,10 @@
 
 .Note__sidebar::-webkit-scrollbar-thumb {
   background-color: hsl(0, 0%, 90%);
+}
+
+.dark-mode .Note__sidebar::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 20%);
 }
 
 .Note__sidebar::-webkit-scrollbar-track {
@@ -65,8 +66,9 @@
   border-bottom: solid 1px lightgrey;
 }
 
-.Note__sidebar > .NotesList {
-  background-color: #fefefe;
+.dark-mode .Note__sidebar-header {
+  background-color: hsl(0, 0%, 20%);
+  border-bottom-color: black;
 }
 
 .Note__sidebar > .NotesList > * {
