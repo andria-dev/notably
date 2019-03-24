@@ -10,6 +10,7 @@ import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 import NoteTitle from '../../components/NoteTitle';
 import './style.css';
+import DarkModeToggle from '../../components/DarkModeToggle';
 
 interface INoteProps {
   id: string;
@@ -27,9 +28,12 @@ const Note = memo(({ id, history }: INoteProps) => {
       <div className="Note__main">
         <Header style={{ boxShadow: 'none' }}>
           <NoteTitle />
-          <IconButton title="Close" onClick={() => history.push('/')}>
-            <MdClose size={24} />
-          </IconButton>
+          <div className="Note__header-actions">
+            <DarkModeToggle className="Note__dark-mode-toggle" />
+            <IconButton title="Close" onClick={() => history.push('/')}>
+              <MdClose size={24} />
+            </IconButton>
+          </div>
         </Header>
         <Editor />
       </div>

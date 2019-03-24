@@ -84,3 +84,12 @@
     display: none;
   }
 }
+
+.Note__header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.Note__dark-mode-toggle {
+  margin-right: 1rem;
+}
