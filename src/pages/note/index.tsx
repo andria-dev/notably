@@ -26,7 +26,7 @@ const Note = memo(({ id, history }: INoteProps) => {
         <NotesList activeID={id} />
       </section>
       <div className="Note__main">
-        <Header style={{ boxShadow: 'none' }}>
+        <Header style={{ boxShadow: 'none', backgroundColor: 'transparent' }}>
           <NoteTitle />
           <div className="Note__header-actions">
             <DarkModeToggle className="Note__dark-mode-toggle" />
