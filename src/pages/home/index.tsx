@@ -5,6 +5,7 @@ import { addNote, removeAllNotes, useStore } from '../../store';
 
 import { MdAdd, MdSettings } from 'react-icons/md';
 import { RouteChildrenProps } from 'react-router';
+import DarkModeToggle from '../../components/DarkModeToggle';
 import FAB from '../../components/FAB';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -25,6 +26,7 @@ function Home({ history }: RouteChildrenProps) {
     <div className="Home">
       <Header>
         <Hx size={1}>Notably</Hx>
+        <DarkModeToggle />
         {/* TODO: build menu component that pops up from bottom of screen */}
         {/* TODO: hook up settings button to said menu component */}
         <IconButton title="Open settings">

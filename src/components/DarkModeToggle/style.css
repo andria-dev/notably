@@ -1,0 +1,50 @@
+.DarkModeToggle {
+  --thumb-off: hsl(217, 50%, 80%);
+  --thumb-on: hsl(217, 99%, 65%);
+
+  display: flex;
+  align-items: center;
+}
+
+.DarkModeToggle__input {
+  appearance: none;
+}
+
+.DarkModeToggle__input {
+  position: relative;
+
+  width: 3.25em;
+  height: 1.5em;
+  margin-left: 0.8em;
+
+  background: #2e3033;
+
+  font-size: 0.85rem;
+
+  border-radius: 1.5em;
+
+  cursor: pointer;
+}
+
+.DarkModeToggle__input::before {
+  content: ' ';
+
+  position: absolute;
+  left: -0.1em;
+  top: 50%;
+
+  --size: 1.8em;
+  width: var(--size);
+  height: var(--size);
+
+  background-color: var(--thumb-off);
+  border-radius: 100%;
+
+  transform: translateY(-50%);
+  transition: background-color 0.1s ease-out, left 0.1s ease-out;
+}
+
+.DarkModeToggle__input:checked::before {
+  left: calc(100% - var(--size) + 0.2em);
+  background-color: var(--thumb-on);
+}
