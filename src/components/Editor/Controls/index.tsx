@@ -49,6 +49,7 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
           onToggle={handleInline}
           style={style}
           active={currentInlineStyles.has(style)}
+          title={label}
         >
           {label}
         </StyleButton>

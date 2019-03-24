@@ -8,6 +8,7 @@ interface IStyleButtonProps {
   onToggle: (name: string) => any;
   style: string;
   children: string;
+  [s: string]: any;
 }
 function StyleButton({ active = false, onToggle, children, style, ...props }: IStyleButtonProps) {
   const handleToggle = useCallback(

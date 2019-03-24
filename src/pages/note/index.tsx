@@ -17,14 +17,14 @@ interface INoteProps {
 }
 const Note = memo(({ id, history }: INoteProps) => {
   return (
-    <main className="Note">
+    <div className="Note">
       <section className="Note__sidebar">
         <Header className="Note__sidebar-header">
           <Hx size={1}>Notes</Hx>
         </Header>
         <NotesList activeID={id} />
       </section>
-      <section className="Note__main">
+      <div className="Note__main">
         <Header style={{ boxShadow: 'none' }}>
           <NoteTitle />
           <IconButton title="Close" onClick={() => history.push('/')}>
@@ -32,8 +32,8 @@ const Note = memo(({ id, history }: INoteProps) => {
           </IconButton>
         </Header>
         <Editor />
-      </section>
-    </main>
+      </div>
+    </div>
   );
 });
 
@@ -74,8 +74,8 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
 
   if (!state.loadedFromDB) {
     return (
-      // TODO: replace `<main>` with `<Center>`
-      <main
+      // TODO: replace `<div>` with `<Center>`
+      <div
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -85,7 +85,7 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
         }}
       >
         <Hx size={2}>Loading...</Hx>
-      </main>
+      </div>
     );
   }
 

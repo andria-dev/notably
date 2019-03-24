@@ -177,7 +177,7 @@ function Editor() {
   }, [id]);
 
   return (
-    <div className="Editor">
+    <main className="Editor">
       <Controls editorState={editorState} dispatch={dispatch} />
       <DraftEditor
         editorState={editorState}
@@ -190,7 +190,7 @@ function Editor() {
         handleReturn={handleEditorReturn}
         onTab={handleTab}
       />
-    </div>
+    </main>
   );
 }
 
