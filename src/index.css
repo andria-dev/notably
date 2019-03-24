@@ -17,7 +17,7 @@ body {
 
 body.dark-mode {
   --color: #fcfcfc;
-  --background: hsl(0, 0, 10%);
+  --background: hsl(0, 0%, 10%);
 }
 
 button:focus {
