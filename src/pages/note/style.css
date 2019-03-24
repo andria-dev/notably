@@ -28,6 +28,8 @@
   width: var(--sidebar-width);
   margin-top: var(--margin-top);
 
+  background-color: var(--background-mid);
+
   overflow-y: overlay;
   overflow-x: hidden;
 

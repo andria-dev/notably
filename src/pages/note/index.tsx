@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -17,6 +17,8 @@ interface INoteProps {
   history: RouteChildrenProps['history'];
 }
 const Note = memo(({ id, history }: INoteProps) => {
+  const goToHome = useCallback(() => history.push('/'), [history]);
+
   return (
     <div className="Note">
       <section className="Note__sidebar">
@@ -30,7 +32,7 @@ const Note = memo(({ id, history }: INoteProps) => {
           <NoteTitle />
           <div className="Note__header-actions">
             <DarkModeToggle className="Note__dark-mode-toggle" />
-            <IconButton title="Close" onClick={() => history.push('/')}>
+            <IconButton title="Close" onClick={goToHome}>
               <MdClose size={24} />
             </IconButton>
           </div>

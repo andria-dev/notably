@@ -1,6 +1,7 @@
 body {
   --color: black;
   --background: white;
+  --background-mid: white;
   --background-light: white;
 
   margin: 0;
@@ -19,6 +20,7 @@ body {
 body.dark-mode {
   --color: #fcfcfc;
   --background: hsl(0, 0%, 10%);
+  --background-mid: hsl(0, 0%, 15%);
   --background-light: hsl(0, 0%, 18%);
 }
 
