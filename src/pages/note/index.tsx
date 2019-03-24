@@ -27,7 +27,7 @@ const Note = memo(({ id, history }: INoteProps) => {
       <section className="Note__main">
         <Header style={{ boxShadow: 'none' }}>
           <NoteTitle />
-          <IconButton onClick={() => history.push('/')}>
+          <IconButton title="Close" onClick={() => history.push('/')}>
             <MdClose size={24} />
           </IconButton>
         </Header>

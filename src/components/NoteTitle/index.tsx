@@ -31,7 +31,7 @@ function NoteTitle() {
       }}
       className="NoteTitle"
       id={id}
-      aria-label="Title"
+      aria-label="Title of note"
       labelProps={{ htmlFor: id }}
     />
   );
