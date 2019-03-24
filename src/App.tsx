@@ -17,7 +17,16 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
   meta[name="apple-mobile-web-app-status-bar-style"]
 `);
 
-function App() {
+const App = memo(() => (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/note/:id" component={Note} />
+    </Switch>
+  </Router>
+));
+
+function AppWrapper() {
   const darkMode = useDarkMode(false, {
     onChange: (isDark?: boolean) => {
       if (isDark) {
@@ -41,15 +50,10 @@ function App() {
   return (
     <ReduxProvider store={store}>
       <DarkModeContext.Provider value={darkMode}>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/note/:id" component={Note} />
-          </Switch>
-        </Router>
+        <App />
       </DarkModeContext.Provider>
     </ReduxProvider>
   );
 }
 
-export default memo(App);
+export default AppWrapper;
