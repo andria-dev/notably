@@ -12,6 +12,8 @@ import Hx from '../../components/Hx';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 
+import './style.css';
+
 function Home({ history }: RouteChildrenProps) {
   const [, dispatch] = useStore();
 
@@ -26,12 +28,14 @@ function Home({ history }: RouteChildrenProps) {
     <div className="Home">
       <Header>
         <Hx size={1}>Notably</Hx>
-        <DarkModeToggle />
-        {/* TODO: build menu component that pops up from bottom of screen */}
-        {/* TODO: hook up settings button to said menu component */}
-        <IconButton title="Open settings">
-          <MdSettings size={24} />
-        </IconButton>
+        <div className="Home__header-actions">
+          <DarkModeToggle className="Home__dark-mode-toggle" />
+          {/* TODO: build menu component that pops up from bottom of screen */}
+          {/* TODO: hook up settings button to said menu component */}
+          <IconButton title="Open settings">
+            <MdSettings size={24} />
+          </IconButton>
+        </div>
       </Header>
 
       <NotesList responsive />

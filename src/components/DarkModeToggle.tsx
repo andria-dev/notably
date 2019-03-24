@@ -29,7 +29,7 @@ const icons = {
   )
 };
 
-function DarkModeToggle() {
+function DarkModeToggle({ ...props }) {
   const { value, toggle } = useDarkMode(false, {
     onChange: (isDark?: boolean) => {
       if (isDark) {
@@ -46,7 +46,7 @@ function DarkModeToggle() {
     }
   });
 
-  return <Toggle checked={value} onChange={toggle} icons={icons} />;
+  return <Toggle checked={value} onChange={toggle} icons={icons} {...props} />;
 }
 
 export default DarkModeToggle;
