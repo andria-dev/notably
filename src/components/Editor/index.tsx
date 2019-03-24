@@ -3,21 +3,18 @@ import {
   Editor as DraftEditor,
   EditorState,
   getDefaultKeyBinding,
-  Modifier,
-  RichUtils,
-  ContentState
+  RichUtils
 } from 'draft-js';
 import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { inputHandler } from '../../inputHandler';
 import { IAction, updateState, useStore } from '../../store';
 
-// @ts-ignore
-import CodeUtils, {
-  hasSelectionInBlock,
+import {
   getKeyBinding,
-  onTab,
+  handleKeyCommand,
   handleReturn,
-  handleKeyCommand
+  hasSelectionInBlock,
+  onTab
 } from 'draft-js-code-custom';
 import Controls from './Controls';
 import { blockRenderMap, decorator, hasCommandModifier, styleMap } from './rich-style';
