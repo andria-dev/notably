@@ -1,12 +1,6 @@
-import React from 'react';
-import useDarkMode from 'use-dark-mode';
+import React, { useContext } from 'react';
+import { DarkModeContext } from '../contexts';
 import Toggle from './Toggle';
-
-const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
-  meta[name="theme-color"],
-  meta[name="msapplication-navbutton-color"],
-  meta[name="apple-mobile-web-app-status-bar-style"]
-`);
 
 const icons = {
   checked: (
@@ -30,21 +24,7 @@ const icons = {
 };
 
 function DarkModeToggle({ ...props }) {
-  const { value, toggle } = useDarkMode(false, {
-    onChange: (isDark?: boolean) => {
-      if (isDark) {
-        document.body.classList.add('dark-mode');
-        themeMetaTags.forEach((tag: HTMLMetaElement) => {
-          tag.content = '#191919';
-        });
-      } else {
-        document.body.classList.remove('dark-mode');
-        themeMetaTags.forEach((tag: HTMLMetaElement) => {
-          tag.content = '#013b98';
-        });
-      }
-    }
-  });
+  const { value, toggle } = useContext(DarkModeContext);
 
   return <Toggle checked={value} onChange={toggle} icons={icons} {...props} />;
 }
