@@ -5,12 +5,12 @@ import Hx from '../../components/Hx';
 import { setActiveNoteID, useStore } from '../../store';
 
 import { MdClose } from 'react-icons/md';
+import DarkModeToggle from '../../components/DarkModeToggle';
 import Editor from '../../components/Editor';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 import NoteTitle from '../../components/NoteTitle';
 import './style.css';
-import DarkModeToggle from '../../components/DarkModeToggle';
 
 interface INoteProps {
   id: string;
