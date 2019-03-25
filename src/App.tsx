@@ -6,10 +6,11 @@ import Note from './pages/note';
 
 import { getNotes, ReduxProvider, store } from './store';
 
-/* Global CSS + Utilities */
 import useDarkMode from 'use-dark-mode';
-import './App.css';
 import { DarkModeContext } from './contexts';
+
+/* Global CSS + Utilities */
+import './App.css';
 
 const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
   meta[name="theme-color"],
