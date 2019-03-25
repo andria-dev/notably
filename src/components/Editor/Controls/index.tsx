@@ -40,9 +40,17 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
   );
 
   const y = useScrollYPosition();
+  const raised = y >= 42;
 
   return (
-    <section className={classNames('Controls', { 'shadow-md': y >= 42 }, className)} {...props}>
+    <section
+      className={classNames(
+        'Controls',
+        { 'shadow-md': raised, 'Controls--raised': raised },
+        className
+      )}
+      {...props}
+    >
       {inlineStyles.map(({ label, style }) => (
         <StyleButton
           key={label}
