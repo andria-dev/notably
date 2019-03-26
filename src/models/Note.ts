@@ -1,5 +1,14 @@
-import { EditorState } from 'draft-js';
-import { decorator } from '../components/Editor/rich-style';
+// import { EditorState } from 'draft-js';
+import { Value } from 'slate';
+
+const emptyState = Value.fromJSON({
+  object: 'value',
+  document: {
+    object: 'document',
+    data: {},
+    nodes: []
+  }
+});
 
 export default class Note {
   // @ts-ignore
@@ -8,14 +17,10 @@ export default class Note {
   private static shortRtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'short' });
 
   public title: string;
-  public state: EditorState;
+  public state: Value;
   public lastModified: Date;
 
-  constructor(
-    title: string = 'Title',
-    state: EditorState = EditorState.createEmpty(decorator),
-    lastModified: Date = new Date()
-  ) {
+  constructor(title: string = 'Title', state: Value = emptyState, lastModified: Date = new Date()) {
     this.title = title;
     this.state = state;
     this.lastModified = lastModified;
