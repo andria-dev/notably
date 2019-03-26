@@ -12,7 +12,7 @@
   margin-bottom: 1rem;
 
   border-radius: 3px;
-  transition: background-color 0.15s ease-in-out;
+  transition: background-color 0.2s ease-out;
 }
 
 .note__title {
@@ -25,14 +25,11 @@
 
 .note__content {
   margin: 0;
-
   color: hsl(0, 0%, 40%);
 }
 
-.note__title,
-.note__modified,
-.note__content {
-  transition: color 0.15s ease-in-out;
+.dark-mode .note__content {
+  color: hsl(0, 0%, 70%);
 }
 
 /* Interaction styles */
@@ -41,7 +38,12 @@
   background-color: hsl(217, 99%, 98%);
 }
 
-/* Active styles */
+.dark-mode .NotesList__note:hover,
+.dark-mode .NotesList__note:focus {
+  background-color: hsl(217, 15%, 25%);
+}
+
+/* Selected note styles */
 .NotesList__note.NotesList__note--active {
   background-color: hsl(217, 99%, 95%);
 }

@@ -14,7 +14,7 @@ interface IHxProps {
 
 /**
  * @param props.size size determines font-size: 1-6 -> 2rem-1rem
- * @param props.weight weight determines font-weight: 1-6 -> 600-100
+ * @param props.weight weight determines font-weight: 1-6 -> 800-200
  */
 function Hx({ size = 1, weight = size, type = 'h1', className, style, ...props }: IHxProps) {
   return React.createElement(type, {
@@ -22,7 +22,7 @@ function Hx({ size = 1, weight = size, type = 'h1', className, style, ...props }
     className: classNames(className, 'Hx'),
     style: {
       fontSize: `${2 - (size - 1) * 0.2}rem`,
-      fontWeight: (7 - weight) * 100,
+      fontWeight: (9 - weight) * 100,
       ...style
     }
   });
