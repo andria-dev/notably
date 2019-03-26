@@ -20,7 +20,7 @@ function setNote(id: string, note: Note): Promise<void> {
   const noteObj: INoteData = {
     title: note.title,
     lastModified: note.lastModified,
-    state: note.state.toJS()
+    state: note.state.toJSON()
   };
   return set(id, noteObj);
 }
