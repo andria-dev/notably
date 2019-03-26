@@ -1073,7 +1073,16 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/slate@^0.44.2":
+"@types/slate-react@^0.21.1":
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@types/slate-react/-/slate-react-0.21.1.tgz#5f8ff779d5a88c955c4512a0450d86148639d0e4"
+  integrity sha512-g4YMkjmre1InxgAqZeMXhIeziqpyUvWFDrBCrvFAbXsuEA6LX0kwCNJQFmesxpwJCg3Y7kXhOjjEhHfw6H+QiA==
+  dependencies:
+    "@types/react" "*"
+    "@types/slate" "*"
+    immutable "^3.8.2"
+
+"@types/slate@*", "@types/slate@^0.44.2":
   version "0.44.2"
   resolved "https://registry.yarnpkg.com/@types/slate/-/slate-0.44.2.tgz#60b3d7d81de4050ce43711109e1d37b6087b467f"
   integrity sha512-JIXDx39fboeOekOJlcERq9bKuGX/n8tjfqUlm0J/mEhlURyqw5oZry/odovAe2s1Jrlw4KICgT/1SismiknU8Q==
@@ -8015,7 +8024,7 @@ pretty-format@^23.6.0:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
-prismjs@^1.15.0:
+prismjs@^1.13.0, prismjs@^1.15.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.16.0.tgz#406eb2c8aacb0f5f0f1167930cb83835d10a4308"
   integrity sha512-OA4MKxjFZHSvZcisLGe14THYsug/nF6O1f0pAJc0KN0wTyAcLqmsbE+lTGKSpyh+9pEW57+k6pg2AfYR+coyHA==
@@ -9138,6 +9147,13 @@ slate-plain-serializer@^0.6.36:
   version "0.6.36"
   resolved "https://registry.yarnpkg.com/slate-plain-serializer/-/slate-plain-serializer-0.6.36.tgz#19ac5c66f972f068654b226c9a628bdc29475764"
   integrity sha512-StVNj0wyM9KNtjRPYsFxNVrkeKtILwRy0QHr33Ln/SH05mAF6Of7MkmeC7GrqrN99J01ntz0pA2VLewq8ErhDQ==
+
+slate-prism@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/slate-prism/-/slate-prism-0.5.0.tgz#009eb74fea38ad76c64db67def7ea0884917adec"
+  integrity sha512-WnyR1l3dOMNd4zbMmwExz4Uy6z27qGDPRWDXlW7ylbWhlwfJ94Cjy0crjhaVxd9Kk0YkriMU6RjNN9j4WM/ndA==
+  dependencies:
+    prismjs "^1.13.0"
 
 slate-prop-types@^0.5.27:
   version "0.5.27"

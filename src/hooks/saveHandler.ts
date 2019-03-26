@@ -1,18 +1,19 @@
+import { useMemo } from 'react';
 import { debounce } from 'mini-debounce';
-import { store } from './store';
+import { store } from '../store';
 
-type Setter<T> = (newValue: T) => void;
-type Unmounted = () => void;
+type DebouncedSave<T> = (newValue: T) => void;
+type Save = () => void;
 
 /**
  * @param ...args passed to `actionCreator` after `id` and `newValue`
  */
-export function inputHandler<T>(
+export function saveHandler<T>(
   debounceDelay: number,
   id: string,
   actionCreator: CallableFunction,
   ...args: any[]
-): [Setter<T>, Unmounted] {
+): [DebouncedSave<T>, Save] {
   let value: T;
   let timeoutID: number | NodeJS.Timeout;
 
@@ -26,7 +27,7 @@ export function inputHandler<T>(
    * Setter
    * Starts debounce and keeps track of value + timeoutID
    */
-  const setter = (newValue: T) => {
+  const debouncedSave = (newValue: T) => {
     value = newValue;
     timeoutID = updateStore.debounced(newValue);
   };
@@ -35,12 +36,25 @@ export function inputHandler<T>(
    * Unmounted
    * Cancels previous updates and saves everything immediately
    */
-  const unmounted = () => {
+  const save = () => {
     if (timeoutID !== undefined) {
       clearTimeout(timeoutID as number);
       updateStore(value);
     }
   };
 
-  return [setter, unmounted];
+  return [debouncedSave, save];
+}
+
+export function useSaveHandler<T>(
+  debounceDelay: number,
+  id: string,
+  actionCreator: CallableFunction,
+  ...args: any[]
+): [DebouncedSave<T>, Save] {
+  return useMemo(() => saveHandler<T>(debounceDelay, id, actionCreator), [
+    debounceDelay,
+    id,
+    actionCreator
+  ]);
 }

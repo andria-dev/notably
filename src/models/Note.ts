@@ -1,14 +1,8 @@
-// import { EditorState } from 'draft-js';
 import { Value } from 'slate';
+// @ts-ignore
+import Plain from 'slate-plain-serializer';
 
-const emptyState = Value.fromJSON({
-  object: 'value',
-  document: {
-    object: 'document',
-    data: {},
-    nodes: []
-  }
-});
+const emptyState = Plain.deserialize('');
 
 export default class Note {
   // @ts-ignore
@@ -20,7 +14,11 @@ export default class Note {
   public state: Value;
   public lastModified: Date;
 
-  constructor(title: string = 'Title', state: Value = emptyState, lastModified: Date = new Date()) {
+  constructor(
+    title: string = 'Title',
+    state: Value = Value.fromJSON(emptyState),
+    lastModified: Date = new Date()
+  ) {
     this.title = title;
     this.state = state;
     this.lastModified = lastModified;
