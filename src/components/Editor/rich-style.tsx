@@ -103,6 +103,30 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
 }
 
 /**
+ * On backspace, if at the start of a non-paragraph block,
+ * convert it into a paragraph block.
+ */
+function onBackspace(event: Event, editor: Editor, next: () => any) {
+  const selection = editor.value.selection;
+  if (selection.isExpanded || selection.start.offset !== 0) {
+    return next();
+  }
+
+  const startBlock = editor.value.startBlock;
+  if (startBlock.type === 'paragraph') {
+    return next();
+  }
+
+  event.preventDefault();
+  editor.setBlocks('paragraph');
+
+  if (startBlock.type === 'list-item') {
+    editor.unwrapBlock('unordered-list');
+    editor.unwrapBlock('ordered-list');
+  }
+}
+
+/**
  * Renders different marks as React elements based on their mark-types.
  */
 export function renderMark(props: any, editor: Editor, next: () => any) {
@@ -144,11 +168,13 @@ const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+j');
 const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
 const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
+const isSpaceHotkey = isKeyHotkey('space');
+const isBackspaceHotkey = isKeyHotkey('backspace');
 
 /**
  * Handles key-down events and applies different mark and node-types
  * based on the keys pressed. Offloads enter and backspace to
- * `onEnter` and `onBackspace`.
+ * `onSpace` and `onBackspace`.
  */
 export function onKeyDown(event: any, editor: Editor, next: () => any) {
   let mark;
@@ -165,6 +191,10 @@ export function onKeyDown(event: any, editor: Editor, next: () => any) {
     mark = 'deleted';
   } else if (isInsertedHotkey(event)) {
     mark = 'inserted';
+  } else if (isSpaceHotkey(event)) {
+    return onSpace(event, editor, next);
+  } else if (isBackspaceHotkey(event)) {
+    return onBackspace(event, editor, next);
   } else {
     return next();
   }
