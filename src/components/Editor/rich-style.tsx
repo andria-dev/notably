@@ -1,6 +1,6 @@
 // tslint:disable: ordered-imports
 import React from 'react';
-import { Node, Block } from 'slate';
+import { Node, Block, Editor } from 'slate';
 
 import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-jsx';
@@ -46,7 +46,7 @@ export const plugins = [
   })
 ];
 
-export function renderNode(props: any, editor: any, next: CallableFunction) {
+export function renderNode(props: any, editor: Editor, next: CallableFunction) {
   const { node, attributes, children } = props;
 
   switch (node.type) {
@@ -62,10 +62,31 @@ export function renderNode(props: any, editor: any, next: CallableFunction) {
       return <h1 {...attributes}>{children}</h1>;
     case 'blockquote':
       return <blockquote {...attributes}>{children}</blockquote>;
-    case 'unordered-list-item':
+    case 'list-item':
       return <li {...attributes}>{children}</li>;
-    case 'ordered-list-item':
+    case 'ordered-list':
       return <ol {...attributes}>{children}</ol>;
+    default:
+      return next();
+  }
+}
+
+export function renderMark(props: any, editor: Editor, next: CallableFunction) {
+  const { mark, attributes, children } = props;
+
+  switch (mark.type) {
+    case 'bold':
+      return <strong {...attributes}>{children}</strong>;
+    case 'code':
+      return <code {...attributes}>{children}</code>;
+    case 'italic':
+      return <em {...attributes}>{children}</em>;
+    case 'underlined':
+      return <u {...attributes}>{children}</u>;
+    case 'deleted':
+      return <del {...attributes}>{children}</del>;
+    case 'inserted':
+      return <ins {...attributes}>{children}</ins>;
     default:
       return next();
   }
