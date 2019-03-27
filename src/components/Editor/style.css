@@ -66,3 +66,16 @@
 
   text-decoration: none;
 }
+
+.Editor__blockquote {
+  margin: 0;
+  padding: 0 1rem;
+
+  color: hsl(212, 8%, 45%);
+  border-left: 0.25em solid hsl(210, 10%, 89%);
+}
+
+.dark-mode .Editor__blockquote {
+  color: hsl(212, 4%, 75%);
+  border-left-color: hsl(210, 5%, 35%);
+}

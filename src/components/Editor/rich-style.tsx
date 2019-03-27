@@ -35,9 +35,15 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
     case 'heading':
       return <h1 {...attributes}>{children}</h1>;
     case 'blockquote':
-      return <blockquote {...attributes}>{children}</blockquote>;
+      return (
+        <blockquote {...attributes} className="Editor__blockquote">
+          {children}
+        </blockquote>
+      );
     case 'list-item':
       return <li {...attributes}>{children}</li>;
+    case 'unordered-list':
+      return <ul {...attributes}>{children}</ul>;
     case 'ordered-list':
       return <ol {...attributes}>{children}</ol>;
     default:
@@ -56,7 +62,7 @@ function getType(chars: string) {
     case '1.':
       return 'ordered-list';
     case '>':
-      return 'block-quote';
+      return 'blockquote';
     case '#':
       return 'heading-one';
     case '##':
@@ -86,7 +92,7 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
 
   const startBlock = editor.value.startBlock;
   const type = getType(startBlock.text.slice(0, selection.start.offset).replace(/\s*/g, ''));
-  if (!type || (type === 'unordered-list' && startBlock.type === 'unordered-list')) {
+  if (!type || (type.includes('list') && startBlock.type === 'list-item')) {
     return next();
   }
 
@@ -169,7 +175,9 @@ const isCodeHotkey = isKeyHotkey('mod+j');
 const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
 const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
 const isSpaceHotkey = isKeyHotkey('space');
+const isShiftSpaceHotkey = isKeyHotkey('shift+space');
 const isBackspaceHotkey = isKeyHotkey('backspace');
+const isShiftBackspaceHotkey = isKeyHotkey('shift+backspace');
 
 /**
  * Handles key-down events and applies different mark and node-types
@@ -191,9 +199,9 @@ export function onKeyDown(event: any, editor: Editor, next: () => any) {
     mark = 'deleted';
   } else if (isInsertedHotkey(event)) {
     mark = 'inserted';
-  } else if (isSpaceHotkey(event)) {
+  } else if (isSpaceHotkey(event) || isShiftSpaceHotkey(event)) {
     return onSpace(event, editor, next);
-  } else if (isBackspaceHotkey(event)) {
+  } else if (isBackspaceHotkey(event) || isShiftBackspaceHotkey(event)) {
     return onBackspace(event, editor, next);
   } else {
     return next();
