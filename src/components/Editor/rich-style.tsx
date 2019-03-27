@@ -14,9 +14,6 @@ export const plugins = [
   PluginPrism({
     onlyIn: (block: Block) => block.type === 'code-block',
     getSyntax: (block: Block) => block.data.get('syntax')
-  }),
-  PluginEditCode({
-    onlyIn: (block: Block) => block.type === 'code-block'
   })
 ];
 
@@ -100,7 +97,6 @@ export function onKeyDown(event: any, editor: Editor, next: () => any) {
   } else if (isInsertedHotkey(event)) {
     mark = 'inserted';
   } else {
-    console.log(event, 'NEXT');
     return next();
   }
 
