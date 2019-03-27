@@ -9,6 +9,7 @@ import PluginEditCode from 'slate-edit-code';
 import PluginPrism from 'slate-prism';
 
 import 'prismjs/themes/prism-okaidia.css';
+import { LabelledHx } from '../LabelledHx';
 
 export const plugins = [
   PluginPrism({
@@ -32,8 +33,42 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
       );
     case 'paragraph':
       return <p {...attributes}>{children}</p>;
-    case 'heading':
-      return <h1 {...attributes}>{children}</h1>;
+    case 'heading-one':
+      return (
+        <LabelledHx {...attributes} size={1}>
+          {children}
+        </LabelledHx>
+      );
+    case 'heading-two':
+      return (
+        <LabelledHx {...attributes} size={2}>
+          {children}
+        </LabelledHx>
+      );
+    case 'heading-three':
+      return (
+        <LabelledHx {...attributes} size={3}>
+          {children}
+        </LabelledHx>
+      );
+    case 'heading-four':
+      return (
+        <LabelledHx {...attributes} size={4}>
+          {children}
+        </LabelledHx>
+      );
+    case 'heading-five':
+      return (
+        <LabelledHx {...attributes} size={5}>
+          {children}
+        </LabelledHx>
+      );
+    case 'heading-six':
+      return (
+        <LabelledHx {...attributes} size={6}>
+          {children}
+        </LabelledHx>
+      );
     case 'blockquote':
       return (
         <blockquote {...attributes} className="Editor__blockquote">
