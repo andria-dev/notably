@@ -1,20 +1,17 @@
-import { convertFromRaw, convertToRaw, EditorState, RawDraftContentState } from 'draft-js';
 import { clear, del, get, keys, set } from 'idb-keyval';
+import { Value } from 'slate';
 import uuid from 'uuid/v4';
-import { decorator } from '../components/Editor/rich-style';
 import Note from '../models/Note';
 import { IAction } from './';
 
 interface INoteData {
   title: string;
   lastModified: Date;
-  state: RawDraftContentState;
+  state: any;
 }
 async function getNote(id: string): Promise<Note> {
   const noteData: INoteData = await get(id);
-  const state = EditorState.set(EditorState.createWithContent(convertFromRaw(noteData.state)), {
-    decorator
-  });
+  const state = Value.fromJSON(noteData.state);
 
   return new Note(noteData.title, state, noteData.lastModified);
 }
@@ -23,7 +20,7 @@ function setNote(id: string, note: Note): Promise<void> {
   const noteObj: INoteData = {
     title: note.title,
     lastModified: note.lastModified,
-    state: convertToRaw(note.state.getCurrentContent())
+    state: note.state.toJSON()
   };
   return set(id, noteObj);
 }
@@ -96,7 +93,7 @@ export async function updateTitle(noteID: string, newTitle: string) {
 
 export async function updateState(
   noteID: string,
-  newState: EditorState,
+  newState: Value,
   updateLastModified?: boolean
 ): Promise<IAction> {
   try {

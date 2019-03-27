@@ -5,12 +5,13 @@ import { types } from '../';
 import { IAction } from '../../../store';
 
 import classNames from '@chbphone55/classnames';
-import { inlineStyles } from '../rich-style';
 
 import { useScrollYPosition } from 'react-use-scroll-position';
 import StyleButton from '../StyleButton';
 
 import './style.css';
+
+const marks: [] = [];
 
 interface IControlsProps {
   dispatch: React.Dispatch<IAction>;
@@ -51,7 +52,7 @@ function Controls({ dispatch, editorState, className, ...props }: IControlsProps
       )}
       {...props}
     >
-      {inlineStyles.map(({ label, style }) => (
+      {marks.map(({ label, style }) => (
         <StyleButton
           key={label}
           onToggle={handleInline}

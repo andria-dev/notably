@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import { inputHandler } from '../../inputHandler';
+import { useSaveHandler } from '../../hooks/saveHandler';
 import { updateTitle, useStore } from '../../store';
 
 import { LabelledHx } from '../LabelledHx';
@@ -12,7 +12,7 @@ function NoteTitle() {
   const note = state.notes[id];
 
   const [title, setTitle] = useState(note.title);
-  const [setter, unmounted] = useMemo(() => inputHandler<string>(2000, id, updateTitle), [id]);
+  const [setter, unmounted] = useSaveHandler<string>(2000, id, updateTitle);
 
   useEffect(() => {
     setTitle(note.title);
