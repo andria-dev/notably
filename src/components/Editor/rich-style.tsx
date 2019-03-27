@@ -42,13 +42,6 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
   }
 }
 
-const codeStyle = {
-  backgroundColor: 'hsl(0, 0%, 95%)',
-  fontSize: '1rem',
-  fontFamily: '"Roboto Mono",Menlo,Monaco,"Courier New",Courier,monospace',
-  borderRadius: '0.12rem'
-};
-
 export function renderMark(props: any, editor: Editor, next: () => any) {
   const { mark, attributes, children } = props;
 
@@ -57,7 +50,7 @@ export function renderMark(props: any, editor: Editor, next: () => any) {
       return <strong {...attributes}>{children}</strong>;
     case 'code':
       return (
-        <code {...attributes} style={codeStyle}>
+        <code {...attributes} className="Editor__code">
           {children}
         </code>
       );
@@ -66,9 +59,17 @@ export function renderMark(props: any, editor: Editor, next: () => any) {
     case 'underlined':
       return <u {...attributes}>{children}</u>;
     case 'deleted':
-      return <del {...attributes}>{children}</del>;
+      return (
+        <del {...attributes} className="Editor__del">
+          {children}
+        </del>
+      );
     case 'inserted':
-      return <ins {...attributes}>{children}</ins>;
+      return (
+        <ins {...attributes} className="Editor__ins">
+          {children}
+        </ins>
+      );
     default:
       return next();
   }
@@ -77,7 +78,7 @@ export function renderMark(props: any, editor: Editor, next: () => any) {
 const isBoldHotkey = isKeyHotkey('mod+b');
 const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
-const isCodeHotkey = isKeyHotkey('mod+`');
+const isCodeHotkey = isKeyHotkey('mod+j');
 const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
 const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
 
@@ -102,4 +103,11 @@ export function onKeyDown(event: any, editor: Editor, next: () => any) {
 
   event.preventDefault();
   editor.toggleMark(mark);
+
+  // disallows having both deleted and inserted
+  if (mark === 'deleted') {
+    editor.removeMark('inserted');
+  } else if (mark === 'inserted') {
+    editor.removeMark('deleted');
+  }
 }

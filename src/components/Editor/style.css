@@ -40,3 +40,29 @@
   font-family: 'Roboto Mono', Menlo, Monaco, 'Courier New', Courier, monospace;
   font-size: 0.9rem;
 }
+
+.Editor__code {
+  background-color: hsl(0, 0%, 95%);
+  font-size: 1rem;
+  font-family: 'Roboto Mono', Menlo, Monaco, 'Courier New', Courier, monospace;
+}
+
+.dark-mode .Editor__code {
+  background-color: hsl(0, 0%, 40%);
+}
+
+.Editor__del,
+.Editor__del * {
+  color: hsl(210, 12%, 16%);
+  background-color: hsl(353, 95%, 86%);
+
+  text-decoration: none;
+}
+
+.Editor__ins,
+.Editor__ins * {
+  color: hsl(210, 12%, 16%);
+  background-color: hsl(135, 73%, 81%);
+
+  text-decoration: none;
+}

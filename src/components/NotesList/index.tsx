@@ -43,7 +43,7 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
       {...props}
     >
       {sortedNotes.map(([id, note]) => {
-        const noteContentSnippet = note.state.texts.get(0).getText();
+        const noteContentSnippet = note.state.texts.first().getText();
         const menuID = `notes-list__${id}`;
         const isActive = activeID === id;
 
