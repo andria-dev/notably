@@ -10,6 +10,7 @@
     "draft-js-prism": "^1.0.6",
     "idb-keyval": "^3.1.0",
     "immutable": "^4.0.0-rc.12",
+    "is-hotkey": "^0.1.4",
     "mini-debounce": "^1.0.4",
     "prismjs": "^1.15.0",
     "react": "^16.8.5",
@@ -54,6 +55,7 @@
   "devDependencies": {
     "@types/dom-inputevent": "^1.0.4",
     "@types/draft-js": "^0.10.29",
+    "@types/is-hotkey": "^0.1.1",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.11.4",
     "@types/prismjs": "^1.9.1",

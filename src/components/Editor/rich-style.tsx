@@ -1,6 +1,7 @@
 // tslint:disable: ordered-imports
 import React from 'react';
-import { Node, Block, Editor } from 'slate';
+import { Block, Editor } from 'slate';
+import { isKeyHotkey } from 'is-hotkey';
 
 import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-jsx';
@@ -30,11 +31,6 @@ import 'prismjs/themes/prism-okaidia.css';
 //     borderRadius: '0.12rem'
 //   }
 // };
-
-const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
-export function hasCommandModifier(event: React.KeyboardEvent<{}>): boolean {
-  return isMac && !event.altKey && (event.metaKey || event.ctrlKey);
-}
 
 export const plugins = [
   PluginPrism({
@@ -90,4 +86,34 @@ export function renderMark(props: any, editor: Editor, next: CallableFunction) {
     default:
       return next();
   }
+}
+
+const isBoldHotkey = isKeyHotkey('mod+b');
+const isItalicHotkey = isKeyHotkey('mod+i');
+const isUnderlinedHotkey = isKeyHotkey('mod+u');
+const isCodeHotkey = isKeyHotkey('mod+`');
+const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
+const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
+
+export function onKeyDown(event: KeyboardEvent, editor: Editor, next: CallableFunction) {
+  let mark;
+
+  if (isBoldHotkey(event)) {
+    mark = 'bold';
+  } else if (isItalicHotkey(event)) {
+    mark = 'italic';
+  } else if (isUnderlinedHotkey(event)) {
+    mark = 'underlined';
+  } else if (isCodeHotkey(event)) {
+    mark = 'code';
+  } else if (isDeletedHotkey(event)) {
+    mark = 'deleted';
+  } else if (isInsertedHotkey(event)) {
+    mark = 'inserted';
+  } else {
+    return next();
+  }
+
+  event.preventDefault();
+  editor.toggleMark(mark);
 }
