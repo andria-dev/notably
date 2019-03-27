@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import { IAction, updateState, useStore } from '../../store';
 
 import { Value } from 'slate';
 import { Editor as SlateEditor } from 'slate-react';
 import { useSaveHandler } from '../../hooks/saveHandler';
+
+import { onKeyDown, plugins, renderMark, renderNode } from './rich-style';
 
 import './style.css';
 
@@ -45,7 +47,14 @@ function Editor() {
 
   return (
     <main className="Editor">
-      <SlateEditor value={editorState} onChange={handleChange} />
+      <SlateEditor
+        value={editorState}
+        onChange={handleChange}
+        onKeyDown={onKeyDown}
+        renderNode={renderNode}
+        renderMark={renderMark}
+        plugins={plugins}
+      />
     </main>
   );
 }

@@ -3,34 +3,12 @@ import React from 'react';
 import { Block, Editor } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 
-import 'prismjs/components/prism-markup';
-import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-tsx';
-// import Prism from 'prismjs';
-
 // @ts-ignore
 import PluginEditCode from 'slate-edit-code';
 // @ts-ignore
 import PluginPrism from 'slate-prism';
 
 import 'prismjs/themes/prism-okaidia.css';
-
-// export const styleMap = {
-//   ...DefaultDraftInlineStyle,
-//   BOLD: {
-//     fontWeight: '800'
-//   },
-//   STRIKETHROUGH: {
-//     textDecoration: 'line-through'
-//   },
-//   CODE: {
-//     backgroundColor: 'hsl(0, 0%, 95%)',
-//     fontSize: '1rem',
-//     fontFamily: '"Roboto Mono",Menlo,Monaco,"Courier New",Courier,monospace',
-//     borderRadius: '0.12rem'
-//   }
-// };
 
 export const plugins = [
   PluginPrism({
@@ -67,14 +45,25 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
   }
 }
 
-export function renderMark(props: any, editor: Editor, next: CallableFunction) {
+const codeStyle = {
+  backgroundColor: 'hsl(0, 0%, 95%)',
+  fontSize: '1rem',
+  fontFamily: '"Roboto Mono",Menlo,Monaco,"Courier New",Courier,monospace',
+  borderRadius: '0.12rem'
+};
+
+export function renderMark(props: any, editor: Editor, next: () => any) {
   const { mark, attributes, children } = props;
 
   switch (mark.type) {
     case 'bold':
       return <strong {...attributes}>{children}</strong>;
     case 'code':
-      return <code {...attributes}>{children}</code>;
+      return (
+        <code {...attributes} style={codeStyle}>
+          {children}
+        </code>
+      );
     case 'italic':
       return <em {...attributes}>{children}</em>;
     case 'underlined':
@@ -95,7 +84,7 @@ const isCodeHotkey = isKeyHotkey('mod+`');
 const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
 const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
 
-export function onKeyDown(event: KeyboardEvent, editor: Editor, next: CallableFunction) {
+export function onKeyDown(event: any, editor: Editor, next: () => any) {
   let mark;
 
   if (isBoldHotkey(event)) {
@@ -111,6 +100,7 @@ export function onKeyDown(event: KeyboardEvent, editor: Editor, next: CallableFu
   } else if (isInsertedHotkey(event)) {
     mark = 'inserted';
   } else {
+    console.log(event, 'NEXT');
     return next();
   }
 
