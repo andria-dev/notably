@@ -3461,6 +3461,11 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
+ends-with@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ends-with/-/ends-with-0.2.0.tgz#2f9da98d57a50cfda4571ce4339000500f4e6b8a"
+  integrity sha1-L52pjVelDP2kVxzkM5AAUA9Oa4o=
+
 enhanced-resolve@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.1.0.tgz#41c7e0bfdfe74ac1ffe1e57ad6a5c6c9f3742a7f"
@@ -5258,7 +5263,7 @@ is-glob@^4.0.0:
   dependencies:
     is-extglob "^2.1.1"
 
-is-hotkey@0.1.4:
+is-hotkey@0.1.4, is-hotkey@^0.1.1:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/is-hotkey/-/is-hotkey-0.1.4.tgz#c34d2c85d6ec8d09a871dcf71931c8067a824c7d"
   integrity sha512-Py+aW4r5mBBY18TGzGz286/gKS+fCQ0Hee3qkaiSmEPiD0PqFpe0wuA3l7rTOUKyeXl8Mxf3XzJxIoTlSv+kxA==
@@ -9134,6 +9139,16 @@ slate-dev-environment@^0.2.2:
   integrity sha512-JZ09llrRQu6JUsLJCUlGC0lB1r1qIAabAkSd454iyYBq6lDuY//Bypi3Jo8yzIfzZ4+mRLdQvl9e8MbeM9l48Q==
   dependencies:
     is-in-browser "^1.1.3"
+
+slate-edit-code@^0.15.5:
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/slate-edit-code/-/slate-edit-code-0.15.5.tgz#9b64ad7150a6eaaa8212d7a2200e1c6ae2332b63"
+  integrity sha512-+Nd6AGPYtYSe87l16cHSnhXF4CPW7n6f4KoxL+dDhf1KQkP1dXGSgAFJlZmOJJp9dQexPbB0mxTu2TPKB9W2MA==
+  dependencies:
+    detect-indent "^4.0.0"
+    detect-newline "^2.1.0"
+    ends-with "^0.2.0"
+    is-hotkey "^0.1.1"
 
 slate-hotkeys@^0.2.9:
   version "0.2.9"
