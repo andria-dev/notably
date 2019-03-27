@@ -46,7 +46,9 @@ export const plugins = [
   })
 ];
 
-export function renderNode({ node, children, attributes, ...props }: any) {
+export function renderNode(props: any, editor: any, next: CallableFunction) {
+  const { node, attributes, children } = props;
+
   switch (node.type) {
     case 'code-block':
       return (
@@ -60,11 +62,11 @@ export function renderNode({ node, children, attributes, ...props }: any) {
       return <h1 {...attributes}>{children}</h1>;
     case 'blockquote':
       return <blockquote {...attributes}>{children}</blockquote>;
-    case 'unoredered-list-item':
+    case 'unordered-list-item':
       return <li {...attributes}>{children}</li>;
     case 'ordered-list-item':
       return <ol {...attributes}>{children}</ol>;
     default:
-      return null;
+      return next();
   }
 }
