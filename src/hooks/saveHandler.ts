@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
 import { debounce } from 'mini-debounce';
+import { useMemo } from 'react';
 import { store } from '../store';
 
 type DebouncedSave<T> = (newValue: T) => void;
@@ -24,8 +24,8 @@ export function saveHandler<T>(
   updateStore.debounced = debounce(updateStore, debounceDelay);
 
   /**
-   * Setter
-   * Starts debounce and keeps track of value + timeoutID
+   * Takes in a value and updates the store with it
+   * after the specified amount of time.
    */
   const debouncedSave = (newValue: T) => {
     value = newValue;
@@ -33,8 +33,8 @@ export function saveHandler<T>(
   };
 
   /**
-   * Unmounted
-   * Cancels previous updates and saves everything immediately
+   * Clears the timeout for the latest save and
+   * updates the store with the latest value.
    */
   const save = () => {
     if (timeoutID !== undefined) {
