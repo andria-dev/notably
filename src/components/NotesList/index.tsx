@@ -78,7 +78,7 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
                 Delete note
               </MenuItem>
               <MenuItem
-                data={{ url: `${location.origin}/note/${id}` }}
+                data={{ url: `${window.location.origin}/note/${id}` }}
                 onClick={handleCopyToClipboard}
               >
                 Copy link
