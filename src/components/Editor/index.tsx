@@ -8,6 +8,7 @@ import { useSaveHandler } from '../../hooks/saveHandler';
 import { onKeyDown, plugins, renderMark, renderNode } from './rich-style';
 
 import './style.css';
+import isHotkey from 'is-hotkey';
 
 export const types = {
   CHANGE: 0,
@@ -23,6 +24,8 @@ function EditorStateReducer(state: Value, action: IAction): Value {
       throw new Error(`Invalid action: ${action.type}`);
   }
 }
+
+const isSaveHotkey = isHotkey('mod+s');
 
 function Editor() {
   const [state] = useStore();
@@ -40,9 +43,23 @@ function Editor() {
     [dispatch, debouncedSave]
   );
 
+  const saveListener = useCallback(
+    (event: KeyboardEvent) => {
+      if (isSaveHotkey(event)) {
+        event.preventDefault();
+        save();
+      }
+    },
+    [save]
+  );
+
   useEffect(() => {
     dispatch({ type: types.CHANGE, payload: note.state });
-    return save;
+    window.addEventListener('keydown', saveListener);
+    return () => {
+      save();
+      window.removeEventListener('keydown', saveListener);
+    };
   }, [id]);
 
   return (
