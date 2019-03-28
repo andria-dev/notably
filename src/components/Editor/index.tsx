@@ -5,10 +5,10 @@ import { Value } from 'slate';
 import { Editor as SlateEditor } from 'slate-react';
 import { useSaveHandler } from '../../hooks/saveHandler';
 
+import isHotkey from 'is-hotkey';
 import { onKeyDown, plugins, renderMark, renderNode } from './rich-style';
 
 import './style.css';
-import isHotkey from 'is-hotkey';
 
 export const types = {
   CHANGE: 0,
@@ -43,6 +43,13 @@ function Editor() {
     [dispatch, debouncedSave]
   );
 
+  // Once mounted (or id has changed) update the editor state
+  // Once unmounted (or id has changed again) run immediate save
+  useEffect(() => {
+    dispatch({ type: types.CHANGE, payload: note.state });
+    return save;
+  }, [id]);
+
   const saveListener = useCallback(
     (event: KeyboardEvent) => {
       if (isSaveHotkey(event)) {
@@ -53,14 +60,14 @@ function Editor() {
     [save]
   );
 
+  // Once mounted (or saveListener has changed) listen for CMD+S to save
+  // Once unmounted (or saveListener changed again) remove the listener
   useEffect(() => {
-    dispatch({ type: types.CHANGE, payload: note.state });
     window.addEventListener('keydown', saveListener);
     return () => {
-      save();
       window.removeEventListener('keydown', saveListener);
     };
-  }, [id]);
+  }, [saveListener]);
 
   return (
     <main className="Editor">

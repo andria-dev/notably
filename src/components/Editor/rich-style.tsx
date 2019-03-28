@@ -4,7 +4,7 @@ import { Block, Editor } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 
 // @ts-ignore
-import PluginEditCode from 'slate-edit-code';
+// import PluginEditCode from 'slate-edit-code';
 // @ts-ignore
 import PluginPrism from 'slate-prism';
 
