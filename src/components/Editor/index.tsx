@@ -48,7 +48,7 @@ function Editor() {
   useEffect(() => {
     dispatch({ type: types.CHANGE, payload: note.state });
     return save;
-  }, [id]);
+  }, [id, note.state, save]);
 
   const saveListener = useCallback(
     (event: KeyboardEvent) => {

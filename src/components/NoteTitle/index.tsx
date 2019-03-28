@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useSaveHandler } from '../../hooks/saveHandler';
 import { updateTitle, useStore } from '../../store';
 
@@ -17,7 +17,7 @@ function NoteTitle() {
   useEffect(() => {
     setTitle(note.title);
     return unmounted;
-  }, [id]);
+  }, [id, note.title, unmounted]);
 
   return (
     <LabelledHx

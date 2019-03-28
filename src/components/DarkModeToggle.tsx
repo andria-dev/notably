@@ -3,24 +3,8 @@ import { DarkModeContext } from '../contexts';
 import Toggle from './Toggle';
 
 const icons = {
-  checked: (
-    <img
-      src="/moon.png"
-      width="16"
-      height="16"
-      role="presentation"
-      style={{ pointerEvents: 'none' }}
-    />
-  ),
-  unchecked: (
-    <img
-      src="/sun.png"
-      width="16"
-      height="16"
-      role="presentation"
-      style={{ pointerEvents: 'none' }}
-    />
-  )
+  checked: <img src="/moon.png" width="16" height="16" alt="" style={{ pointerEvents: 'none' }} />,
+  unchecked: <img src="/sun.png" width="16" height="16" alt="" style={{ pointerEvents: 'none' }} />
 };
 
 function DarkModeToggle({ ...props }) {

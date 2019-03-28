@@ -38,10 +38,9 @@ function reducer(state: IState = initialState, action: IAction) {
       };
 
     case 'REMOVE_NOTE':
-      const {
-        [action.payload]: {},
-        ...newNotes
-      } = state.notes;
+      const newNotes = { ...state.notes };
+      delete newNotes[action.payload];
+
       return {
         ...state,
         notes: newNotes
