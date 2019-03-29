@@ -209,10 +209,8 @@ const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+j');
 const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
 const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
-const isSpaceHotkey = isKeyHotkey('space');
-const isShiftSpaceHotkey = isKeyHotkey('shift+space');
-const isBackspaceHotkey = isKeyHotkey('backspace');
-const isShiftBackspaceHotkey = isKeyHotkey('shift+backspace');
+const isSpaceHotkey = isKeyHotkey('shift?+space');
+const isBackspaceHotkey = isKeyHotkey('shift?+backspace');
 
 /**
  * Handles key-down events and applies different mark and node-types
@@ -234,9 +232,9 @@ export function onKeyDown(event: any, editor: Editor, next: () => any) {
     mark = 'deleted';
   } else if (isInsertedHotkey(event)) {
     mark = 'inserted';
-  } else if (isSpaceHotkey(event) || isShiftSpaceHotkey(event)) {
+  } else if (isSpaceHotkey(event)) {
     return onSpace(event, editor, next);
-  } else if (isBackspaceHotkey(event) || isShiftBackspaceHotkey(event)) {
+  } else if (isBackspaceHotkey(event)) {
     return onBackspace(event, editor, next);
   } else {
     return next();
