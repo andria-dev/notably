@@ -15,6 +15,9 @@ body {
   background-color: var(--background);
 
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
+
+  scrollbar-color: hsl(0, 0%, 90%) transparent;
+  scrollbar-width: thin;
 }
 
 body.dark-mode {
@@ -22,6 +25,24 @@ body.dark-mode {
   --background: hsl(0, 0%, 10%);
   --background-mid: hsl(0, 0%, 15%);
   --background-light: hsl(0, 0%, 18%);
+
+  scrollbar-color: hsl(0, 0%, 20%) transparent;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 90%);
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 20%);
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: none;
 }
 
 button:focus {
