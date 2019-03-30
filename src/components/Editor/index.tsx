@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef } from 'react';
 import { IAction, updateState, useStore } from '../../store';
 
 import { Value } from 'slate';
@@ -9,6 +9,10 @@ import isHotkey from 'is-hotkey';
 import { onKeyDown, plugins, renderMark, renderNode } from './rich-style';
 
 import './style.css';
+
+function fixValue(value: Value) {
+  return Value.fromJSON(value.toJSON());
+}
 
 export const types = {
   CHANGE: 0,
@@ -31,9 +35,10 @@ function Editor() {
   const [state] = useStore();
 
   const id = state.activeNoteID;
+  const idRef = useRef(id);
   const note = state.notes[id];
 
-  const [editorState, dispatch] = useReducer(EditorStateReducer, note.state);
+  const [editorState, dispatch] = useReducer(EditorStateReducer, fixValue(note.state));
   const [debouncedSave, save] = useSaveHandler<Value>(2000, id, updateState, true);
   const handleChange = useCallback(
     ({ value }) => {
@@ -43,12 +48,17 @@ function Editor() {
     [dispatch, debouncedSave]
   );
 
-  // Once mounted (or id has changed) update the editor state
-  // Once unmounted (or id has changed again) run immediate save
+  // Once mounted, or id updated, update the editor state
+  // Once unmounted, or id has changed again, run immediate save
   useEffect(() => {
-    dispatch({ type: types.CHANGE, payload: note.state });
+    // check current id against past id
+    if (id !== idRef.current) {
+      dispatch({ type: types.CHANGE, payload: fixValue(note.state) });
+    }
+    idRef.current = id;
+
     return save;
-  }, [id, note.state, save]);
+  }, [id, save, note.state]);
 
   const saveListener = useCallback(
     (event: KeyboardEvent) => {
