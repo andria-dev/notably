@@ -37,6 +37,12 @@
 
 .Note__sidebar > .NotesList {
   overflow-y: scroll;
+  scrollbar-color: hsl(0, 0%, 90%) transparent;
+  scrollbar-width: thin;
+}
+
+.dark-mode .Note__sidebar > .NotesList {
+  scrollbar-color: hsl(0, 0%, 20%) transparent;
 }
 
 .Note__sidebar > .NotesList::-webkit-scrollbar {
