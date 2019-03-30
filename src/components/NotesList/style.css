@@ -28,8 +28,7 @@
   color: hsl(0, 0%, 40%);
 }
 
-.dark-mode .note__content,
-.dark-mode .NotesList__note--active .note__content {
+.dark-mode .note__content {
   color: hsl(0, 0%, 70%);
 }
 
@@ -74,6 +73,10 @@
 .dark-mode .NotesList__note--active .note__title,
 .dark-mode .NotesList__note--active .note__modified {
   color: white;
+}
+
+.dark-mode .NotesList__note--active .note__content {
+  color: hsl(0, 0%, 90%);
 }
 
 /* Responsive styles */
