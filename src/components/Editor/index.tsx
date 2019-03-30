@@ -3,7 +3,7 @@ import { IAction, updateState, useStore } from '../../store';
 
 import { Value } from 'slate';
 import { Editor as SlateEditor } from 'slate-react';
-import { useSaveHandler } from '../../hooks/saveHandler';
+import { useSaveHandler } from '../../hooks/useSaveHandler';
 
 import isHotkey from 'is-hotkey';
 import { onKeyDown, plugins, renderMark, renderNode } from './rich-style';
