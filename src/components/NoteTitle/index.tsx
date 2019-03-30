@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useSaveHandler } from '../../hooks/useSaveHandler';
+import { useSaveHandler } from '../../hooks/';
 import { updateTitle, useStore } from '../../store';
 
 import { LabelledHx } from '../LabelledHx';
