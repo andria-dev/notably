@@ -1,4 +1,6 @@
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment, useMemo, useContext } from 'react';
+// @ts-ignore
+import { __RouterContext as RouterContext } from 'react-router';
 
 import classNames from '@chbphone55/classnames';
 
@@ -19,7 +21,7 @@ interface INotesListProps {
 }
 
 function NotesList({ className, responsive = false, activeID, ...props }: INotesListProps) {
-  const [{ notes }, dispatch] = useStore();
+  const [{ notes, activeNoteID }, dispatch] = useStore();
 
   const sortedNotes = useMemo(
     () =>
@@ -29,8 +31,12 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
     [notes]
   );
 
+  const { history } = useContext(RouterContext);
   async function handleRemoveNote(event: Event, { id }: { id: string }) {
     dispatch(await removeNote(id));
+    if (activeNoteID === id) {
+      history.replace('/');
+    }
   }
 
   const Component = responsive ? 'main' : 'section';
