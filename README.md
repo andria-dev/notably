@@ -1,44 +1,13 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Notably
 
-## Available Scripts
+An offline note-taking PWA built with React.js with persisted data via the browser's IndexedDB
 
-In the project directory, you can run:
+[![Netlify Status](https://api.netlify.com/api/v1/badges/84e7f8f7-5170-4857-b127-c0b8dd6f14c0/deploy-status)](https://app.netlify.com/sites/notably/deploys)
 
-### `npm start`
+### Tools used
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [idb-keyval](https://npm.im/idb-keyval) — an abstraction for Indexed DB that uses promises. All **saving/persistence** goes through here
+- [slate.js](https://github.com/ianstormtaylor/slate) — a robust content-editable editor that allows for rich-text editing. This is used as **the main editor for the web app**. I began the project using Facebook's [draft.js](https://npm.im/draft-js), however, it is has many flaws and seems to be a dying project
+- [use-dark-mode](https://npm.im/use-dark-mode) — a React hook for persisting a setting for dark mode that is initially based on `prefers-color-scheme` media query
+- [redux](https://npm.im/redux) — used as state management for React. Originally, I had attempted to use React's Context API to handle state management, and it worked, but it began to cause _performance issues_
+- [relative-time-format](https://npm.im/relative-time-format) — a polyfill for `Intl.RelativeTimeFormat` that is loaded dynamically when `Intl.RelativeTimeFormat` is missing. This was used to render a readable form of the time passed since the last edit
