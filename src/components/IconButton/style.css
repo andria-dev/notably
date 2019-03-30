@@ -1,7 +1,12 @@
 .IconButton {
+  --color: black;
+  --hover-bg: hsl(0, 0%, 90%);
+  --active-bg: hsl(0, 0%, 70%);
+
   display: flex;
   padding: 0.3rem;
 
+  color: var(--color);
   background: none;
 
   border: none;
@@ -14,13 +19,18 @@
 }
 
 .IconButton:hover {
-  background-color: hsl(0, 0%, 90%);
+  background-color: var(--hover-bg);
 }
 
 .IconButton:active {
-  background-color: hsl(0, 0%, 70%) !important;
+  background-color: var(--active-bg) !important;
 }
 
 .IconButton:focus {
-  background-color: hsl(0, 0%, 90%);
+  background-color: var(--hover-bg);
+}
+
+.dark-mode .IconButton {
+  --color: white;
+  --hover-bg: hsl(0, 0%, 50%);
 }
