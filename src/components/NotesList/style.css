@@ -28,19 +28,20 @@
   color: hsl(0, 0%, 40%);
 }
 
-.dark-mode .note__content {
+.dark-mode .note__content,
+.dark-mode .NotesList__note--active .note__content {
   color: hsl(0, 0%, 70%);
 }
 
 /* Interaction styles */
-.NotesList__note:hover,
-.NotesList__note:focus {
+.NotesList__note:not(.NotesList__note--active):hover,
+.NotesList__note:not(.NotesList__note--active):focus {
   background-color: hsl(217, 99%, 98%);
 }
 
-.dark-mode .NotesList__note:hover,
-.dark-mode .NotesList__note:focus {
-  background-color: hsl(217, 15%, 25%);
+.dark-mode .NotesList__note:not(.NotesList__note--active):hover,
+.dark-mode .NotesList__note:not(.NotesList__note--active):focus {
+  background-color: hsl(217, 40%, 22%);
 }
 
 /* Selected note styles */
@@ -63,6 +64,16 @@
 .NotesList__note--active .Tag {
   color: hsl(217, 40%, 35%);
   background-color: hsl(217, 65%, 87.5%);
+}
+
+/* Dark selected note styles */
+.dark-mode .NotesList__note.NotesList__note--active {
+  background-color: hsl(217, 35%, 44%);
+}
+
+.dark-mode .NotesList__note--active .note__title,
+.dark-mode .NotesList__note--active .note__modified {
+  color: white;
 }
 
 /* Responsive styles */
