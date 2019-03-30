@@ -30,25 +30,28 @@
 
   background-color: var(--background-mid);
 
-  overflow-y: overlay;
-  overflow-x: hidden;
+  overflow: visible;
 
   border-right: solid 1px rgba(0, 0, 0, 0.15);
 }
 
-.Note__sidebar::-webkit-scrollbar {
+.Note__sidebar > .NotesList {
+  overflow-y: scroll;
+}
+
+.Note__sidebar > .NotesList::-webkit-scrollbar {
   width: 6px;
 }
 
-.Note__sidebar::-webkit-scrollbar-thumb {
+.Note__sidebar > .NotesList::-webkit-scrollbar-thumb {
   background-color: hsl(0, 0%, 90%);
 }
 
-.dark-mode .Note__sidebar::-webkit-scrollbar-thumb {
+.dark-mode .Note__sidebar > .NotesList::-webkit-scrollbar-thumb {
   background-color: hsl(0, 0%, 20%);
 }
 
-.Note__sidebar::-webkit-scrollbar-track {
+.Note__sidebar > .NotesList::-webkit-scrollbar-track {
   box-shadow: none;
 }
 
