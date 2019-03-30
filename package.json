@@ -5,9 +5,6 @@
   "dependencies": {
     "@chbphone55/classnames": "^1.0.3",
     "clipboard-polyfill": "^2.7.0",
-    "draft-js": "^0.10.5",
-    "draft-js-code-custom": "^0.10.2",
-    "draft-js-prism": "^1.0.6",
     "idb-keyval": "^3.1.0",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
@@ -32,7 +29,6 @@
     "slate-schema-violations": "^0.1.39",
     "typescript": "^3.3.3",
     "use-dark-mode": "^2.3.1",
-    "use-debounce": "^0.0.9",
     "uuid": "^3.3.2"
   },
   "scripts": {
@@ -55,7 +51,6 @@
   ],
   "devDependencies": {
     "@types/dom-inputevent": "^1.0.4",
-    "@types/draft-js": "^0.10.29",
     "@types/is-hotkey": "^0.1.1",
     "@types/jest": "^24.0.11",
     "@types/node": "^11.11.4",
