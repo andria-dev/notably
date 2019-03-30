@@ -9,8 +9,12 @@ interface ITagProps {
   [s: string]: any;
 }
 
-function Tag({ children, className }: ITagProps) {
-  return <p className={classNames(className, 'Tag')}>{children}</p>;
+function Tag({ children, className, ...props }: ITagProps) {
+  return (
+    <p className={classNames(className, 'Tag')} {...props}>
+      {children}
+    </p>
+  );
 }
 
 export default memo(Tag);

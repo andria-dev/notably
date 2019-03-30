@@ -63,18 +63,25 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
                 })
               }}
             >
-              <Link to={`/note/${id}`} style={{ color: 'unset', textDecoration: 'none' }}>
+              <Link
+                to={`/note/${id}`}
+                style={{ color: 'unset', textDecoration: 'none' }}
+                aria-current={isActive}
+                aria-selected={isActive}
+              >
                 <article>
                   <Hx size={6} weight={2} className="note__title truncate">
                     {note.title}
                   </Hx>
                   <Hx size={6} weight={5} type="h2" className="note__modified truncate">
-                    {responsive ? 'Last modified' : ''} {note.timeSinceModified()}
+                    Last modified {note.timeSinceModified()}
                   </Hx>
                   {noteContentSnippet.length ? (
-                    <p className="note__content truncate">{noteContentSnippet}</p>
+                    <p className="note__content truncate" aria-hidden>
+                      {noteContentSnippet}
+                    </p>
                   ) : (
-                    <Tag>No content</Tag>
+                    <Tag aria-hidden>No content</Tag>
                   )}
                 </article>
               </Link>
