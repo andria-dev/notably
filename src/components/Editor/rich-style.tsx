@@ -32,7 +32,11 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
         </pre>
       );
     case 'paragraph':
-      return <p {...attributes}>{children}</p>;
+      return (
+        <p {...attributes} className="Editor__paragraph">
+          {children}
+        </p>
+      );
     case 'heading-one':
       return (
         <LabelledHx {...attributes} size={1}>

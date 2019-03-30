@@ -79,3 +79,7 @@
   color: hsl(212, 4%, 75%);
   border-left-color: hsl(210, 5%, 35%);
 }
+
+.Editor__paragraph {
+  margin: 0;
+}
