@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
@@ -11,9 +10,9 @@ async function loadRelativeTimeFormat() {
   }
 
   // @ts-ignore
-  const RelativeTimeFormat = await import('relative-time-format');
+  const RelativeTimeFormat = (await import('relative-time-format')).default;
   // @ts-ignore
-  const en: object = await import('relative-time-format/locale/en');
+  const en = (await import('relative-time-format/locale/en/')).default;
 
   RelativeTimeFormat.addLocale(en);
   // @ts-ignore
@@ -25,7 +24,7 @@ async function loadRequestIdleCallback() {
   if (!window.requestIdleCallback) {
     const {
       requestIdleCallback,
-      cancelIdleCallback,
+      cancelIdleCallback
     } = await import('./polyfills/requestIdleCallback');
     // @ts-ignore
     window.requestIdleCallback = requestIdleCallback;
@@ -45,14 +44,13 @@ async function loadClipboard() {
 }
 
 // wait for polyfills
-Promise.all([
-  loadRelativeTimeFormat(),
-  loadRequestIdleCallback(),
-  loadClipboard(),
-]).then(() => {
-  // then render
-  ReactDOM.render(<App />, document.getElementById('root'));
-});
+
+Promise.all([loadRelativeTimeFormat(), loadRequestIdleCallback(), loadClipboard()])
+  .then(() => import('./App'))
+  .then(({ default: App }) => {
+    // then render
+    ReactDOM.render(<App />, document.getElementById('root'));
+  });
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
