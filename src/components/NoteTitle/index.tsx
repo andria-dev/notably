@@ -17,7 +17,7 @@ function NoteTitle() {
   useEffect(() => {
     setTitle(note.title);
     return save;
-  }, [id, note.title, save]);
+  }, [note.title, save]);
 
   return (
     <LabelledHx

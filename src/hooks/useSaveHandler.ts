@@ -63,6 +63,6 @@ export function useSaveHandler<T>(
     setSaved,
     id,
     actionCreator,
-    args
+    ...args
   ]);
 }
