@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, createContext, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -10,6 +10,9 @@ import Editor from '../../components/Editor';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 import NoteTitle from '../../components/NoteTitle';
+
+import { SavedContext } from '../../contexts';
+
 import './style.css';
 
 interface INoteProps {
@@ -18,6 +21,7 @@ interface INoteProps {
 }
 const Note = memo(({ id, history }: INoteProps) => {
   const goToHome = useCallback(() => history.push('/'), [history]);
+  const [saved, setSaved] = useState(true);
 
   return (
     <div className="Note">
@@ -31,13 +35,16 @@ const Note = memo(({ id, history }: INoteProps) => {
         <Header style={{ boxShadow: 'none', backgroundColor: 'transparent' }}>
           <NoteTitle />
           <div className="Note__header-actions">
+            <p>{saved ? 'Saved' : 'Not saved'}</p>
             <DarkModeToggle className="Note__dark-mode-toggle" />
             <IconButton title="Close" onClick={goToHome}>
               <MdClose size={24} />
             </IconButton>
           </div>
         </Header>
-        <Editor />
+        <SavedContext.Provider value={setSaved}>
+          <Editor />
+        </SavedContext.Provider>
       </div>
     </div>
   );

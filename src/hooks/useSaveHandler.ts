@@ -1,5 +1,6 @@
 import { debounce } from 'mini-debounce';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
+import { SavedContext } from '../contexts';
 import { store } from '../store';
 
 type DebouncedSave<T> = (newValue: T) => void;
@@ -10,6 +11,7 @@ type Save = () => void;
  */
 export function saveHandler<T>(
   debounceDelay: number,
+  setSaved: React.Dispatch<React.SetStateAction<boolean>>,
   id: string,
   actionCreator: CallableFunction,
   ...args: any[]
@@ -19,6 +21,7 @@ export function saveHandler<T>(
 
   async function updateStore(newValue: T) {
     const action = await actionCreator(id, newValue, ...args);
+    setSaved(true);
     store.dispatch(action);
   }
   updateStore.debounced = debounce(updateStore, debounceDelay);
@@ -28,6 +31,7 @@ export function saveHandler<T>(
    * after the specified amount of time.
    */
   const debouncedSave = (newValue: T) => {
+    setSaved(false);
     value = newValue;
     timeoutID = updateStore.debounced(newValue);
   };
@@ -52,9 +56,13 @@ export function useSaveHandler<T>(
   actionCreator: CallableFunction,
   ...args: any[]
 ): [DebouncedSave<T>, Save] {
-  return useMemo(() => saveHandler<T>(debounceDelay, id, actionCreator), [
+  const setSaved = useContext(SavedContext);
+
+  return useMemo(() => saveHandler<T>(debounceDelay, setSaved, id, actionCreator, ...args), [
     debounceDelay,
+    setSaved,
     id,
-    actionCreator
+    actionCreator,
+    args
   ]);
 }

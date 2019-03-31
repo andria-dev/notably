@@ -12,12 +12,12 @@ function NoteTitle() {
   const note = state.notes[id];
 
   const [title, setTitle] = useState(note.title);
-  const [setter, unmounted] = useSaveHandler<string>(2000, id, updateTitle);
+  const [debouncedSave, save] = useSaveHandler<string>(2000, id, updateTitle);
 
   useEffect(() => {
     setTitle(note.title);
-    return unmounted;
-  }, [id, note.title, unmounted]);
+    return save;
+  }, [id, note.title, save]);
 
   return (
     <LabelledHx
@@ -27,7 +27,7 @@ function NoteTitle() {
       onChange={(event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setTitle(value);
-        setter(value);
+        debouncedSave(value);
       }}
       className="NoteTitle"
       id={id}

@@ -7,3 +7,5 @@ export const DarkModeContext: Context<DarkMode> = createContext({
   disable: () => {},
   toggle: () => {}
 });
+
+export const SavedContext = createContext<React.Dispatch<React.SetStateAction<boolean>>>(() => {});
