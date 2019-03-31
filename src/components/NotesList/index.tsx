@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useMemo } from 'react';
+import React, { Fragment, useContext, useMemo, useCallback } from 'react';
 // @ts-ignore
 import { __RouterContext as RouterContext } from 'react-router';
 
@@ -12,6 +12,8 @@ import Tag from '../Tag';
 import { removeNote, useStore } from '../../store';
 import './contextmenu.css';
 import './style.css';
+
+const LinkStyles = { color: 'unset', textDecoration: 'none' };
 
 interface INotesListProps {
   className?: any;
@@ -32,12 +34,15 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
   );
 
   const { history } = useContext(RouterContext);
-  async function handleRemoveNote(event: Event, { id }: { id: string }) {
-    dispatch(await removeNote(id));
-    if (activeNoteID === id) {
-      history.replace('/');
-    }
-  }
+  const handleRemoveNote = useCallback(
+    async (event: Event, { id }: { id: string }) => {
+      dispatch(await removeNote(id));
+      if (activeNoteID === id) {
+        history.replace('/');
+      }
+    },
+    [activeNoteID, dispatch, history]
+  );
 
   const Component = responsive ? 'main' : 'section';
 
@@ -65,7 +70,7 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
             >
               <Link
                 to={`/note/${id}`}
-                style={{ color: 'unset', textDecoration: 'none' }}
+                style={LinkStyles}
                 aria-current={isActive}
                 aria-selected={isActive}
               >
