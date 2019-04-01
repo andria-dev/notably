@@ -33,7 +33,9 @@ const Note = memo(({ id, history }: INoteProps) => {
       </section>
       <div className="Note__main">
         <Header style={{ boxShadow: 'none', backgroundColor: 'transparent' }}>
-          <NoteTitle />
+          <SavedContext.Provider value={setSaved}>
+            <NoteTitle />
+          </SavedContext.Provider>
           <div className="Note__header-actions">
             <p>{saved ? 'Saved' : 'Not saved'}</p>
             <DarkModeToggle className="Note__dark-mode-toggle" />
