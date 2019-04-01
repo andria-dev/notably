@@ -102,3 +102,17 @@
 .Note__dark-mode-toggle {
   margin-right: 1rem;
 }
+
+.Note__saved-indicator {
+  margin-right: 0.5rem;
+}
+.Note__saved-indicator > circle {
+  fill: transparent;
+  stroke: hsl(217, 99%, 70%);
+  stroke-width: 12;
+
+  transition: fill 0.2s ease-out;
+}
+.Note__saved-indicator--saved > circle {
+  fill: hsl(217, 99%, 70%);
+}

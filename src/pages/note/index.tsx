@@ -13,6 +13,7 @@ import NoteTitle from '../../components/NoteTitle';
 
 import { SavedContext } from '../../contexts';
 
+import classNames from '@chbphone55/classnames';
 import './style.css';
 
 interface INoteProps {
@@ -37,7 +38,18 @@ const Note = memo(({ id, history }: INoteProps) => {
             <NoteTitle />
           </SavedContext.Provider>
           <div className="Note__header-actions">
-            <p>{saved ? 'Saved' : 'Not saved'}</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="0.75rem"
+              height="0.75rem"
+              viewBox="0 0 100 100"
+              className={classNames('Note__saved-indicator', {
+                'Note__saved-indicator--saved': saved
+              })}
+              aria-label={saved ? 'Note is saved' : 'Note is unsaved'}
+            >
+              <circle r="44" cx="50" cy="50" />
+            </svg>
             <DarkModeToggle className="Note__dark-mode-toggle" />
             <IconButton title="Close" onClick={goToHome}>
               <MdClose size={24} />
