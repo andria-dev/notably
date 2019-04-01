@@ -1,5 +1,5 @@
 import { Dispatch, ReducerState } from 'react';
-import { useReduxDispatch, useReduxState } from 'react-hooks-easy-redux';
+import { useReduxDispatch, useReduxState } from 'reactive-react-redux';
 import { createStore } from 'redux';
 import Note from '../models/Note';
 
@@ -97,5 +97,5 @@ export function useStore(): [IState, Dispatch<IAction>] {
   return [useReduxState(), useReduxDispatch()];
 }
 
-export { ReduxProvider } from 'react-hooks-easy-redux';
+export { ReduxProvider } from 'reactive-react-redux';
 export * from './actions';
