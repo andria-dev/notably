@@ -72,7 +72,9 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
                 to={`/note/${id}`}
                 style={LinkStyles}
                 aria-current={isActive}
-                aria-selected={isActive}
+                aria-label={
+                  isActive ? `Current note, "${note.title}"` : `Go to note "${note.title}"`
+                }
               >
                 <article>
                   <Hx size={6} weight={2} className="note__title truncate">
