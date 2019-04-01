@@ -43,12 +43,18 @@
       "react-hooks"
     ]
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
+  "browserslist": {
+    "production": [
+      "last 4 chrome versions",
+      "last 4 firefox versions",
+      "last 4 safari versions"
+    ],
+    "development": [
+      "last 4 chrome versions",
+      "last 4 firefox versions",
+      "last 4 safari versions"
+    ]
+  },
   "devDependencies": {
     "@types/dom-inputevent": "^1.0.4",
     "@types/is-hotkey": "^0.1.1",
