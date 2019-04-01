@@ -1,7 +1,7 @@
 import { Context, createContext } from 'react';
 import { DarkMode } from 'use-dark-mode';
 
-export const DarkModeContext: Context<DarkMode> = createContext({
+export const DarkModeContext = createContext<DarkMode>({
   value: false,
   enable: () => {},
   disable: () => {},
