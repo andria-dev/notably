@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useRef } from 'react';
 import { IAction, updateState, useStore } from '../../store';
 
-import { Value, Operation } from 'slate';
+import { Operation, Value } from 'slate';
 import { Editor as SlateEditor } from 'slate-react';
 import { useSaveHandler } from '../../hooks/';
 
