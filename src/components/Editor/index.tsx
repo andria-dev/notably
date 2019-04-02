@@ -69,6 +69,7 @@ function Editor() {
       if (isSaveHotkey(event)) {
         event.preventDefault();
         save();
+        import('./play-save-sound').then(({ play }) => play());
       }
     },
     [save]
