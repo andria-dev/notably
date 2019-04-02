@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useRef } from 'react';
 import { IAction, updateState, useStore } from '../../store';
 
-import { Value } from 'slate';
+import { Value, Operation } from 'slate';
 import { Editor as SlateEditor } from 'slate-react';
 import { useSaveHandler } from '../../hooks/';
 
@@ -41,9 +41,13 @@ function Editor() {
   const [editorState, dispatch] = useReducer(EditorStateReducer, fixValue(note.state));
   const [debouncedSave, save] = useSaveHandler<Value>(2000, id, updateState, true);
   const handleChange = useCallback(
-    ({ value }) => {
+    ({ value, operations }) => {
       dispatch({ type: types.CHANGE, payload: value });
-      debouncedSave(value);
+
+      // only save if the content has changed (i.e. not just moving cursor)
+      if (operations.some((operation: Operation) => operation.type !== 'set_selection')) {
+        debouncedSave(value);
+      }
     },
     [dispatch, debouncedSave]
   );
