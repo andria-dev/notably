@@ -16,6 +16,8 @@ import { SavedContext } from '../../contexts';
 import classNames from '@chbphone55/classnames';
 import './style.css';
 
+const HeaderStyles = { boxShadow: 'none', backgroundColor: 'transparent' };
+
 interface INoteProps {
   id: string;
   history: RouteChildrenProps['history'];
@@ -33,7 +35,7 @@ const Note = memo(({ id, history }: INoteProps) => {
         <NotesList activeID={id} />
       </section>
       <div className="Note__main">
-        <Header style={{ boxShadow: 'none', backgroundColor: 'transparent' }}>
+        <Header style={HeaderStyles}>
           <SavedContext.Provider value={setSaved}>
             <NoteTitle />
           </SavedContext.Provider>
@@ -46,8 +48,8 @@ const Note = memo(({ id, history }: INoteProps) => {
               className={classNames('Note__saved-indicator', {
                 'Note__saved-indicator--saved': saved
               })}
-              aria-label={saved ? 'Note is saved' : 'Note is unsaved'}
             >
+              <title>{saved ? 'Note is saved' : 'Note is unsaved'}</title>
               <circle r="44" cx="50" cy="50" />
             </svg>
             <DarkModeToggle className="Note__dark-mode-toggle" />

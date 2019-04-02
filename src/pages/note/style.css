@@ -104,7 +104,7 @@
 }
 
 .Note__saved-indicator {
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
 }
 .Note__saved-indicator > circle {
   fill: transparent;
