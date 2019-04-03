@@ -168,8 +168,6 @@ function onEnter(event: Event, editor: Editor, next: () => any, shift: boolean) 
   } else {
     return editor.splitBlock(1).setBlocks(newBlockType);
   }
-
-  // return next();
 }
 
 /**
