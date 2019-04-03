@@ -114,6 +114,8 @@ function getType(chars: string) {
       return 'heading-five';
     case '######':
       return 'heading-six';
+    case '```':
+      return 'code-block';
     default:
       return null;
   }
@@ -145,6 +147,29 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
   }
 
   editor.moveFocusToStartOfNode(startBlock).delete();
+}
+
+function onEnter(event: Event, editor: Editor, next: () => any, shift: boolean) {
+  const selection = editor.value.selection;
+  if (selection.isExpanded) {
+    return next();
+  }
+
+  const startBlock = editor.value.startBlock;
+  const newBlockType = startBlock.type === 'code-block' ? 'code-block' : 'paragraph';
+
+  if (shift) {
+    return editor
+      .moveToEndOfBlock()
+      .splitBlock(1)
+      .setBlocks(newBlockType);
+  } else if (startBlock.text === '```') {
+    return editor.splitBlock(1).setBlocks('code-block');
+  } else {
+    return editor.splitBlock(1).setBlocks(newBlockType);
+  }
+
+  // return next();
 }
 
 /**
@@ -215,6 +240,8 @@ const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
 const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
 const isSpaceHotkey = isKeyHotkey('shift?+space');
 const isBackspaceHotkey = isKeyHotkey('shift?+backspace');
+const isEnterKey = isKeyHotkey('enter');
+const isShiftEnterKey = isKeyHotkey('shift+enter');
 
 /**
  * Handles key-down events and applies different mark and node-types
@@ -240,6 +267,10 @@ export function onKeyDown(event: any, editor: Editor, next: () => any) {
     return onSpace(event, editor, next);
   } else if (isBackspaceHotkey(event)) {
     return onBackspace(event, editor, next);
+  } else if (isEnterKey(event)) {
+    return onEnter(event, editor, next, false);
+  } else if (isShiftEnterKey(event)) {
+    return onEnter(event, editor, next, true);
   } else {
     return next();
   }
