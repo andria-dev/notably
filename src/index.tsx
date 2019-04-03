@@ -35,6 +35,7 @@ async function loadRequestIdleCallback() {
 
 async function loadClipboard() {
   if (!navigator.clipboard) {
+    // @ts-ignore
     navigator.clipboard = {};
   }
 
