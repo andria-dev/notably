@@ -163,8 +163,8 @@ function onEnter(event: Event, editor: Editor, next: () => any, shift: boolean) 
       .moveToEndOfBlock()
       .splitBlock(1)
       .setBlocks(newBlockType);
-  } else if (startBlock.text === '```') {
-    return editor.splitBlock(1).setBlocks('code-block');
+  } else if (startBlock.text.slice(0, selection.start.offset) === '```') {
+    return editor.deleteBackward(selection.start.offset).setBlocks('code-block');
   } else {
     return editor.splitBlock(1).setBlocks(newBlockType);
   }
