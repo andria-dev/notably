@@ -4,8 +4,6 @@ import { Block, Editor } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 
 // @ts-ignore
-// import PluginEditCode from 'slate-edit-code';
-// @ts-ignore
 import PluginPrism from 'slate-prism';
 
 import 'prismjs/themes/prism-okaidia.css';
@@ -14,7 +12,7 @@ import { LabelledHx } from '../LabelledHx';
 export const plugins = [
   PluginPrism({
     onlyIn: (block: Block) => block.type === 'code-block',
-    getSyntax: (block: Block) => block.data.get('syntax')
+    getSyntax: () => 'javascript' /* (block: Block) => block.data.get('syntax') */
   })
 ];
 
@@ -27,7 +25,7 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
   switch (node.type) {
     case 'code-block':
       return (
-        <pre>
+        <pre className="Editor__code-block">
           <code {...attributes}>{children}</code>
         </pre>
       );

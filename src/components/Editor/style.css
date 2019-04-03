@@ -68,7 +68,6 @@
 }
 
 .Editor__blockquote {
-  margin: 0;
   padding: 0 1rem;
 
   color: hsl(212, 8%, 45%);
@@ -80,6 +79,8 @@
   border-left-color: hsl(210, 5%, 35%);
 }
 
-.Editor__paragraph {
+.Editor__blockquote,
+.Editor__paragraph,
+.Editor__code-block {
   margin: 0;
 }
