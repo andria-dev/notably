@@ -25,7 +25,7 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
   switch (node.type) {
     case 'code-block':
       return (
-        <pre className="Editor__code-block">
+        <pre className="Editor__code-block language-javascript">
           <code {...attributes}>{children}</code>
         </pre>
       );
@@ -154,17 +154,20 @@ function onEnter(event: Event, editor: Editor, next: () => any, shift: boolean) 
   }
 
   const startBlock = editor.value.startBlock;
-  const newBlockType = startBlock.type === 'code-block' ? 'code-block' : 'paragraph';
+
+  const insertNewLine =
+    startBlock.type === 'code-block'
+      ? () => editor.insertText('\n')
+      : () => editor.splitBlock(1).setBlocks('paragraph');
 
   if (shift) {
-    return editor
-      .moveToEndOfBlock()
-      .splitBlock(1)
-      .setBlocks(newBlockType);
+    editor.moveToEndOfBlock();
+    insertNewLine();
+    return;
   } else if (startBlock.text.slice(0, selection.start.offset) === '```') {
     return editor.deleteBackward(selection.start.offset).setBlocks('code-block');
   } else {
-    return editor.splitBlock(1).setBlocks(newBlockType);
+    return insertNewLine();
   }
 }
 
