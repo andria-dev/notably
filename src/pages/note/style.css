@@ -104,6 +104,9 @@
 }
 
 .Note__saved-indicator {
+  --size: 0.75rem;
+  width: var(--size);
+  height: var(--size);
   margin-right: 0.75rem;
 }
 .Note__saved-indicator > circle {

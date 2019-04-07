@@ -42,8 +42,6 @@ const Note = memo(({ id, history }: INoteProps) => {
           <div className="Note__header-actions">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="0.75rem"
-              height="0.75rem"
               viewBox="0 0 100 100"
               className={classNames('Note__saved-indicator', {
                 'Note__saved-indicator--saved': saved
