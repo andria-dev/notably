@@ -6,7 +6,7 @@ import { isKeyHotkey } from 'is-hotkey';
 // @ts-ignore
 import PluginPrism from 'slate-prism';
 
-import 'prismjs/themes/prism-okaidia.css';
+import 'prismjs/themes/prism-tomorrow.css';
 import { LabelledHx } from '../LabelledHx';
 
 export const plugins = [
