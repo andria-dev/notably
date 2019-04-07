@@ -12,7 +12,7 @@ import { LabelledHx } from '../LabelledHx';
 export const plugins = [
   PluginPrism({
     onlyIn: (block: Block) => block.type === 'code-block',
-    getSyntax: () => 'javascript' /* (block: Block) => block.data.get('syntax') */
+    getSyntax: (block: Block) => block.data.get('syntax') || 'javascript'
   })
 ];
 

@@ -35,7 +35,7 @@
   pointer-events: none;
 }
 
-.Editor__code-block > pre {
+.Editor__code-block * {
   margin: 0;
   font-family: 'Roboto Mono', Menlo, Monaco, 'Courier New', Courier, monospace;
   font-size: 0.9rem;
