@@ -1,7 +1,8 @@
 // tslint:disable: ordered-imports
 import React from 'react';
 import { Block, Editor, Range, Point } from 'slate';
-import isHotkey, { isKeyHotkey } from 'is-hotkey';
+import { List } from 'immutable';
+import { isKeyHotkey } from 'is-hotkey';
 
 // @ts-ignore
 import PluginPrism from 'slate-prism';
@@ -172,18 +173,36 @@ function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
 }
 
 function onTab(event: any, editor: Editor, next: () => any, shift: boolean) {
-  if (!shift) {
-    return editor.insertText('  ');
-  }
-
   const { startBlock, selection } = editor.value;
 
   if (startBlock.type !== 'code-block') {
     return;
   }
 
-  editor.focus();
+  const { anchor, focus } = selection;
+  const isPrimitive = (x: any): boolean => ['string', 'number'].includes(typeof x) || x === null;
+  if ((isPrimitive(anchor.path) || isPrimitive(focus.path)) && anchor.path !== focus.path) {
+    return;
+  }
+
+  if (
+    anchor.path instanceof List &&
+    focus.path instanceof List &&
+    // @ts-ignore
+    (anchor.path.size !== focus.path.size ||
+      // @ts-ignore
+      !anchor.path.every((it: number, index: number) => focus.path.get(index) === it))
+  ) {
+    return;
+  }
+
   event.preventDefault();
+
+  if (!shift) {
+    return editor.insertText('  ');
+  }
+
+  editor.focus();
 
   const selectionStart = selection.start.offset;
   const beginningOfLine = startBlock.text.lastIndexOf('\n', selectionStart) + 1;
