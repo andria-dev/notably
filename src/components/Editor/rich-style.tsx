@@ -1,7 +1,7 @@
 // tslint:disable: ordered-imports
 import React from 'react';
-import { Block, Editor } from 'slate';
-import { isKeyHotkey } from 'is-hotkey';
+import { Block, Editor, Range, Point } from 'slate';
+import isHotkey, { isKeyHotkey } from 'is-hotkey';
 
 // @ts-ignore
 import PluginPrism from 'slate-prism';
@@ -147,28 +147,67 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
   editor.moveFocusToStartOfNode(startBlock).delete();
 }
 
-function onEnter(event: Event, editor: Editor, next: () => any, shift: boolean) {
-  const selection = editor.value.selection;
+const isModEnterKey = isKeyHotkey('mod+enter');
+function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
+  const { startBlock, selection } = editor.value;
   if (selection.isExpanded) {
     return next();
   }
-
-  const startBlock = editor.value.startBlock;
 
   const insertNewLine =
     startBlock.type === 'code-block'
       ? () => editor.insertText('\n')
       : () => editor.splitBlock(1).setBlocks('paragraph');
 
-  if (shift) {
-    editor.moveToEndOfBlock();
-    insertNewLine();
-    return;
+  if (startBlock.type === 'code-block' && isModEnterKey(event)) {
+    const { offset } = selection.anchor;
+    const newlinePosition = startBlock.text.indexOf('\n', offset);
+
+    return editor.moveForward(newlinePosition - offset).insertText('\n');
   } else if (startBlock.text.slice(0, selection.start.offset) === '```') {
     return editor.deleteBackward(selection.start.offset).setBlocks('code-block');
   } else {
     return insertNewLine();
   }
+}
+
+function onTab(event: any, editor: Editor, next: () => any, shift: boolean) {
+  if (!shift) {
+    return editor.insertText('  ');
+  }
+
+  const { startBlock, selection } = editor.value;
+
+  if (startBlock.type !== 'code-block') {
+    return;
+  }
+
+  editor.focus();
+  event.preventDefault();
+
+  const selectionStart = selection.start.offset;
+  const beginningOfLine = startBlock.text.lastIndexOf('\n', selectionStart) + 1;
+
+  if (startBlock.text.slice(beginningOfLine, beginningOfLine + 2) !== '  ') {
+    return;
+  }
+
+  const { key } = startBlock.getFirstText()!;
+
+  editor.deleteAtRange(
+    Range.fromJSON({
+      anchor: Point.fromJSON({
+        key,
+        offset: beginningOfLine,
+        object: 'point'
+      }),
+      focus: Point.fromJSON({
+        key,
+        offset: beginningOfLine + 2,
+        object: 'point'
+      })
+    })
+  );
 }
 
 /**
@@ -239,8 +278,9 @@ const isDeletedHotkey = isKeyHotkey('mod+shift+backspace');
 const isInsertedHotkey = isKeyHotkey('mod+shift+enter');
 const isSpaceHotkey = isKeyHotkey('shift?+space');
 const isBackspaceHotkey = isKeyHotkey('shift?+backspace');
-const isEnterKey = isKeyHotkey('enter');
-const isShiftEnterKey = isKeyHotkey('shift+enter');
+const isEnterKey = isKeyHotkey('mod?+shift?+enter');
+const isTabKey = isKeyHotkey('tab');
+const isShiftTabKey = isKeyHotkey('shift+tab');
 
 /**
  * Handles key-down events and applies different mark and node-types
@@ -268,8 +308,10 @@ export function onKeyDown(event: any, editor: Editor, next: () => any) {
     return onBackspace(event, editor, next);
   } else if (isEnterKey(event)) {
     return onEnter(event, editor, next, false);
-  } else if (isShiftEnterKey(event)) {
-    return onEnter(event, editor, next, true);
+  } else if (isTabKey(event)) {
+    return onTab(event, editor, next, false);
+  } else if (isShiftTabKey(event)) {
+    return onTab(event, editor, next, true);
   } else {
     return next();
   }
