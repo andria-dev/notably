@@ -1,6 +1,6 @@
 // tslint:disable: ordered-imports
 import React from 'react';
-import { Block, Editor, Range, Point } from 'slate';
+import { Block, Editor, Range, Point, Operation } from 'slate';
 import { List } from 'immutable';
 import { isKeyHotkey } from 'is-hotkey';
 
@@ -207,40 +207,33 @@ function onTab(event: any, editor: Editor, next: () => any, shift: boolean) {
 
   event.preventDefault();
 
-  if (!shift) {
-    // indent in-place (no selection)
-    if (anchor.offset === focus.offset) {
-      return editor.insertText('  ');
-    }
-
-    // indent whole line(s) (selection exists)
+  if (!shift && anchor.offset === focus.offset) {
+    return editor.insertText('  ');
   }
 
-  editor.focus();
-
-  const selectionStart = selection.start.offset;
-  const beginningOfLine = startBlock.text.lastIndexOf('\n', selectionStart) + 1;
-
-  if (startBlock.text.slice(beginningOfLine, beginningOfLine + 2) !== '  ') {
-    return;
-  }
-
+  const { text } = startBlock;
   const { key } = startBlock.getFirstText()!;
+  const selectionStart = selection.start.offset;
+  const selectionEnd = selection.end.offset;
 
-  editor.deleteAtRange(
-    Range.fromJSON({
-      anchor: Point.fromJSON({
-        key,
-        offset: beginningOfLine,
-        object: 'point'
-      }),
-      focus: Point.fromJSON({
-        key,
-        offset: beginningOfLine + 2,
-        object: 'point'
-      })
-    })
-  );
+  let beginningOfLine = text.lastIndexOf('\n', selectionStart - 1) + 1;
+
+  editor.withoutNormalizing(() => {
+    for (const line of text.slice(beginningOfLine, selectionEnd).split('\n')) {
+      if (shift) {
+        if (line.slice(0, 2) !== '  ') {
+          beginningOfLine += line.length + 1;
+          continue;
+        }
+
+        editor.removeTextByKey(key, beginningOfLine, 2);
+      } else {
+        editor.insertTextByKey(key, beginningOfLine, '  ');
+      }
+
+      beginningOfLine += line.length + 1 + (shift ? -2 : 2);
+    }
+  });
 }
 
 /**
