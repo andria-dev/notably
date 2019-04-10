@@ -149,6 +149,11 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
 }
 
 const isModEnterKey = isKeyHotkey('mod+enter');
+/**
+ * On enter, if within a code-block, insert a newline character.
+ * If the text before the cursor is *three backticks* then create a code-block.
+ * Otherwise, split out of the block and create a paragraph.
+ */
 function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
   const { startBlock, selection } = editor.value;
   if (selection.isExpanded) {
@@ -203,7 +208,12 @@ function onTab(event: any, editor: Editor, next: () => any, shift: boolean) {
   event.preventDefault();
 
   if (!shift) {
-    return editor.insertText('  ');
+    // indent in-place (no selection)
+    if (anchor.offset === focus.offset) {
+      return editor.insertText('  ');
+    }
+
+    // indent whole line(s) (selection exists)
   }
 
   editor.focus();
