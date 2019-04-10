@@ -172,6 +172,10 @@ function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
   }
 }
 
+/**
+ * On tab, indent 2 spaces. If shift was held down, un-indent the line 2 spaces.
+ * Multi-line (un-)indentation is supported.
+ */
 function onTab(event: any, editor: Editor, next: () => any, shift: boolean) {
   const { startBlock, selection } = editor.value;
 
