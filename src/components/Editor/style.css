@@ -1,38 +1,13 @@
-.Editor {
+.Editor--wrapper {
   padding: 0 1.5rem;
   height: 100%;
   font-size: 1rem;
   font-weight: normal;
 }
 
-.DraftEditor-root,
-.DraftEditor-editorContainer {
-  display: inline;
-}
-
-.public-DraftEditor-content {
-  /* 100% - height-of(.Controls) - margin-bottom-of(.Controls) */
-  min-height: calc(100% - 2.625rem - 1rem);
-}
-
-.public-DraftEditor-content
-  > [data-contents]
-  > [data-block]:first-child:last-child
-  > div[data-offset-key]:first-child:last-child
-  > span[data-offset-key]:first-child:last-child
-  br[data-text]:first-child:last-child {
-  content: '';
-}
-
-.public-DraftEditor-content
-  > [data-contents]
-  > [data-block]:first-child:last-child
-  > div[data-offset-key]:first-child:last-child
-  > span[data-offset-key]:first-child:last-child
-  br[data-text]:first-child:last-child::after {
-  content: 'Write a tutorial, or create a diary...';
-  opacity: 0.5;
-  pointer-events: none;
+.Editor {
+  display: block;
+  min-height: 100%;
 }
 
 .Editor__code-block * {

@@ -38,14 +38,26 @@ function Editor() {
   const idRef = useRef(id);
   const note = state.notes[id];
 
-  const [editorState, dispatch] = useReducer(EditorStateReducer, fixValue(note.state));
-  const [debouncedSave, save] = useSaveHandler<Value>(2000, id, updateState, true);
+  const [editorState, dispatch] = useReducer(
+    EditorStateReducer,
+    fixValue(note.state)
+  );
+  const [debouncedSave, save] = useSaveHandler<Value>(
+    2000,
+    id,
+    updateState,
+    true
+  );
   const handleChange = useCallback(
     ({ value, operations }) => {
       dispatch({ type: types.CHANGE, payload: value });
 
       // only save if the content has changed (i.e. not just moving cursor)
-      if (operations.some((operation: Operation) => operation.type !== 'set_selection')) {
+      if (
+        operations.some(
+          (operation: Operation) => operation.type !== 'set_selection'
+        )
+      ) {
         debouncedSave(value);
       }
     },
@@ -85,14 +97,16 @@ function Editor() {
   }, [saveListener]);
 
   return (
-    <main className="Editor">
+    <main className="Editor--wrapper">
       <SlateEditor
+        className="Editor"
         value={editorState}
         onChange={handleChange}
         onKeyDown={onKeyDown}
         renderNode={renderNode}
         renderMark={renderMark}
         plugins={plugins}
+        placeholder="Write a tutorial, or create a diary..."
       />
     </main>
   );
