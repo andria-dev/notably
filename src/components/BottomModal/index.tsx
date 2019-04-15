@@ -1,7 +1,9 @@
 import React from 'react';
-import ReactModal from 'react-modal';
 
 import { animated, useTransition } from 'react-spring';
+import ModalBackdrop from '../ModalBackdrop';
+import ModalPortal from '../ModalPortal';
+import './style.css';
 
 interface IProps extends ReactModal.Props {
   children?: JSX.Element;
@@ -10,35 +12,29 @@ interface IProps extends ReactModal.Props {
 function BottomModal({ children, ...props }: IProps) {
   const transition = useTransition(props.isOpen, null, {
     from: {
-      position: 'absolute',
-      bottom: 0,
-      transform: 'translateY(100%)'
+      transform: 'translateY(100%) translateX(-50%)'
     },
     enter: {
-      transform: 'translateY(100%)'
+      transform: 'translateY(0%) translateX(-50%)'
     },
     leave: {
-      transform: 'translateY(0%)'
-    }
+      transform: 'translateY(100%) translateX(-50%)'
+    },
+    config: { mass: 1, tension: 200, friction: 26 }
   });
 
   return (
-    <ReactModal
-      className="BottomModal"
-      overlayClassName="BottomModal-overlay"
-      shouldCloseOnEsc={true}
-      shouldCloseOnOverlayClick={true}
-      {...props}
-    >
-      {transition.map(
-        ({ item, key, props: style }) =>
-          item && (
-            <animated.div key={key} style={style}>
+    <ModalPortal>
+      <ModalBackdrop className="BottomModal__backdrop">
+        {transition.map(({ item, key, props: style }) =>
+          item ? (
+            <animated.div className="BottomModal" key={key} style={style}>
               {children}
             </animated.div>
-          )
-      )}
-    </ReactModal>
+          ) : null
+        )}
+      </ModalBackdrop>
+    </ModalPortal>
   );
 }
 

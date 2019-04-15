@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 
 import Note from '../../models/Note';
 import { addNote, useStore } from '../../store';
@@ -12,10 +12,16 @@ import Hx from '../../components/Hx';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
 
+import BottomModal from '../../components/BottomModal';
 import './style.css';
 
 function Home({ history }: RouteChildrenProps) {
   const [, dispatch] = useStore();
+  const [isSettingsOpen, setSettingsOpen] = useState(false);
+
+  const toggleSettingOpen = useCallback(() => setSettingsOpen(prev => !prev), [
+    setSettingsOpen
+  ]);
 
   async function createNote() {
     const action = await addNote(new Note());
@@ -32,7 +38,7 @@ function Home({ history }: RouteChildrenProps) {
           <DarkModeToggle className="Home__dark-mode-toggle" />
           {/* TODO: build menu component that pops up from bottom of screen */}
           {/* TODO: hook up settings button to said menu component */}
-          <IconButton title="Open settings">
+          <IconButton title="Open settings" onClick={toggleSettingOpen}>
             <MdSettings size={24} />
           </IconButton>
         </div>
@@ -44,6 +50,10 @@ function Home({ history }: RouteChildrenProps) {
         <MdAdd size={24} style={{ marginRight: '0.5rem' }} />
         New note
       </FAB>
+
+      <BottomModal isOpen={isSettingsOpen} onRequestClose={toggleSettingOpen}>
+        <Hx size={3}>Settings</Hx>
+      </BottomModal>
     </div>
   );
 }
