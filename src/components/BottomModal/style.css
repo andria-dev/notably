@@ -1,14 +1,5 @@
-.BottomModal__overlay {
-  background-color: hsla(0, 0%, 0%, 0.5);
-  position: absolute;
-  top: 0;
-  left: 0;
-
+.BottomModal__backdrop {
   overflow: hidden;
-
-  width: 100vw;
-  height: 100vh;
-  z-index: 999;
 }
 
 .BottomModal {

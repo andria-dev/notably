@@ -1,8 +1,9 @@
+import classNames from '@chbphone55/classnames';
 import React from 'react';
 import './style.css';
 
-function ModalBackdrop(props: any) {
-  return <div className="ModalBackdrop" {...props} />;
+function ModalBackdrop({ className, ...props }: any) {
+  return <div className={classNames('ModalBackdrop', className)} {...props} />;
 }
 
 export default ModalBackdrop;
