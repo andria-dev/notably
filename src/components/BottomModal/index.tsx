@@ -8,6 +8,7 @@ import './style.css';
 interface IProps {
   children?: JSX.Element;
   isOpen: boolean;
+  onRequestClose: () => void;
 }
 
 function BottomModal({ children, isOpen, ...props }: IProps) {
