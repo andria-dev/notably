@@ -1,8 +1,9 @@
+import classNames from '@chbphone55/classnames';
 import React, { Fragment, useCallback, useContext, useMemo } from 'react';
 // @ts-ignore
 import { __RouterContext as RouterContext } from 'react-router';
 
-import classNames from '@chbphone55/classnames';
+import { Leaf } from 'slate';
 
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { Link } from 'react-router-dom';
@@ -22,13 +23,19 @@ interface INotesListProps {
   [s: string]: any;
 }
 
-function NotesList({ className, responsive = false, activeID, ...props }: INotesListProps) {
+function NotesList({
+  className,
+  responsive = false,
+  activeID,
+  ...props
+}: INotesListProps) {
   const [{ notes, activeNoteID }, dispatch] = useStore();
 
   const sortedNotes = useMemo(
     () =>
       Object.entries(notes).sort(
-        ([, noteA], [, noteB]) => noteB.lastModified.getTime() - noteA.lastModified.getTime()
+        ([, noteA], [, noteB]) =>
+          noteB.lastModified.getTime() - noteA.lastModified.getTime()
       ),
     [notes]
   );
@@ -54,7 +61,21 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
       {...props}
     >
       {sortedNotes.map(([id, note]) => {
-        const noteContentSnippet = note.state.texts.first().getText();
+        /**
+         * Gets the first line as follows:
+         * * get the document
+         * * get its first block
+         * * get the leaves of the first node
+         * * join the text on each leaf together
+         */
+        const noteContentSnippet = note.state.document
+          .getBlocks()
+          .get(0)
+          .nodes.get(0)
+          // @ts-ignore
+          .leaves.map((leaf: Leaf) => leaf.text)
+          .toJS()
+          .join('');
         const menuID = `notes-list__${id}`;
         const isActive = activeID === id;
 
@@ -73,14 +94,21 @@ function NotesList({ className, responsive = false, activeID, ...props }: INotes
                 style={LinkStyles}
                 aria-current={isActive}
                 aria-label={
-                  isActive ? `Current note, "${note.title}"` : `Go to note "${note.title}"`
+                  isActive
+                    ? `Current note, "${note.title}"`
+                    : `Go to note "${note.title}"`
                 }
               >
                 <article>
                   <Hx size={6} weight={2} className="note__title truncate">
                     {note.title}
                   </Hx>
-                  <Hx size={6} weight={5} type="h2" className="note__modified truncate">
+                  <Hx
+                    size={6}
+                    weight={5}
+                    type="h2"
+                    className="note__modified truncate"
+                  >
                     Last modified {note.timeSinceModified()}
                   </Hx>
                   {noteContentSnippet.length ? (

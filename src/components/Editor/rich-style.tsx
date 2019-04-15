@@ -131,7 +131,9 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
   }
 
   const startBlock = editor.value.startBlock;
-  const type = getType(startBlock.text.slice(0, selection.start.offset).replace(/\s*/g, ''));
+  const type = getType(
+    startBlock.text.slice(0, selection.start.offset).replace(/\s*/g, '')
+  );
   if (!type || (type.includes('list') && startBlock.type === 'list-item')) {
     return next();
   }
@@ -171,7 +173,9 @@ function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
 
     return editor.moveForward(newlinePosition - offset).insertText('\n');
   } else if (startBlock.text.slice(0, selection.start.offset) === '```') {
-    return editor.deleteBackward(selection.start.offset).setBlocks('code-block');
+    return editor
+      .deleteBackward(selection.start.offset)
+      .setBlocks('code-block');
   } else {
     return insertNewLine();
   }
@@ -189,8 +193,12 @@ function onTab(event: any, editor: Editor, next: () => any, shift: boolean) {
   }
 
   const { anchor, focus } = selection;
-  const isPrimitive = (x: any): boolean => ['string', 'number'].includes(typeof x) || x === null;
-  if ((isPrimitive(anchor.path) || isPrimitive(focus.path)) && anchor.path !== focus.path) {
+  const isPrimitive = (x: any): boolean =>
+    ['string', 'number'].includes(typeof x) || x === null;
+  if (
+    (isPrimitive(anchor.path) || isPrimitive(focus.path)) &&
+    anchor.path !== focus.path
+  ) {
     return;
   }
 
@@ -200,7 +208,10 @@ function onTab(event: any, editor: Editor, next: () => any, shift: boolean) {
     // @ts-ignore
     (anchor.path.size !== focus.path.size ||
       // @ts-ignore
-      !anchor.path.every((it: number, index: number) => focus.path.get(index) === it))
+      !anchor.path.every(
+        // @ts-ignore
+        (it: number, index: number) => focus.path.get(index) === it
+      ))
   ) {
     return;
   }
