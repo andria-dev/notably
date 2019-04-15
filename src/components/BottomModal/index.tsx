@@ -5,12 +5,27 @@ import ModalBackdrop from '../ModalBackdrop';
 import ModalPortal from '../ModalPortal';
 import './style.css';
 
-interface IProps extends ReactModal.Props {
+interface IProps {
   children?: JSX.Element;
+  isOpen: boolean;
 }
 
-function BottomModal({ children, ...props }: IProps) {
-  const transition = useTransition(props.isOpen, null, {
+function BottomModal({ children, isOpen, ...props }: IProps) {
+  const backdropTransition = useTransition(isOpen, null, {
+    from: {
+      // @ts-ignore
+      opacity: 0
+    },
+    enter: {
+      // @ts-ignore
+      opacity: 1
+    },
+    exit: {
+      opacity: 0
+    }
+  });
+
+  const modalTransition = useTransition(isOpen, null, {
     from: {
       transform: 'translateY(100%) translateX(-50%)'
     },
@@ -25,15 +40,30 @@ function BottomModal({ children, ...props }: IProps) {
 
   return (
     <ModalPortal>
-      <ModalBackdrop className="BottomModal__backdrop">
-        {transition.map(({ item, key, props: style }) =>
-          item ? (
-            <animated.div className="BottomModal" key={key} style={style}>
-              {children}
-            </animated.div>
-          ) : null
-        )}
-      </ModalBackdrop>
+      {backdropTransition.map(
+        // @ts-ignore
+        backdrop =>
+          backdrop.item && (
+            <ModalBackdrop
+              key={backdrop.key}
+              className="BottomModal__backdrop"
+              style={backdrop.props}
+            >
+              {modalTransition.map(
+                modal =>
+                  modal.item && (
+                    <animated.div
+                      className="BottomModal"
+                      key={modal.key}
+                      style={modal.props}
+                    >
+                      {children}
+                    </animated.div>
+                  )
+              )}
+            </ModalBackdrop>
+          )
+      )}
     </ModalPortal>
   );
 }
