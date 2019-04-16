@@ -39,8 +39,12 @@ function Home({ history }: RouteChildrenProps) {
   const importNotes = useCallback(async () => {}, []);
 
   const exportNotes = useCallback(async () => {
-    const { payload: notes } = await getNotes();
-    Object.values(notes).map(note => note.export());
+    const action = await getNotes();
+
+    if (action.type === 'SET_NOTES') {
+      const notes = Object.values(action.payload).map(note => note.export());
+      // now we need to copy it to the clipboard!
+    }
   }, []);
 
   const deleteAll = useCallback(async () => {}, []);
