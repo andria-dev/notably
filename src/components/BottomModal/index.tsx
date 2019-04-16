@@ -1,21 +1,32 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import { animated, useTransition } from 'react-spring';
+
 import ModalBackdrop from '../ModalBackdrop';
 import ModalPortal from '../ModalPortal';
+
+import classNames from '@chbphone55/classnames';
+
 import './style.css';
 
 interface IProps {
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
   isOpen: boolean;
   onRequestClose: () => void;
+  [s: string]: any;
 }
 
-function BottomModal({ children, isOpen, onRequestClose, ...props }: IProps) {
+function BottomModal({
+  children,
+  isOpen,
+  onRequestClose,
+  className,
+  ...props
+}: IProps) {
   const backdropTransition = useTransition(isOpen, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    '--opacity': 0,
+    from: { '--opacity': 0 },
+    enter: { '--opacity': 0.5 },
+    leave: { '--opacity': 0 },
     config: { mass: 1, tension: 200, friction: 26 }
   });
 
@@ -25,6 +36,20 @@ function BottomModal({ children, isOpen, onRequestClose, ...props }: IProps) {
     leave: { transform: 'translateY(100%) translateX(-50%)' },
     config: { mass: 1, tension: 200, friction: 26 }
   });
+
+  // Close on Escape
+  useEffect(() => {
+    function listener(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        onRequestClose();
+      }
+    }
+    window.addEventListener('keyup', listener);
+
+    return () => {
+      window.removeEventListener('keyup', listener);
+    };
+  }, [onRequestClose]);
 
   return (
     <ModalPortal>
@@ -39,9 +64,10 @@ function BottomModal({ children, isOpen, onRequestClose, ...props }: IProps) {
             {modalTransition.map(modal =>
               modal.item ? (
                 <animated.div
-                  className="BottomModal"
+                  className={classNames('BottomModal', className)}
                   key={modal.key}
                   style={modal.props}
+                  {...props}
                 >
                   {children}
                 </animated.div>

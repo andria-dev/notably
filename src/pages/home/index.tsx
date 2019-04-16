@@ -57,6 +57,8 @@ function Home({ history }: RouteChildrenProps) {
 
       <BottomModal isOpen={isSettingsOpen} onRequestClose={closeSettings}>
         <Hx size={3}>Settings</Hx>
+        <button>Export all</button>
+        <button>Delete all</button>
       </BottomModal>
     </div>
   );
