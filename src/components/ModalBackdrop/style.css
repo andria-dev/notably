@@ -11,5 +11,5 @@
 }
 
 .dark-mode .ModalBackdrop {
-  background-color: hsla(0, 0%, 50%, calc(var(--opacity) + 0.2));
+  background-color: hsla(0, 0%, 50%, calc(var(--opacity) * 1.4));
 }
