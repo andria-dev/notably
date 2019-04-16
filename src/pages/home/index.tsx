@@ -40,8 +40,6 @@ function Home({ history }: RouteChildrenProps) {
         <Hx size={1}>Notably</Hx>
         <div className="Home__header-actions">
           <DarkModeToggle className="Home__dark-mode-toggle" />
-          {/* TODO: build menu component that pops up from bottom of screen */}
-          {/* TODO: hook up settings button to said menu component */}
           <IconButton title="Open settings" onClick={openSettings}>
             <MdSettings size={24} />
           </IconButton>
