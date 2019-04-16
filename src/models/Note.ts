@@ -7,7 +7,7 @@ const emptyState = Plain.deserialize('');
 export interface INoteJSON {
   title: string;
   state: ValueJSON;
-  lastModified: string;
+  lastModified: string | Date;
 }
 
 export default class Note {
@@ -44,7 +44,7 @@ export default class Note {
     return {
       title: this.title,
       state: this.state.toJSON(),
-      lastModified: this.lastModified.toJSON()
+      lastModified: this.lastModified
     };
   }
 
