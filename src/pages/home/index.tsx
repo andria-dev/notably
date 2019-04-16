@@ -63,7 +63,8 @@ function Home({ history }: RouteChildrenProps) {
         <Hx size={3} className="Home__settings-title">
           Settings
         </Hx>
-        <button>Export all</button>
+        <button>Import</button>
+        <button>Export</button>
         <button>Delete all</button>
       </BottomModal>
     </div>
