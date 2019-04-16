@@ -1,14 +1,30 @@
-import { Value } from 'slate';
+import { Value, ValueJSON } from 'slate';
 // @ts-ignore
 import Plain from 'slate-plain-serializer';
 
 const emptyState = Plain.deserialize('');
 
+export interface INoteJSON {
+  title: string;
+  state: ValueJSON;
+  lastModified: string;
+}
+
 export default class Note {
+  public static import({ title, state, lastModified }: INoteJSON): Note {
+    return new Note(title, Value.fromJSON(state), new Date(lastModified));
+  }
+
   // @ts-ignore
-  private static longRtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'long' });
+  private static longRtf = new Intl.RelativeTimeFormat('en', {
+    numeric: 'auto',
+    style: 'long'
+  });
   // @ts-ignore
-  private static shortRtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto', style: 'short' });
+  private static shortRtf = new Intl.RelativeTimeFormat('en', {
+    numeric: 'auto',
+    style: 'short'
+  });
 
   public title: string;
   public state: Value;
@@ -24,13 +40,23 @@ export default class Note {
     this.lastModified = lastModified;
   }
 
+  public export(): INoteJSON {
+    return {
+      title: this.title,
+      state: this.state.toJSON(),
+      lastModified: this.lastModified.toJSON()
+    };
+  }
+
   public updateLastModified() {
     this.lastModified = new Date();
   }
 
   public timeSinceModified({ short } = { short: false }) {
     const now: Date = new Date();
-    let timePassed: number = Math.floor(now.getTime() - this.lastModified.getTime());
+    let timePassed: number = Math.floor(
+      now.getTime() - this.lastModified.getTime()
+    );
 
     const divide = (n: number) => {
       timePassed = Math.floor(timePassed / n);
