@@ -1,5 +1,6 @@
 import classNames from '@chbphone55/classnames';
 import React, { useCallback, useRef } from 'react';
+import { animated } from 'react-spring';
 import './style.css';
 
 function ModalBackdrop({ className, onClick, ...props }: any) {
@@ -15,7 +16,7 @@ function ModalBackdrop({ className, onClick, ...props }: any) {
   );
 
   return (
-    <div
+    <animated.div
       ref={ref}
       onClick={handleClick}
       className={classNames('ModalBackdrop', className)}
