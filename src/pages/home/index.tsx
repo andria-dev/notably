@@ -55,8 +55,14 @@ function Home({ history }: RouteChildrenProps) {
         New note
       </FAB>
 
-      <BottomModal isOpen={isSettingsOpen} onRequestClose={closeSettings}>
-        <Hx size={3}>Settings</Hx>
+      <BottomModal
+        isOpen={isSettingsOpen}
+        onRequestClose={closeSettings}
+        className="Home__settings"
+      >
+        <Hx size={3} className="Home__settings-title">
+          Settings
+        </Hx>
         <button>Export all</button>
         <button>Delete all</button>
       </BottomModal>

@@ -6,3 +6,53 @@
 .Home__dark-mode-toggle {
   margin-right: 1rem;
 }
+
+.Home__settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.Home__settings-title {
+  margin-bottom: 1rem;
+}
+
+.Home__settings > button {
+  --border-color: hsl(0, 0%, 95%);
+  --background-hover: hsl(217, 99%, 95%);
+  --background-active: hsl(217, 99%, 90%);
+  --color-hover: hsl(217, 99%, 30%);
+
+  padding: 1rem 1.5rem;
+
+  color: var(--color);
+  background: transparent;
+
+  font-size: 1rem;
+  text-align: left;
+
+  border: none;
+
+  cursor: pointer;
+  transition: background-color 0.15s ease-out;
+}
+
+.dark-mode .Home__settings > button {
+  --border-color: hsl(0, 0%, 25%);
+  --background-hover: hsl(217, 40%, 22%);
+  --background-active: hsl(217, 35%, 44%);
+  --color-hover: white;
+}
+
+.Home__settings > button:hover,
+.Home__settings > button:focus {
+  color: var(--color-hover);
+  background-color: var(--background-hover);
+}
+
+.Home__settings > button:active {
+  background-color: var(--background-active);
+}
+
+.Home__settings > button:not(:last-of-type) {
+  border-bottom: solid 1px var(--border-color);
+}
