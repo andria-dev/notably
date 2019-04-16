@@ -19,7 +19,11 @@ function Home({ history }: RouteChildrenProps) {
   const [, dispatch] = useStore();
   const [isSettingsOpen, setSettingsOpen] = useState(false);
 
-  const toggleSettingOpen = useCallback(() => setSettingsOpen(prev => !prev), [
+  const closeSettings = useCallback(() => setSettingsOpen(false), [
+    setSettingsOpen
+  ]);
+
+  const openSettings = useCallback(() => setSettingsOpen(true), [
     setSettingsOpen
   ]);
 
@@ -38,7 +42,7 @@ function Home({ history }: RouteChildrenProps) {
           <DarkModeToggle className="Home__dark-mode-toggle" />
           {/* TODO: build menu component that pops up from bottom of screen */}
           {/* TODO: hook up settings button to said menu component */}
-          <IconButton title="Open settings" onClick={toggleSettingOpen}>
+          <IconButton title="Open settings" onClick={openSettings}>
             <MdSettings size={24} />
           </IconButton>
         </div>
@@ -51,7 +55,7 @@ function Home({ history }: RouteChildrenProps) {
         New note
       </FAB>
 
-      <BottomModal isOpen={isSettingsOpen} onRequestClose={toggleSettingOpen}>
+      <BottomModal isOpen={isSettingsOpen} onRequestClose={closeSettings}>
         <Hx size={3}>Settings</Hx>
       </BottomModal>
     </div>
