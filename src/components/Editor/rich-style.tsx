@@ -1,6 +1,6 @@
 // tslint:disable: ordered-imports
 import React from 'react';
-import { Block, Editor, Range, Point, Operation } from 'slate';
+import { Block, Editor } from 'slate';
 import { List } from 'immutable';
 import { isKeyHotkey } from 'is-hotkey';
 

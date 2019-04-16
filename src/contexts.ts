@@ -1,4 +1,4 @@
-import { Context, createContext } from 'react';
+import { createContext } from 'react';
 import { DarkMode } from 'use-dark-mode';
 
 export const DarkModeContext = createContext<DarkMode>({
@@ -8,4 +8,6 @@ export const DarkModeContext = createContext<DarkMode>({
   toggle: () => {}
 });
 
-export const SavedContext = createContext<React.Dispatch<React.SetStateAction<boolean>>>(() => {});
+export const SavedContext = createContext<
+  React.Dispatch<React.SetStateAction<boolean>>
+>(() => {});

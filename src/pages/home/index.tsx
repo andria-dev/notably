@@ -34,7 +34,7 @@ function Home({ history }: RouteChildrenProps) {
     if (action.type === 'ADD_NOTE') {
       history.push(`/note/${action.payload.noteID}`);
     }
-  }, [history.push, dispatch]);
+  }, [history, dispatch]);
 
   const importNotes = useCallback(async () => {}, []);
 

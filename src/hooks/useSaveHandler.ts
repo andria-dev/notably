@@ -56,13 +56,11 @@ export function useSaveHandler<T>(
   actionCreator: CallableFunction,
   ...args: any[]
 ): [DebouncedSave<T>, Save] {
-  const setSaved = useContext(SavedContext);
+  const setSaved = useContext(SavedContext); // I have to spread `args` because it is spread in the definition
 
-  return useMemo(() => saveHandler<T>(debounceDelay, setSaved, id, actionCreator, ...args), [
-    debounceDelay,
-    setSaved,
-    id,
-    actionCreator,
-    ...args
-  ]);
+  /* eslint-disable react-hooks/exhaustive-deps */ return useMemo(
+    () => saveHandler<T>(debounceDelay, setSaved, id, actionCreator, ...args),
+    [debounceDelay, setSaved, id, actionCreator, ...args]
+  );
+  /* eslint-enable */
 }
