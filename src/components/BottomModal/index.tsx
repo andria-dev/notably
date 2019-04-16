@@ -11,17 +11,15 @@ interface IProps {
   onRequestClose: () => void;
 }
 
-function BottomModal({ children, isOpen, ...props }: IProps) {
+function BottomModal({ children, isOpen, onRequestClose, ...props }: IProps) {
   const backdropTransition = useTransition(isOpen, null, {
     from: {
-      // @ts-ignore
       opacity: 0
     },
     enter: {
-      // @ts-ignore
       opacity: 1
     },
-    exit: {
+    leave: {
       opacity: 0
     }
   });
@@ -44,26 +42,26 @@ function BottomModal({ children, isOpen, ...props }: IProps) {
       {backdropTransition.map(
         // @ts-ignore
         backdrop =>
-          backdrop.item && (
+          backdrop.item ? (
             <ModalBackdrop
               key={backdrop.key}
               className="BottomModal__backdrop"
               style={backdrop.props}
+              onClick={onRequestClose}
             >
-              {modalTransition.map(
-                modal =>
-                  modal.item && (
-                    <animated.div
-                      className="BottomModal"
-                      key={modal.key}
-                      style={modal.props}
-                    >
-                      {children}
-                    </animated.div>
-                  )
+              {modalTransition.map(modal =>
+                modal.item ? (
+                  <animated.div
+                    className="BottomModal"
+                    key={modal.key}
+                    style={modal.props}
+                  >
+                    {children}
+                  </animated.div>
+                ) : null
               )}
             </ModalBackdrop>
-          )
+          ) : null
       )}
     </ModalPortal>
   );
