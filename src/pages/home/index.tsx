@@ -27,12 +27,12 @@ function Home({ history }: RouteChildrenProps) {
     setSettingsOpen
   ]);
 
-  async function createNote() {
+  const createNote = useCallback(async () => {
     const action = await addNote(new Note());
     dispatch(action);
 
     history.push(`/note/${action.payload.id}`);
-  }
+  }, [history.push, dispatch]);
 
   return (
     <div className="Home">
