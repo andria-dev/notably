@@ -1,28 +1,15 @@
 import { clear, del, get, keys, set } from 'idb-keyval';
 import { Value } from 'slate';
 import uuid from 'uuid/v4';
-import Note from '../models/Note';
+import Note, { INoteJSON } from '../models/Note';
 import { IAction } from './';
 
-interface INoteData {
-  title: string;
-  lastModified: Date;
-  state: any;
-}
 async function getNote(id: string): Promise<Note> {
-  const noteData: INoteData = await get(id);
-  const state = Value.fromJSON(noteData.state);
-
-  return new Note(noteData.title, state, noteData.lastModified);
+  return Note.import(await get(id));
 }
 
 function setNote(id: string, note: Note): Promise<void> {
-  const noteObj: INoteData = {
-    title: note.title,
-    lastModified: note.lastModified,
-    state: note.state.toJSON()
-  };
-  return set(id, noteObj);
+  return set(id, note.export());
 }
 
 function createError(message: string, instance: Error): IAction {
@@ -46,7 +33,10 @@ export async function getNotes(): Promise<IAction> {
       payload: notes
     };
   } catch (error) {
-    return createError('Unable to get your saved notes from your database.', error);
+    return createError(
+      'Unable to get your saved notes from your database.',
+      error
+    );
   }
 }
 
@@ -71,7 +61,10 @@ export async function addNote(note: Note): Promise<IAction> {
       payload: { id, note }
     };
   } catch (error) {
-    return createError('Unable to add your new note to the database. Please try again.', error);
+    return createError(
+      'Unable to add your new note to the database. Please try again.',
+      error
+    );
   }
 }
 
@@ -87,7 +80,10 @@ export async function updateTitle(noteID: string, newTitle: string) {
       payload: { noteID, note }
     };
   } catch (error) {
-    return createError("Unable to update your note's title. Please try again.", error);
+    return createError(
+      "Unable to update your note's title. Please try again.",
+      error
+    );
   }
 }
 
