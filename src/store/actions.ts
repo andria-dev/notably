@@ -1,8 +1,8 @@
 import { clear, del, get, keys, set } from 'idb-keyval';
 import { Value } from 'slate';
 import uuid from 'uuid/v4';
-import Note, { INoteJSON } from '../models/Note';
-import { IAction } from './';
+import Note from '../models/Note';
+import { IAction, IActionEmpty } from './';
 
 async function getNote(id: string): Promise<Note> {
   return Note.import(await get(id));
@@ -53,12 +53,12 @@ export async function removeNote(noteID: string): Promise<IAction> {
 }
 
 export async function addNote(note: Note): Promise<IAction> {
-  const id = uuid();
+  const noteID = uuid();
   try {
-    await setNote(id, note);
+    await setNote(noteID, note);
     return {
       type: 'ADD_NOTE',
-      payload: { id, note }
+      payload: { noteID, note }
     };
   } catch (error) {
     return createError(
@@ -68,7 +68,10 @@ export async function addNote(note: Note): Promise<IAction> {
   }
 }
 
-export async function updateTitle(noteID: string, newTitle: string) {
+export async function updateTitle(
+  noteID: string,
+  newTitle: string
+): Promise<IAction> {
   try {
     const note: Note = await getNote(noteID);
     note.title = newTitle;
@@ -111,7 +114,7 @@ export async function updateState(
   }
 }
 
-export async function removeAllNotes(): Promise<IAction> {
+export async function removeAllNotes(): Promise<IAction | IActionEmpty> {
   try {
     await clear();
     return {

@@ -1,11 +1,35 @@
 import { Dispatch, ReducerState } from 'react';
 import { useReduxDispatch, useReduxState } from 'reactive-react-redux';
 import { createStore } from 'redux';
+import { ObjectOf } from '../generic-types';
 import Note from '../models/Note';
 
-export interface IAction {
-  type: string | number;
-  payload?: any;
+export type IAction =
+  | {
+      type: 'SET_NOTES';
+      payload: ObjectOf<Note>;
+    }
+  | {
+      type: 'ADD_NOTE' | 'UPDATE_NOTE';
+      payload: {
+        noteID: string;
+        note: Note;
+      };
+    }
+  | {
+      type: 'REMOVE_NOTE' | 'SET_ACTIVE_NOTE_ID';
+      payload: string;
+    }
+  | {
+      type: 'ERROR';
+      payload: {
+        message: string;
+        instance: Error;
+      };
+    };
+
+export interface IActionEmpty {
+  type: 'REMOVE_ALL_NOTES' | 'CLOSE_ERROR';
 }
 
 interface IState extends ReducerState<any> {
@@ -22,7 +46,7 @@ const initialState: IState = {
   activeNoteID: ''
 };
 
-function reducer(state: IState = initialState, action: IAction) {
+function reducer(state: IState = initialState, action: IAction | IActionEmpty) {
   switch (action.type) {
     case 'SET_NOTES':
       return {
@@ -34,7 +58,7 @@ function reducer(state: IState = initialState, action: IAction) {
     case 'ADD_NOTE':
       return {
         ...state,
-        notes: { ...state.notes, [action.payload.id]: action.payload.note }
+        notes: { ...state.notes, [action.payload.noteID]: action.payload.note }
       };
 
     case 'REMOVE_NOTE':
@@ -93,7 +117,7 @@ export const store = createStore(
 /**
  * Hook for getting the current state and dispatch
  */
-export function useStore(): [IState, Dispatch<IAction>] {
+export function useStore(): [IState, Dispatch<IAction | IActionEmpty>] {
   return [useReduxState(), useReduxDispatch()];
 }
 

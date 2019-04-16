@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useReducer, useRef } from 'react';
-import { IAction, updateState, useStore } from '../../store';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { updateState, useStore } from '../../store';
 
 import { Operation, Value } from 'slate';
 import { Editor as SlateEditor } from 'slate-react';
@@ -14,21 +14,6 @@ function fixValue(value: Value) {
   return Value.fromJSON(value.toJSON());
 }
 
-export const types = {
-  CHANGE: 0,
-  INLINE: 1,
-  BLOCK: 2
-};
-
-function EditorStateReducer(state: Value, action: IAction): Value {
-  switch (action.type) {
-    case types.CHANGE:
-      return action.payload;
-    default:
-      throw new Error(`Invalid action: ${action.type}`);
-  }
-}
-
 const isSaveHotkey = isHotkey('mod+s');
 
 function Editor() {
@@ -38,10 +23,7 @@ function Editor() {
   const idRef = useRef(id);
   const note = state.notes[id];
 
-  const [editorState, dispatch] = useReducer(
-    EditorStateReducer,
-    fixValue(note.state)
-  );
+  const [editorState, setEditorState] = useState(fixValue(note.state));
   const [debouncedSave, save] = useSaveHandler<Value>(
     2000,
     id,
@@ -50,7 +32,7 @@ function Editor() {
   );
   const handleChange = useCallback(
     ({ value, operations }) => {
-      dispatch({ type: types.CHANGE, payload: value });
+      setEditorState(value);
 
       // only save if the content has changed (i.e. not just moving cursor)
       if (
@@ -61,7 +43,7 @@ function Editor() {
         debouncedSave(value);
       }
     },
-    [dispatch, debouncedSave]
+    [setEditorState, debouncedSave]
   );
 
   // Once mounted, or id updated, update the editor state
@@ -69,12 +51,12 @@ function Editor() {
   useEffect(() => {
     // check current id against past id
     if (id !== idRef.current) {
-      dispatch({ type: types.CHANGE, payload: fixValue(note.state) });
+      setEditorState(fixValue(note.state));
     }
     idRef.current = id;
 
     return save;
-  }, [id, save, note.state]);
+  }, [id, save, note.state, setEditorState]);
 
   const saveListener = useCallback(
     (event: KeyboardEvent) => {

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import Note from '../../models/Note';
-import { addNote, useStore } from '../../store';
+import { addNote, getNotes, useStore } from '../../store';
 
 import { MdAdd, MdSettings } from 'react-icons/md';
 import { RouteChildrenProps } from 'react-router';
@@ -31,8 +31,19 @@ function Home({ history }: RouteChildrenProps) {
     const action = await addNote(new Note());
     dispatch(action);
 
-    history.push(`/note/${action.payload.id}`);
+    if (action.type === 'ADD_NOTE') {
+      history.push(`/note/${action.payload.noteID}`);
+    }
   }, [history.push, dispatch]);
+
+  const importNotes = useCallback(async () => {}, []);
+
+  const exportNotes = useCallback(async () => {
+    const { payload: notes } = await getNotes();
+    Object.values(notes).map(note => note.export());
+  }, []);
+
+  const deleteAll = useCallback(async () => {}, []);
 
   return (
     <div className="Home">
@@ -61,9 +72,9 @@ function Home({ history }: RouteChildrenProps) {
         <Hx size={3} className="Home__settings-title">
           Settings
         </Hx>
-        <button>Import</button>
-        <button>Export</button>
-        <button>Delete all</button>
+        <button onClick={importNotes}>Import</button>
+        <button onClick={exportNotes}>Export</button>
+        <button onClick={deleteAll}>Delete all</button>
       </BottomModal>
     </div>
   );
