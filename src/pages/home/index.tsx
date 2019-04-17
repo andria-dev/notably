@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import Note from '../../models/Note';
-import { addNote, getNotes, useStore } from '../../store';
+import { addNote, getNotes, removeAllNotes, useStore } from '../../store';
 
 import { MdAdd, MdSettings } from 'react-icons/md';
 import { RouteChildrenProps } from 'react-router';
@@ -47,7 +47,11 @@ function Home({ history }: RouteChildrenProps) {
     }
   }, []);
 
-  const deleteAll = useCallback(async () => {}, []);
+  const deleteAll = useCallback(async () => {
+    const action = await removeAllNotes();
+    dispatch(action);
+    closeSettings();
+  }, [dispatch]);
 
   return (
     <div className="Home">
