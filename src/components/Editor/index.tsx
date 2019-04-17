@@ -14,6 +14,10 @@ function fixValue(value: Value) {
   return Value.fromJSON(value.toJSON());
 }
 
+// const saveSound = new Audio('/save-sound.webm');
+const saveSound = document.querySelector('#save-sound')! as HTMLAudioElement;
+saveSound.volume = 0.25;
+
 const isSaveHotkey = isHotkey('mod+s');
 
 function Editor() {
@@ -63,7 +67,11 @@ function Editor() {
       if (isSaveHotkey(event)) {
         event.preventDefault();
         save();
-        import('./play-save-sound').then(({ play }) => play());
+
+        saveSound.play().catch(error => {
+          saveSound.controls = true;
+          document.body.appendChild(saveSound);
+        });
       }
     },
     [save]
