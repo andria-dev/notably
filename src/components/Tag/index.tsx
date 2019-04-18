@@ -1,11 +1,11 @@
 import classNames from '@chbphone55/classnames';
-import React, { memo } from 'react';
+import React, { memo, ReactNode } from 'react';
 
 import './style.css';
 
 interface ITagProps {
   className?: any;
-  children: React.ReactNode;
+  children: ReactNode;
   [s: string]: any;
 }
 

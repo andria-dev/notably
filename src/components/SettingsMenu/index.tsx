@@ -2,8 +2,8 @@ import React, { useCallback } from 'react';
 import { useBoolean } from '../../hooks';
 import { getNotes, removeAllNotes, useStore } from '../../store';
 
-import BottomModal from '../BottomModal';
 import Hx from '../Hx';
+import BottomModal from '../Modal/BottomModal';
 
 interface ISettingsMenuProps {
   close: () => void;

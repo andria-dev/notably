@@ -1,39 +1,24 @@
-import React, { useEffect } from 'react';
-import { animated, useTransition } from 'react-spring';
-
+import React, { ReactNode, useEffect } from 'react';
+import { useTransition } from 'react-spring';
 import ModalBackdrop from '../ModalBackdrop';
 import ModalPortal from '../ModalPortal';
 
-import classNames from '@chbphone55/classnames';
-
-import './style.css';
-
-interface IProps {
-  children?: JSX.Element | JSX.Element[];
+export interface IBaseModalProps {
+  children: ReactNode;
   isOpen: boolean;
   onRequestClose: () => void;
-  [s: string]: any;
 }
 
-function BottomModal({
-  children,
+function BaseModal({
   isOpen,
   onRequestClose,
-  className,
-  ...props
-}: IProps) {
+  children
+}: IBaseModalProps & JSX.IntrinsicAttributes) {
   const backdropTransition = useTransition(isOpen, null, {
     '--opacity': 0,
     from: { '--opacity': 0 },
     enter: { '--opacity': 0.5 },
     leave: { '--opacity': 0 },
-    config: { mass: 1, tension: 200, friction: 26 }
-  });
-
-  const modalTransition = useTransition(isOpen, null, {
-    from: { transform: 'translateY(100%) translateX(-50%)' },
-    enter: { transform: 'translateY(0%) translateX(-50%)' },
-    leave: { transform: 'translateY(100%) translateX(-50%)' },
     config: { mass: 1, tension: 200, friction: 26 }
   });
 
@@ -61,18 +46,7 @@ function BottomModal({
             style={backdrop.props}
             onClick={onRequestClose}
           >
-            {modalTransition.map(modal =>
-              modal.item ? (
-                <animated.div
-                  className={classNames('BottomModal', className)}
-                  key={modal.key}
-                  style={modal.props}
-                  {...props}
-                >
-                  {children}
-                </animated.div>
-              ) : null
-            )}
+            {children}
           </ModalBackdrop>
         ) : null
       )}
@@ -80,4 +54,4 @@ function BottomModal({
   );
 }
 
-export default BottomModal;
+export default BaseModal;
