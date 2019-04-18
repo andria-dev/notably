@@ -36,16 +36,30 @@ function Home({ history }: RouteChildrenProps) {
     }
   }, [history, dispatch]);
 
-  const importNotes = useCallback(async () => {}, []);
+  const importNotes = useCallback(async () => {
+    closeSettings();
+  }, [closeSettings]);
 
   const exportNotes = useCallback(async () => {
     const action = await getNotes();
 
     if (action.type === 'SET_NOTES') {
-      const notes = Object.values(action.payload).map(note => note.export());
-      // now we need to copy it to the clipboard!
+      const exportedNotes = JSON.stringify(
+        Object.values(action.payload).map(note => note.export())
+      );
+
+      navigator.clipboard
+        .writeText(exportedNotes)
+        .then(() => {
+          alert('Copied to clipboard!');
+        })
+        .catch(() => {
+          alert('Unable to copy.');
+        });
     }
-  }, []);
+
+    closeSettings();
+  }, [closeSettings]);
 
   const deleteAll = useCallback(async () => {
     const action = await removeAllNotes();

@@ -148,7 +148,7 @@ function handleCopyToClipboard(event: Event, { url }: { url: string }) {
     })
     .catch((error: Error) => {
       // TODO: replace with snackbar or similar
-      alert('Unable to copy');
+      alert('Unable to copy.');
     });
 }
 
