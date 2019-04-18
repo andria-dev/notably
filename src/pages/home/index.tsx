@@ -51,7 +51,7 @@ function Home({ history }: RouteChildrenProps) {
     const action = await removeAllNotes();
     dispatch(action);
     closeSettings();
-  }, [dispatch]);
+  }, [dispatch, closeSettings]);
 
   return (
     <div className="Home">
