@@ -8,6 +8,8 @@
 
   --opacity: 0.5;
   background-color: hsla(0, 0%, 0%, var(--opacity));
+
+  overflow: hidden;
 }
 
 .dark-mode .ModalBackdrop {

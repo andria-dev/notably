@@ -1,8 +1,3 @@
-.BottomModal__backdrop {
-  overflow: hidden;
-  background-color: hsla(0, 0%, 0%, var(--opacity, 1));
-}
-
 .BottomModal {
   position: absolute;
   bottom: 0;

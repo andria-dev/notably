@@ -9,11 +9,7 @@ export interface IBaseModalProps {
   onRequestClose: () => void;
 }
 
-function BaseModal({
-  isOpen,
-  onRequestClose,
-  children
-}: IBaseModalProps & JSX.IntrinsicAttributes) {
+function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
   const backdropTransition = useTransition(isOpen, null, {
     '--opacity': 0,
     from: { '--opacity': 0 },

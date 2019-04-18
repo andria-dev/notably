@@ -28,7 +28,7 @@ function BottomModal({
   });
 
   return (
-    <BaseModal>
+    <BaseModal isOpen={isOpen} onRequestClose={onRequestClose}>
       {modalTransition.map(modal =>
         modal.item ? (
           <animated.div
