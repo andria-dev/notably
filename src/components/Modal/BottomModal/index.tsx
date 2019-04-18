@@ -1,17 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { animated, useTransition } from 'react-spring';
-
 import BaseModal, { IBaseModalProps } from '../BaseModal';
-import ModalBackdrop from '../ModalBackdrop';
-import ModalPortal from '../ModalPortal';
 
 import classNames from '@chbphone55/classnames';
-
+import { ObjectOf } from '../../../generic-types';
 import './style.css';
-
-interface IProps extends IBaseModalProps {
-  [s: string]: any;
-}
 
 function BottomModal({
   children,
@@ -19,7 +12,7 @@ function BottomModal({
   onRequestClose,
   className,
   ...props
-}: IProps) {
+}: IBaseModalProps & ObjectOf<any>) {
   const modalTransition = useTransition(isOpen, null, {
     from: { transform: 'translateY(100%) translateX(-50%)' },
     enter: { transform: 'translateY(0%) translateX(-50%)' },
