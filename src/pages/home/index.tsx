@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import Note from '../../models/Note';
 import { addNote, getNotes, removeAllNotes, useStore } from '../../store';
@@ -19,13 +19,10 @@ function Home({ history }: RouteChildrenProps) {
   const [, dispatch] = useStore();
   const [isSettingsOpen, setSettingsOpen] = useState(false);
 
-  const closeSettings = useCallback(() => setSettingsOpen(false), [
-    setSettingsOpen
-  ]);
-
-  const openSettings = useCallback(() => setSettingsOpen(true), [
-    setSettingsOpen
-  ]);
+  const [openSettings, closeSettings] = useMemo(
+    () => [() => setSettingsOpen(true), () => setSettingsOpen(false)],
+    [setSettingsOpen]
+  );
 
   const createNote = useCallback(async () => {
     const action = await addNote(new Note());
@@ -36,7 +33,7 @@ function Home({ history }: RouteChildrenProps) {
     }
   }, [history, dispatch]);
 
-  const importNotes = useCallback(async () => {
+  const importNotes = useCallback(() => {
     closeSettings();
   }, [closeSettings]);
 
