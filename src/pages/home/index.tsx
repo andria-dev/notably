@@ -11,18 +11,13 @@ import Header from '../../components/Header';
 import Hx from '../../components/Hx';
 import IconButton from '../../components/IconButton';
 import NotesList from '../../components/NotesList';
+import { useSettingsMenu } from '../../components/SettingsMenu';
 
-import BottomModal from '../../components/BottomModal';
 import './style.css';
 
 function Home({ history }: RouteChildrenProps) {
   const [, dispatch] = useStore();
-  const [isSettingsOpen, setSettingsOpen] = useState(false);
-
-  const [openSettings, closeSettings] = useMemo(
-    () => [() => setSettingsOpen(true), () => setSettingsOpen(false)],
-    [setSettingsOpen]
-  );
+  const [openSettings, settingsMenu] = useSettingsMenu();
 
   const createNote = useCallback(async () => {
     const action = await addNote(new Note());
@@ -32,37 +27,6 @@ function Home({ history }: RouteChildrenProps) {
       history.push(`/note/${action.payload.noteID}`);
     }
   }, [history, dispatch]);
-
-  const importNotes = useCallback(() => {
-    closeSettings();
-  }, [closeSettings]);
-
-  const exportNotes = useCallback(async () => {
-    const action = await getNotes();
-
-    if (action.type === 'SET_NOTES') {
-      const exportedNotes = JSON.stringify(
-        Object.values(action.payload).map(note => note.export())
-      );
-
-      navigator.clipboard
-        .writeText(exportedNotes)
-        .then(() => {
-          alert('Copied to clipboard!');
-        })
-        .catch(() => {
-          alert('Unable to copy.');
-        });
-    }
-
-    closeSettings();
-  }, [closeSettings]);
-
-  const deleteAll = useCallback(async () => {
-    const action = await removeAllNotes();
-    dispatch(action);
-    closeSettings();
-  }, [dispatch, closeSettings]);
 
   return (
     <div className="Home">
@@ -83,18 +47,7 @@ function Home({ history }: RouteChildrenProps) {
         New note
       </FAB>
 
-      <BottomModal
-        isOpen={isSettingsOpen}
-        onRequestClose={closeSettings}
-        className="Home__settings"
-      >
-        <Hx size={3} className="Home__settings-title">
-          Settings
-        </Hx>
-        <button onClick={importNotes}>Import notes</button>
-        <button onClick={exportNotes}>Export notes</button>
-        <button onClick={deleteAll}>Delete all notes</button>
-      </BottomModal>
+      {settingsMenu}
     </div>
   );
 }
