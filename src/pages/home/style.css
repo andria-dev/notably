@@ -13,7 +13,7 @@
 }
 
 .Home__settings-title {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .Home__settings > button {
@@ -22,13 +22,14 @@
   --background-active: hsl(217, 99%, 90%);
   --color-hover: hsl(217, 99%, 30%);
 
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
 
   color: var(--color);
   background: transparent;
 
   font-size: 1rem;
   text-align: left;
+  text-transform: capitalize;
 
   border: none;
 
@@ -51,8 +52,4 @@
 
 .Home__settings > button:active {
   background-color: var(--background-active);
-}
-
-.Home__settings > button:not(:last-of-type) {
-  border-bottom: solid 1px var(--border-color);
 }

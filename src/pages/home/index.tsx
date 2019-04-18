@@ -94,9 +94,9 @@ function Home({ history }: RouteChildrenProps) {
         <Hx size={3} className="Home__settings-title">
           Settings
         </Hx>
-        <button onClick={importNotes}>Import</button>
-        <button onClick={exportNotes}>Export</button>
-        <button onClick={deleteAll}>Delete all</button>
+        <button onClick={importNotes}>Import notes</button>
+        <button onClick={exportNotes}>Export notes</button>
+        <button onClick={deleteAll}>Delete all notes</button>
       </BottomModal>
     </div>
   );
