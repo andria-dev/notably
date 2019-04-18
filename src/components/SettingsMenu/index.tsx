@@ -1,21 +1,39 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useBoolean } from '../../hooks';
 import { getNotes, removeAllNotes, useStore } from '../../store';
 
 import Hx from '../Hx';
 import BottomModal from '../Modal/BottomModal';
+import CenterModal from '../Modal/CenterModal';
 
 interface ISettingsMenuProps {
   close: () => void;
-  open: () => void;
   isOpen: boolean;
 }
 export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
   const [, dispatch] = useStore();
 
-  const importNotes = useCallback(() => {
+  const {
+    setFalse: closeImport,
+    setTrue: openImport,
+    value: isImportOpen
+  } = useBoolean(false);
+  const [importValue, setImportValue] = useState('');
+  const handleImportValueChange = useCallback(
+    event => {
+      setImportValue(event.target.value);
+    },
+    [setImportValue]
+  );
+
+  const openImportAndClose = useCallback(() => {
+    openImport();
     close();
-  }, [close]);
+  }, [openImport, close]);
+
+  const importNotes = useCallback(() => {
+    closeImport();
+  }, [closeImport]);
 
   const exportNotes = useCallback(async () => {
     const action = await getNotes();
@@ -54,15 +72,34 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
         <Hx size={3} className="Home__settings-title">
           Settings
         </Hx>
-        <button onClick={importNotes}>Import notes</button>
+        <button onClick={openImportAndClose}>Import notes</button>
         <button onClick={exportNotes}>Export notes</button>
         <button onClick={deleteAll}>Delete all notes</button>
       </BottomModal>
+
+      <CenterModal
+        isOpen={isImportOpen}
+        onRequestClose={closeImport}
+        className="SettingsMenu__import-modal"
+      >
+        <Hx size={3} className="SettingsMenu__import-title">
+          Import Notes
+        </Hx>
+        <p>
+          To import the notes you need to copy the value that was exported into
+          your clipboard.
+        </p>
+        <p>
+          Once you click okay, you will be prompted to allow access to your
+          clipboard and the notes will be imported.
+        </p>
+        <button onClick={importNotes}>Okay</button>
+      </CenterModal>
     </>
   );
 }
 
 export function useSettingsMenu() {
   const { setFalse: close, setTrue: open, value: isOpen } = useBoolean(false);
-  return [open, <SettingsMenu open={open} close={close} isOpen={isOpen} />];
+  return [open, <SettingsMenu close={close} isOpen={isOpen} />];
 }

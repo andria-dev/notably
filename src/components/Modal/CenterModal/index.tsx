@@ -1,3 +1,4 @@
+import React from 'react';
 import { animated, useTransition } from 'react-spring';
 import { ObjectOf } from '../../../generic-types';
 import BaseModal, { IBaseModalProps } from '../BaseModal';
