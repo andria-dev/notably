@@ -1,5 +1,6 @@
 import React from 'react';
-import { animated, useTransition } from 'react-spring';
+import { animated } from 'react-spring';
+import { useTransition } from '../../../hooks';
 import BaseModal, { IBaseModalProps } from '../BaseModal';
 
 import classNames from '@chbphone55/classnames';

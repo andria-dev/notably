@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect } from 'react';
-import { useTransition } from 'react-spring';
+import { useTransition } from '../../hooks';
 import ModalBackdrop from './ModalBackdrop';
 import ModalPortal from './ModalPortal';
 
