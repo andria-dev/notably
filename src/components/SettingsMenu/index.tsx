@@ -19,13 +19,6 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
     setTrue: openImport,
     value: isImportOpen
   } = useBoolean(false);
-  const [importValue, setImportValue] = useState('');
-  const handleImportValueChange = useCallback(
-    event => {
-      setImportValue(event.target.value);
-    },
-    [setImportValue]
-  );
 
   const openImportAndClose = useCallback(() => {
     openImport();
