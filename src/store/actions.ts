@@ -68,6 +68,23 @@ export async function addNote(note: Note): Promise<IAction> {
   }
 }
 
+export async function addNotes(notes: Note[]): Promise<IAction> {
+  const action: IAction = {
+    type: 'ADD_NOTES',
+    payload: []
+  };
+
+  for await (const currentAction of notes.map(addNote)) {
+    if (currentAction.type === 'ERROR') {
+      // swallow error
+    } else if (currentAction.type === 'ADD_NOTE') {
+      action.payload.push(currentAction.payload);
+    }
+  }
+
+  return action;
+}
+
 export async function updateTitle(
   noteID: string,
   newTitle: string

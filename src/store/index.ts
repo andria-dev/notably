@@ -17,6 +17,13 @@ export type IAction =
       };
     }
   | {
+      type: 'ADD_NOTES';
+      payload: Array<{
+        noteID: string;
+        note: Note;
+      }>;
+    }
+  | {
       type: 'REMOVE_NOTE' | 'SET_ACTIVE_NOTE_ID';
       payload: string;
     }
@@ -61,7 +68,19 @@ function reducer(state: IState = initialState, action: IAction | IActionEmpty) {
         notes: { ...state.notes, [action.payload.noteID]: action.payload.note }
       };
 
-    case 'REMOVE_NOTE':
+    case 'ADD_NOTES': {
+      const newNotes = { ...state.notes };
+      for (const { noteID, note } of action.payload) {
+        newNotes[noteID] = note;
+      }
+
+      return {
+        ...state,
+        notes: newNotes
+      };
+    }
+
+    case 'REMOVE_NOTE': {
       const newNotes = { ...state.notes };
       delete newNotes[action.payload];
 
@@ -69,6 +88,7 @@ function reducer(state: IState = initialState, action: IAction | IActionEmpty) {
         ...state,
         notes: newNotes
       };
+    }
 
     case 'UPDATE_NOTE':
       return {

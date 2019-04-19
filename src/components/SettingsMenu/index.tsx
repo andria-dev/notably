@@ -1,6 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { useBoolean } from '../../hooks';
-import { addNote, getNotes, removeAllNotes, useStore } from '../../store';
+import {
+  addNote,
+  addNotes,
+  getNotes,
+  removeAllNotes,
+  useStore
+} from '../../store';
 
 import Note, { INoteJSON } from '../../models/Note';
 import Hx from '../Hx';
@@ -35,12 +41,8 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
         return;
       }
 
-      noteJSON.forEach(async json => {
-        const note = Note.import(json);
-        const action = await addNote(note);
-
-        dispatch(action);
-      });
+      const notes = noteJSON.map(json => Note.import(json));
+      addNotes(notes).then(dispatch);
     }
 
     navigator.clipboard
