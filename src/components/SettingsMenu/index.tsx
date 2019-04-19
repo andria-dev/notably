@@ -18,7 +18,7 @@ interface ISettingsMenuProps {
   isOpen: boolean;
 }
 export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
-  const [, dispatch] = useStore();
+  const [{ notes }, dispatch] = useStore();
 
   const {
     setFalse: closeImport,
@@ -45,42 +45,60 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
       addNotes(notes).then(dispatch);
     }
 
-    navigator.clipboard
-      .readText()
-      .then(handleData)
-      .catch(() => {
-        const promptString =
-          'We were unable to read the data from your clipboard, try pasting it here:';
-        const userInput = prompt(promptString);
+    function promptUser() {
+      const promptString =
+        'We were unable to read the data from your clipboard, try pasting it here:';
+      const userInput = prompt(promptString);
 
-        if (typeof userInput === 'string') {
-          handleData(userInput);
-        }
-      });
+      if (typeof userInput === 'string') {
+        handleData(userInput);
+      }
+    }
+
+    if (navigator.clipboard.readText) {
+      navigator.clipboard
+        .readText()
+        .then(handleData)
+        .catch(promptUser);
+    } else {
+      promptUser();
+    }
 
     closeImport();
   }, [closeImport, dispatch]);
 
   const exportNotes = useCallback(async () => {
-    const action = await getNotes();
+    const exportedNotes = JSON.stringify(
+      Object.values(notes).map(note => note.export())
+    );
 
-    if (action.type === 'SET_NOTES') {
-      const exportedNotes = JSON.stringify(
-        Object.values(action.payload).map(note => note.export())
-      );
+    navigator.clipboard
+      .writeText(exportedNotes)
+      .then(() => {
+        alert('Copied to clipboard!');
+      })
+      .catch(() => {
+        // Couldn't copy, so we're downloading the file now
+        const message =
+          'Unable to copy automatically, would you like to download the data?';
 
-      navigator.clipboard
-        .writeText(exportedNotes)
-        .then(() => {
-          alert('Copied to clipboard!');
-        })
-        .catch(() => {
-          alert('Unable to copy.');
-        });
-    }
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm(message)) {
+          const uriContent = `data:application/octet-stream,${encodeURIComponent(
+            exportedNotes
+          )}`;
+          const a = document.createElement('a');
+          a.href = uriContent;
+          a.download = 'notes-backup.json';
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      });
 
     close();
-  }, [close]);
+  }, [close, notes]);
 
   const deleteAll = useCallback(async () => {
     const action = await removeAllNotes();
