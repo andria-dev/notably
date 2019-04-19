@@ -57,7 +57,7 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
       });
 
     closeImport();
-  }, [closeImport]);
+  }, [closeImport, dispatch]);
 
   const exportNotes = useCallback(async () => {
     const action = await getNotes();
