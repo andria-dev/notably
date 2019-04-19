@@ -4,6 +4,7 @@ import { ObjectOf } from '../../../generic-types';
 import BaseModal, { IBaseModalProps } from '../BaseModal';
 
 import classNames from '@chbphone55/classnames';
+import './style.css';
 
 function CenterModal({
   isOpen,

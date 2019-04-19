@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useBoolean } from '../../hooks';
-import { getNotes, removeAllNotes, useStore } from '../../store';
+import { addNote, getNotes, removeAllNotes, useStore } from '../../store';
 
+import Note, { INoteJSON } from '../../models/Note';
 import Hx from '../Hx';
 import BottomModal from '../Modal/BottomModal';
 import CenterModal from '../Modal/CenterModal';
@@ -32,6 +33,36 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
   }, [openImport, close]);
 
   const importNotes = useCallback(() => {
+    function handleData(noteString: string) {
+      let noteJSON: INoteJSON[];
+      try {
+        noteJSON = JSON.parse(noteString);
+      } catch {
+        alert('Invalid data');
+        return;
+      }
+
+      noteJSON.forEach(async json => {
+        const note = Note.import(json);
+        const action = await addNote(note);
+
+        dispatch(action);
+      });
+    }
+
+    navigator.clipboard
+      .readText()
+      .then(handleData)
+      .catch(() => {
+        const promptString =
+          'We were unable to read the data from your clipboard, try pasting it here:';
+        const userInput = prompt(promptString);
+
+        if (typeof userInput === 'string') {
+          handleData(userInput);
+        }
+      });
+
     closeImport();
   }, [closeImport]);
 
@@ -90,8 +121,8 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
           your clipboard.
         </p>
         <p>
-          Once you click okay, you will be prompted to allow access to your
-          clipboard and the notes will be imported.
+          Once you click the "Okay" button, you will be prompted to allow access
+          to your clipboard and the notes will be imported.
         </p>
         <button onClick={importNotes}>Okay</button>
       </CenterModal>
