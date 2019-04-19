@@ -144,11 +144,10 @@ function handleCopyToClipboard(event: Event, { url }: { url: string }) {
   navigator.clipboard
     .writeText(url)
     .then(() => {
-      // TODO: notify the user of success
+      alert('Copied to clipboard!');
     })
-    .catch((error: Error) => {
-      // TODO: replace with snackbar or similar
-      alert('Unable to copy.');
+    .catch(() => {
+      alert(`Unable to copy, here is the value: ${url}`);
     });
 }
 
