@@ -150,11 +150,33 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
   editor.moveFocusToStartOfNode(startBlock).delete();
 }
 
+function getLine(text: string, position: number): string {
+  const start = text.lastIndexOf('\n', position - 1) + 1;
+  const end = text.indexOf('\n', position);
+
+  return text.slice(start, end);
+}
+
+function getIndentation(text: string, position: number): number {
+  const line = getLine(text, position);
+  const indentation = line.match(/^(?:\s{2})*/)![0].length / 2;
+  const endsInOpeningBracket = '{[('.includes(line[line.length - 1]);
+  const endsInOpenJSX = /<\w+[^>\/]*>\s*$/.test(line);
+
+  if (endsInOpeningBracket || endsInOpenJSX) {
+    return indentation + 1;
+  }
+
+  return indentation;
+}
+
 const isModEnterKey = isKeyHotkey('mod+enter');
 /**
  * On enter, if within a code-block, insert a newline character.
  * If the text before the cursor is *three backticks* then create a code-block.
  * Otherwise, split out of the block and create a paragraph.
+ *
+ * Also handles auto-indentation in code blocks
  */
 function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
   const { startBlock, selection } = editor.value;
@@ -164,7 +186,12 @@ function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
 
   const insertNewLine =
     startBlock.type === 'code-block'
-      ? () => editor.insertText('\n')
+      ? () =>
+          editor.insertText(
+            `\n${'  '.repeat(
+              getIndentation(startBlock.text, selection.anchor.offset)
+            )}`
+          )
       : () => editor.splitBlock(1).setBlocks('paragraph');
 
   if (startBlock.type === 'code-block' && isModEnterKey(event)) {
