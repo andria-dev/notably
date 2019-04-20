@@ -1,15 +1,24 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Notably",
+  "name": "Notably",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "icons/logo.svg",
+      "sizes": "any",
+      "type": "image/svg"
+    },
+    {
+      "src": "icons/logo.webp",
+      "sizes": "100x100",
+      "type": "image/webp"
+    },
+    {
+      "src": "icons/logo.png",
+      "sizes": "100x100"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#013b98",
   "background_color": "#ffffff"
 }
