@@ -4,8 +4,7 @@
   "icons": [
     {
       "src": "icons/logo.svg",
-      "sizes": "any",
-      "type": "image/svg"
+      "sizes": "1024x1024"
     },
     {
       "src": "icons/logo.webp",
@@ -14,7 +13,8 @@
     },
     {
       "src": "icons/logo.png",
-      "sizes": "100x100"
+      "sizes": "100x100",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
