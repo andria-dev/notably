@@ -152,7 +152,11 @@ function onSpace(event: Event, editor: Editor, next: () => any) {
 
 function getLine(text: string, position: number): string {
   const start = text.lastIndexOf('\n', position - 1) + 1;
-  const end = text.indexOf('\n', position);
+  let end = text.indexOf('\n', position);
+
+  if (end === -1) {
+    end = text.length;
+  }
 
   return text.slice(start, end);
 }
