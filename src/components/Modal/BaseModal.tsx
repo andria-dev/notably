@@ -31,7 +31,20 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
     from: { '--opacity': 0 },
     enter: { '--opacity': 0.5 },
     leave: { '--opacity': 0 },
-    config: { mass: 1, tension: 200, friction: 26 }
+    config: { mass: 1, tension: 200, friction: 26 },
+    onRest() {
+      if (isOpen) {
+        lastActiveElement.current = document.activeElement as HTMLElement;
+        root.setAttribute('inert', '');
+
+        if (modalRef.current) {
+          const focusableElements = getFocusable(modalRef.current);
+          if (focusableElements.length) {
+            focusableElements[0].focus();
+          }
+        }
+      }
+    }
   });
 
   // Close on Escape
@@ -49,17 +62,7 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
   }, [onRequestClose]);
 
   useEffect(() => {
-    if (isOpen) {
-      lastActiveElement.current = document.activeElement as HTMLElement;
-      root.setAttribute('inert', '');
-
-      if (modalRef.current) {
-        const focusableElements = getFocusable(modalRef.current);
-        if (focusableElements.length) {
-          focusableElements[0].focus();
-        }
-      }
-    } else {
+    if (!isOpen) {
       if (lastActiveElement.current) {
         lastActiveElement.current.focus();
       }
