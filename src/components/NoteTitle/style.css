@@ -11,3 +11,13 @@
 .NoteTitle:focus {
   outline: none;
 }
+
+.NoteTitle__wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.NoteTitle__label {
+  margin-top: auto;
+  line-height: 2rem;
+}

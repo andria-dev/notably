@@ -22,17 +22,20 @@ function NoteTitle() {
   return (
     <LabelledHx
       size={1}
-      type="input"
-      value={title}
-      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        setTitle(value);
-        debouncedSave(value);
+      hxProps={{
+        type: 'input',
+        value: title,
+        onChange: (event: ChangeEvent<HTMLInputElement>) => {
+          const value = event.target.value;
+          setTitle(value);
+          debouncedSave(value);
+        },
+        className: 'NoteTitle',
+        id,
+        'aria-label': 'Title of note'
       }}
-      className="NoteTitle"
-      id={id}
-      aria-label="Title of note"
-      labelProps={{ htmlFor: id }}
+      labelProps={{ htmlFor: id, className: 'NoteTitle__label' }}
+      className="NoteTitle__wrapper"
     />
   );
 }
