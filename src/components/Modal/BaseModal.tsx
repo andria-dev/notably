@@ -33,15 +33,10 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
     leave: { '--opacity': 0 },
     config: { mass: 1, tension: 200, friction: 26 },
     onRest() {
-      if (isOpen) {
-        lastActiveElement.current = document.activeElement as HTMLElement;
-        root.setAttribute('inert', '');
-
-        if (modalRef.current) {
-          const focusableElements = getFocusable(modalRef.current);
-          if (focusableElements.length) {
-            focusableElements[0].focus();
-          }
+      if (modalRef.current && isOpen) {
+        const focusableElements = getFocusable(modalRef.current);
+        if (focusableElements.length) {
+          focusableElements[0].focus();
         }
       }
     }
@@ -62,11 +57,18 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
   }, [onRequestClose]);
 
   useEffect(() => {
-    if (!isOpen) {
-      if (lastActiveElement.current) {
-        lastActiveElement.current.focus();
-      }
+    if (isOpen) {
+      lastActiveElement.current = document.activeElement as HTMLElement;
+      root.setAttribute('inert', '');
+    } else {
       root.removeAttribute('inert');
+
+      // wait for inert to wear off then focus
+      setTimeout(() => {
+        if (lastActiveElement.current) {
+          lastActiveElement.current.focus();
+        }
+      }, 0);
     }
   }, [isOpen]);
 
