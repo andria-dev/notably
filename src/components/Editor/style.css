@@ -6,6 +6,7 @@
 }
 
 .Editor {
+  position: relative;
   display: block;
   min-height: 100%;
 }
@@ -58,4 +59,13 @@
 .Editor__paragraph,
 .Editor__code-block {
   margin: 0;
+}
+
+.Editor__placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  opacity: 0.25;
+  user-select: none;
 }
