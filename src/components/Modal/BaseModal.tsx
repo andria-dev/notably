@@ -3,6 +3,8 @@ import { useTransition } from '../../hooks';
 import ModalBackdrop from './ModalBackdrop';
 import ModalPortal from './ModalPortal';
 
+import useLockBodyScroll from 'react-use/lib/useLockBodyScroll';
+
 import 'wicg-inert';
 
 const root = document.getElementById('root')!;
@@ -19,6 +21,8 @@ export interface IBaseModalProps {
 }
 
 function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
+  useLockBodyScroll(isOpen);
+
   const lastActiveElement = useRef<HTMLElement | null>(null);
   const modalRef = useRef<HTMLElement>(null);
 

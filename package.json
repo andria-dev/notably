@@ -19,6 +19,7 @@
     "react-router-dom": "^4.4.0-beta.8",
     "react-scripts": "^3.0.0-next.b0cbf2ca",
     "react-spring": "^8.0.19",
+    "react-use": "^8.1.4",
     "react-use-scroll-position": "^1.0.0",
     "reactive-react-redux": "^1.7.0",
     "redux": "^4.0.1",
