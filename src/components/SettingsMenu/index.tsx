@@ -13,6 +13,9 @@ import Hx from '../Hx';
 import BottomModal from '../Modal/BottomModal';
 import CenterModal from '../Modal/CenterModal';
 
+import Button from '../Button';
+import './style.css';
+
 interface ISettingsMenuProps {
   close: () => void;
   isOpen: boolean;
@@ -137,7 +140,7 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
           Once you click the "Okay" button, you will be prompted to allow access
           to your clipboard and the notes will be imported.
         </p>
-        <button onClick={importNotes}>Okay</button>
+        <Button onClick={importNotes}>Okay</Button>
       </CenterModal>
     </>
   );
