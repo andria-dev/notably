@@ -5,6 +5,9 @@ import { List } from 'immutable';
 import { isKeyHotkey } from 'is-hotkey';
 
 // @ts-ignore
+import SlateReactPlaceholder from 'slate-react-placeholder';
+
+// @ts-ignore
 import PluginPrism from 'slate-prism';
 
 import 'prismjs/themes/prism-tomorrow.css';
@@ -14,7 +17,14 @@ export const plugins = [
   PluginPrism({
     onlyIn: (block: Block) => block.type === 'code-block',
     getSyntax: (block: Block) => block.data.get('syntax') || 'javascript'
-  })
+  }),
+  {
+    queries: {
+      isEmpty: (editor: Editor) => editor.value.document.text === '',
+      isFirst: (editor: Editor, node: Block) =>
+        editor.value.document.nodes.first() === node
+    }
+  }
 ];
 
 /**
@@ -31,6 +41,16 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
         </pre>
       );
     case 'paragraph':
+      if (editor.query('isEmpty') && editor.query('isFirst', node)) {
+        return (
+          <p {...attributes} className="Editor__paragraph">
+            <span className="Editor__placeholder" contentEditable={false}>
+              Write a tutorial, or create a diary...
+            </span>
+            {children}
+          </p>
+        );
+      }
       return (
         <p {...attributes} className="Editor__paragraph">
           {children}

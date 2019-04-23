@@ -21,9 +21,9 @@ dependencies:
   redux: registry.npmjs.org/redux/4.0.1
   relative-time-format: registry.npmjs.org/relative-time-format/0.1.3
   slate: registry.npmjs.org/slate/0.45.0
-  slate-plain-serializer: registry.npmjs.org/slate-plain-serializer/0.6.38
   slate-prism: github.com/chrisbrownie55/slate-prism/d025c94b56fe994f07b99defbeb02558bbc5021e
   slate-react: registry.npmjs.org/slate-react/0.21.20
+  slate-react-placeholder: registry.npmjs.org/slate-react-placeholder/0.1.17
   slate-schema-violations: registry.npmjs.org/slate-schema-violations/0.1.39
   typescript: registry.npmjs.org/typescript/3.4.4
   use-dark-mode: registry.npmjs.org/use-dark-mode/2.3.1
@@ -16360,9 +16360,9 @@ specifiers:
   redux: ^4.0.1
   relative-time-format: ^0.1.3
   slate: ^0.45.0
-  slate-plain-serializer: ^0.6.38
   slate-prism: 'git+https://git@github.com/chrisbrownie55/slate-prism.git'
   slate-react: ^0.21.20
+  slate-react-placeholder: ^0.1.17
   slate-schema-violations: ^0.1.39
   tslint: ^5.12.1
   tslint-config-prettier: ^1.18.0

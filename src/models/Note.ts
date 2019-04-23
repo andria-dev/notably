@@ -1,8 +1,30 @@
-import { Value, ValueJSON } from 'slate';
-// @ts-ignore
-import Plain from 'slate-plain-serializer';
+import { MarkJSON, Value, ValueJSON } from 'slate';
 
-const emptyState = Plain.deserialize('');
+const emptyState: ValueJSON = {
+  object: 'value',
+  document: {
+    object: 'document',
+    data: {},
+    nodes: [
+      {
+        object: 'block',
+        type: 'paragraph',
+        data: {},
+        nodes: [
+          {
+            object: 'text',
+            leaves: [
+              {
+                object: 'leaf',
+                text: ''
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
 
 export interface INoteJSON {
   title: string;

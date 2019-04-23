@@ -97,7 +97,6 @@ function Editor() {
         renderNode={renderNode}
         renderMark={renderMark}
         plugins={plugins}
-        placeholder="Write a tutorial, or create a diary..."
       />
     </main>
   );
