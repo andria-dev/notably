@@ -4,7 +4,7 @@
   left: 50%;
 
   --padding: 2rem;
-  width: calc(100vw - var(--padding) - 1rem);
+  width: calc(100vw - 1rem - var(--padding) * 2);
   max-width: 40rem;
   max-height: 20rem;
   padding: var(--padding);
