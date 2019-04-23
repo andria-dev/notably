@@ -3,7 +3,7 @@ import React, { Fragment, useCallback, useContext, useMemo } from 'react';
 // @ts-ignore
 import { __RouterContext as RouterContext } from 'react-router';
 
-import { Leaf } from 'slate';
+import Plain from 'slate-plain-serializer';
 
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { Link } from 'react-router-dom';
@@ -68,14 +68,7 @@ function NotesList({
          * * get the leaves of the first node
          * * join the text on each leaf together
          */
-        const noteContentSnippet = note.state.document
-          .getBlocks()
-          .get(0)
-          .nodes.get(0)
-          // @ts-ignore
-          .leaves.map((leaf: Leaf) => leaf.text)
-          .toJS()
-          .join('');
+        const noteContentSnippet = Plain.serialize(note.state).slice(0, 200);
         const menuID = `notes-list__${id}`;
         const isActive = activeID === id;
 
