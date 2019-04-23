@@ -3,6 +3,8 @@ import { useTransition } from '../../hooks';
 import ModalBackdrop from './ModalBackdrop';
 import ModalPortal from './ModalPortal';
 
+import 'wicg-inert';
+
 const root = document.getElementById('root')!;
 function getFocusable(element: HTMLElement): NodeListOf<HTMLElement> {
   return element.querySelectorAll(
@@ -43,25 +45,9 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
   }, [onRequestClose]);
 
   useEffect(() => {
-    function handleTab(event: KeyboardEvent) {
-      if (event.key === 'Tab' && modalRef.current) {
-        const focusedElement = document.querySelector(':focus') as HTMLElement;
-        if (!modalRef.current.contains(focusedElement)) {
-          const focusableElements = getFocusable(modalRef.current);
-          if (!focusableElements.length) {
-            // If nothing to focus on, just blur
-            return focusedElement.blur();
-          }
-
-          // focus on first element
-          focusableElements[0].focus();
-        }
-      }
-    }
-
     if (isOpen) {
       lastActiveElement.current = document.activeElement as HTMLElement;
-      root.setAttribute('aria-hidden', 'true');
+      root.setAttribute('inert', '');
 
       if (modalRef.current) {
         const focusableElements = getFocusable(modalRef.current);
@@ -69,18 +55,12 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
           focusableElements[0].focus();
         }
       }
-
-      window.addEventListener('keyup', handleTab);
     } else {
       if (lastActiveElement.current) {
         lastActiveElement.current.focus();
       }
-      root.removeAttribute('aria-hidden');
-
-      window.removeEventListener('keyup', handleTab);
+      root.removeAttribute('inert');
     }
-
-    return () => window.removeEventListener('keyup', handleTab);
   }, [isOpen]);
 
   return (
