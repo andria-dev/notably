@@ -27,7 +27,7 @@ function CenterModal({
           <animated.div
             key={key}
             style={style}
-            className={classNames('CenterModal', className)}
+            className={classNames('CenterModal shadow-lg', className)}
             {...props}
           />
         ) : null

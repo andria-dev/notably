@@ -26,7 +26,7 @@ function BottomModal({
       {modalTransition.map(modal =>
         modal.item ? (
           <animated.div
-            className={classNames('BottomModal', className)}
+            className={classNames('BottomModal shadow-lg', className)}
             key={modal.key}
             style={modal.props}
             {...props}
