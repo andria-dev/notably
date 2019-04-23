@@ -1,11 +1,9 @@
 import classNames from '@chbphone55/classnames';
-import React, { useCallback, useRef } from 'react';
+import React, { forwardRef, useCallback, useRef } from 'react';
 import { animated } from 'react-spring';
 import './style.css';
 
-function ModalBackdrop({ className, onClick, ...props }: any) {
-  const ref = useRef(null);
-
+function ModalBackdrop({ className, onClick, ...props }: any, ref: any) {
   const handleClick = useCallback(
     event => {
       if (ref.current === event.target) {
@@ -25,4 +23,4 @@ function ModalBackdrop({ className, onClick, ...props }: any) {
   );
 }
 
-export default ModalBackdrop;
+export default forwardRef(ModalBackdrop);

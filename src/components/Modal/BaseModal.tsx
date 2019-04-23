@@ -1,7 +1,14 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { useTransition } from '../../hooks';
 import ModalBackdrop from './ModalBackdrop';
 import ModalPortal from './ModalPortal';
+
+const root = document.getElementById('root')!;
+function getFocusable(element: HTMLElement): NodeListOf<HTMLElement> {
+  return element.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+}
 
 export interface IBaseModalProps {
   children: ReactNode;
@@ -10,6 +17,9 @@ export interface IBaseModalProps {
 }
 
 function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
+  const lastActiveElement = useRef<HTMLElement | null>(null);
+  const modalRef = useRef<HTMLElement>(null);
+
   const backdropTransition = useTransition(isOpen, null, {
     '--opacity': 0,
     from: { '--opacity': 0 },
@@ -32,6 +42,47 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
     };
   }, [onRequestClose]);
 
+  useEffect(() => {
+    function handleTab(event: KeyboardEvent) {
+      if (event.key === 'Tab' && modalRef.current) {
+        const focusedElement = document.querySelector(':focus') as HTMLElement;
+        if (!modalRef.current.contains(focusedElement)) {
+          const focusableElements = getFocusable(modalRef.current);
+          if (!focusableElements.length) {
+            // If nothing to focus on, just blur
+            return focusedElement.blur();
+          }
+
+          // focus on first element
+          focusableElements[0].focus();
+        }
+      }
+    }
+
+    if (isOpen) {
+      lastActiveElement.current = document.activeElement as HTMLElement;
+      root.setAttribute('aria-hidden', 'true');
+
+      if (modalRef.current) {
+        const focusableElements = getFocusable(modalRef.current);
+        if (focusableElements.length) {
+          focusableElements[0].focus();
+        }
+      }
+
+      window.addEventListener('keyup', handleTab);
+    } else {
+      if (lastActiveElement.current) {
+        lastActiveElement.current.focus();
+      }
+      root.removeAttribute('aria-hidden');
+
+      window.removeEventListener('keyup', handleTab);
+    }
+
+    return () => window.removeEventListener('keyup', handleTab);
+  }, [isOpen]);
+
   return (
     <ModalPortal>
       {backdropTransition.map(backdrop =>
@@ -41,6 +92,9 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
             className="BottomModal__backdrop"
             style={backdrop.props}
             onClick={onRequestClose}
+            aria-modal="true"
+            role="dialog"
+            ref={modalRef}
           >
             {children}
           </ModalBackdrop>
