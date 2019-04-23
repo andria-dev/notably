@@ -21,8 +21,7 @@ export const plugins = [
   {
     queries: {
       isEmpty: (editor: Editor) => editor.value.document.text === '',
-      isFirst: (editor: Editor, node: Block) =>
-        editor.value.document.nodes.first() === node
+      isOnly: (editor: Editor) => editor.value.document.nodes.size === 1
     }
   }
 ];
@@ -41,7 +40,7 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
         </pre>
       );
     case 'paragraph':
-      if (editor.query('isEmpty') && editor.query('isFirst', node)) {
+      if (editor.query('isEmpty') && editor.query('isOnly')) {
         return (
           <p {...attributes} className="Editor__paragraph">
             <span className="Editor__placeholder" contentEditable={false}>

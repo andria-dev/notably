@@ -68,4 +68,6 @@
 
   opacity: 0.25;
   user-select: none;
+  pointer-events: none;
+  cursor: text;
 }
