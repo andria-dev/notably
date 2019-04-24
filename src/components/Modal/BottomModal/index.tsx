@@ -1,5 +1,5 @@
 import React from 'react';
-import { animated } from 'react-spring';
+import { animated, UseTransitionResult } from 'react-spring';
 import { useTransition } from '../../../hooks';
 import BaseModal, { IBaseModalProps } from '../BaseModal';
 
@@ -7,20 +7,24 @@ import classNames from '@chbphone55/classnames';
 import { ObjectOf } from '../../../generic-types';
 import './style.css';
 
+interface IProps extends IBaseModalProps, ObjectOf<any> {
+  modalTransition?: Array<UseTransitionResult<any, Pick<{}, never>>>;
+}
+
 function BottomModal({
   children,
   isOpen,
   onRequestClose,
   className,
-  ...props
-}: IBaseModalProps & ObjectOf<any>) {
-  const modalTransition = useTransition(isOpen, null, {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  modalTransition = useTransition(isOpen, null, {
     from: { transform: 'translateY(100%) translateX(-50%)' },
     enter: { transform: 'translateY(0%) translateX(-50%)' },
     leave: { transform: 'translateY(100%) translateX(-50%)' },
     config: { mass: 1, tension: 200, friction: 26 }
-  });
-
+  }),
+  ...props
+}: IProps) {
   return (
     <BaseModal isOpen={isOpen} onRequestClose={onRequestClose}>
       {modalTransition.map(modal =>
