@@ -11,7 +11,8 @@ import SlateReactPlaceholder from 'slate-react-placeholder';
 import PluginPrism from 'slate-prism';
 
 import 'prismjs/themes/prism-tomorrow.css';
-import { LabelledHx } from '../LabelledHx';
+import { LabelledHx, ILabelledHxProps } from '../LabelledHx';
+import { ObjectOf } from '../../generic-types';
 
 export const plugins = [
   PluginPrism({
@@ -25,6 +26,10 @@ export const plugins = [
     }
   }
 ];
+
+function Heading(props: ILabelledHxProps) {
+  return <LabelledHx style={{ transform: 'translateX(-2rem)' }} {...props} />;
+}
 
 /**
  * Renders different nodes as React elements for Slate based on their node-type.
@@ -57,39 +62,39 @@ export function renderNode(props: any, editor: Editor, next: CallableFunction) {
       );
     case 'heading-one':
       return (
-        <LabelledHx {...attributes} size={1}>
+        <Heading {...attributes} size={1}>
           {children}
-        </LabelledHx>
+        </Heading>
       );
     case 'heading-two':
       return (
-        <LabelledHx {...attributes} size={2}>
+        <Heading {...attributes} size={2}>
           {children}
-        </LabelledHx>
+        </Heading>
       );
     case 'heading-three':
       return (
-        <LabelledHx {...attributes} size={3}>
+        <Heading {...attributes} size={3}>
           {children}
-        </LabelledHx>
+        </Heading>
       );
     case 'heading-four':
       return (
-        <LabelledHx {...attributes} size={4}>
+        <Heading {...attributes} size={4}>
           {children}
-        </LabelledHx>
+        </Heading>
       );
     case 'heading-five':
       return (
-        <LabelledHx {...attributes} size={5}>
+        <Heading {...attributes} size={5}>
           {children}
-        </LabelledHx>
+        </Heading>
       );
     case 'heading-six':
       return (
-        <LabelledHx {...attributes} size={6}>
+        <Heading {...attributes} size={6}>
           {children}
-        </LabelledHx>
+        </Heading>
       );
     case 'blockquote':
       return (
