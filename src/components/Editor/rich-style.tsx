@@ -194,6 +194,7 @@ function getIndentation(text: string, position: number): number {
 }
 
 const isModEnterKey = isKeyHotkey('mod+enter');
+const isShiftEnterKey = isKeyHotkey('shift+enter');
 /**
  * On enter, if within a code-block, insert a newline character.
  * If the text before the cursor is *three backticks* then create a code-block.
@@ -222,6 +223,8 @@ function onEnter(event: any, editor: Editor, next: () => any, shift: boolean) {
     const newlinePosition = startBlock.text.indexOf('\n', offset);
 
     return editor.moveForward(newlinePosition - offset).insertText('\n');
+  } else if (startBlock.type === 'code-block' && isShiftEnterKey(event)) {
+    return editor.splitBlock(1).setBlocks('paragraph');
   } else if (startBlock.text.slice(0, selection.start.offset) === '```') {
     return editor
       .deleteBackward(selection.start.offset)
