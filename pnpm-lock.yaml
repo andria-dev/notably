@@ -12,7 +12,7 @@ dependencies:
   react-dom: registry.npmjs.org/react-dom/16.8.6
   react-icons: registry.npmjs.org/react-icons/3.6.1
   react-router: registry.npmjs.org/react-router/4.4.0-beta.8
-  react-router-dom: registry.npmjs.org/react-router-dom/4.4.0-beta.8
+  react-router-dom: registry.npmjs.org/react-router-dom/5.0.0
   react-scripts: registry.npmjs.org/react-scripts/3.0.0
   react-spring: registry.npmjs.org/react-spring/8.0.19
   react-use: registry.npmjs.org/react-use/8.1.4
@@ -12777,13 +12777,13 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/react-is/-/react-is-16.8.6.tgz'
     version: 16.8.6
-  registry.npmjs.org/react-router-dom/4.4.0-beta.8:
+  registry.npmjs.org/react-router-dom/5.0.0:
     dependencies:
       '@babel/runtime': registry.npmjs.org/@babel/runtime/7.4.3
       history: registry.npmjs.org/history/4.9.0
       loose-envify: registry.npmjs.org/loose-envify/1.4.0
       prop-types: registry.npmjs.org/prop-types/15.7.2
-      react-router: registry.npmjs.org/react-router/4.4.0-beta.8
+      react-router: registry.npmjs.org/react-router/5.0.0
       tiny-invariant: registry.npmjs.org/tiny-invariant/1.0.4
       tiny-warning: registry.npmjs.org/tiny-warning/1.0.2
     dev: false
@@ -12791,10 +12791,10 @@ packages:
     peerDependencies:
       react: '>=15'
     resolution:
-      integrity: sha512-7BvXPfOAu5t7Xbg42zlKfaWzNKWEL9Jd+/iPE4vafZChZ7qvIaaA3IsUeMc0M+6NDFSqtZl9f8nQKDdfcPthhg==
+      integrity: sha512-wSpja5g9kh5dIteZT3tUoggjnsa+TPFHSMrpHXMpFsaHhQkm/JNVGh2jiF9Dkh4+duj4MKCkwO6H08u6inZYgQ==
       registry: 'http://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.org/react-router-dom/-/react-router-dom-4.4.0-beta.8.tgz'
-    version: 4.4.0-beta.8
+      tarball: 'https://registry.npmjs.org/react-router-dom/-/react-router-dom-5.0.0.tgz'
+    version: 5.0.0
   registry.npmjs.org/react-router/4.4.0-beta.8:
     dependencies:
       '@babel/runtime': registry.npmjs.org/@babel/runtime/7.4.3
@@ -12816,6 +12816,27 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/react-router/-/react-router-4.4.0-beta.8.tgz'
     version: 4.4.0-beta.8
+  registry.npmjs.org/react-router/5.0.0:
+    dependencies:
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.4.3
+      create-react-context: registry.npmjs.org/create-react-context/0.2.3_prop-types@15.7.2
+      history: registry.npmjs.org/history/4.9.0
+      hoist-non-react-statics: registry.npmjs.org/hoist-non-react-statics/3.3.0
+      loose-envify: registry.npmjs.org/loose-envify/1.4.0
+      path-to-regexp: registry.npmjs.org/path-to-regexp/1.7.0
+      prop-types: registry.npmjs.org/prop-types/15.7.2
+      react-is: registry.npmjs.org/react-is/16.8.6
+      tiny-invariant: registry.npmjs.org/tiny-invariant/1.0.4
+      tiny-warning: registry.npmjs.org/tiny-warning/1.0.2
+    dev: false
+    name: react-router
+    peerDependencies:
+      react: '>=15'
+    resolution:
+      integrity: sha512-6EQDakGdLG/it2x9EaCt9ZpEEPxnd0OCLBHQ1AcITAAx7nCnyvnzf76jKWG1s2/oJ7SSviUgfWHofdYljFexsA==
+      registry: 'http://registry.npmjs.com/'
+      tarball: 'https://registry.npmjs.org/react-router/-/react-router-5.0.0.tgz'
+    version: 5.0.0
   registry.npmjs.org/react-scripts/3.0.0:
     dependencies:
       '@babel/core': registry.npmjs.org/@babel/core/7.4.3
@@ -16638,7 +16659,7 @@ specifiers:
   react-dom: ^16.8.6
   react-icons: ^3.4.0
   react-router: ^4.4.0-beta.8
-  react-router-dom: ^4.4.0-beta.8
+  react-router-dom: ^5.0.0
   react-scripts: ^3.0.0
   react-spring: ^8.0.19
   react-use: ^8.1.4
