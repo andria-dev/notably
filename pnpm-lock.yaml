@@ -11,15 +11,15 @@ dependencies:
   react-contextmenu: registry.npmjs.org/react-contextmenu/2.11.0
   react-dom: registry.npmjs.org/react-dom/16.8.6
   react-icons: registry.npmjs.org/react-icons/3.6.1
-  react-router: registry.npmjs.org/react-router/4.4.0-beta.8
+  react-router: registry.npmjs.org/react-router/5.0.0
   react-router-dom: registry.npmjs.org/react-router-dom/5.0.0
   react-scripts: registry.npmjs.org/react-scripts/3.0.0
   react-spring: registry.npmjs.org/react-spring/8.0.19
   react-use: registry.npmjs.org/react-use/8.1.4
   react-use-scroll-position: registry.npmjs.org/react-use-scroll-position/1.0.0
-  reactive-react-redux: registry.npmjs.org/reactive-react-redux/1.8.0
+  reactive-react-redux: registry.npmjs.org/reactive-react-redux/2.0.1
   redux: registry.npmjs.org/redux/4.0.1
-  relative-time-format: registry.npmjs.org/relative-time-format/0.1.3
+  relative-time-format: registry.npmjs.org/relative-time-format/0.2.2
   slate: registry.npmjs.org/slate/0.45.0
   slate-plain-serializer: registry.npmjs.org/slate-plain-serializer/0.6.38
   slate-prism: github.com/chrisbrownie55/slate-prism/d025c94b56fe994f07b99defbeb02558bbc5021e
@@ -6759,6 +6759,16 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz'
     version: 1.1.1
+  registry.npmjs.org/function-double/1.0.4:
+    dependencies:
+      util-arity: registry.npmjs.org/util-arity/1.1.0
+    dev: false
+    name: function-double
+    resolution:
+      integrity: sha512-J+vMIwmWx/uY3Fc4TNeyPyQOjSbaWpHO/xj+tv8RbViLfPipFGohgOWN+kSkuWTwSZPZxMfYopECUA/9Tq8YJA==
+      registry: 'http://registry.npmjs.com/'
+      tarball: 'https://registry.npmjs.org/function-double/-/function-double-1.0.4.tgz'
+    version: 1.0.4
   registry.npmjs.org/functional-red-black-tree/1.0.1:
     dev: false
     name: functional-red-black-tree
@@ -9791,6 +9801,17 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/memoize-one/-/memoize-one-4.0.3.tgz'
     version: 4.0.3
+  registry.npmjs.org/memoize-state/2.0.7:
+    dependencies:
+      function-double: registry.npmjs.org/function-double/1.0.4
+      proxyequal: registry.npmjs.org/proxyequal/2.0.6
+    dev: false
+    name: memoize-state
+    resolution:
+      integrity: sha512-pjuXxBeFLynnUZ2aHyNUhDsBT0u4hkqC/GkcbnQo2soTyepV5FSs02WDpWQfwGXnbA9rgTk3xY59cUTKGK9hFA==
+      registry: 'http://registry.npmjs.com/'
+      tarball: 'https://registry.npmjs.org/memoize-state/-/memoize-state-2.0.7.tgz'
+    version: 2.0.7
   registry.npmjs.org/memory-fs/0.4.1:
     dependencies:
       errno: registry.npmjs.org/errno/0.1.7
@@ -12795,27 +12816,6 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/react-router-dom/-/react-router-dom-5.0.0.tgz'
     version: 5.0.0
-  registry.npmjs.org/react-router/4.4.0-beta.8:
-    dependencies:
-      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.4.3
-      create-react-context: registry.npmjs.org/create-react-context/0.2.3_prop-types@15.7.2
-      history: registry.npmjs.org/history/4.9.0
-      hoist-non-react-statics: registry.npmjs.org/hoist-non-react-statics/3.3.0
-      loose-envify: registry.npmjs.org/loose-envify/1.4.0
-      path-to-regexp: registry.npmjs.org/path-to-regexp/1.7.0
-      prop-types: registry.npmjs.org/prop-types/15.7.2
-      react-is: registry.npmjs.org/react-is/16.8.6
-      tiny-invariant: registry.npmjs.org/tiny-invariant/1.0.4
-      tiny-warning: registry.npmjs.org/tiny-warning/1.0.2
-    dev: false
-    name: react-router
-    peerDependencies:
-      react: '>=15'
-    resolution:
-      integrity: sha512-kt25GUhKCPqzyEnr0PH/o2GiimdJLvkqheP+pqRjFyiKPqgXjQVpiIsxUhMin+pheU8cqkQ3jjLprYhshd+WwQ==
-      registry: 'http://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.org/react-router/-/react-router-4.4.0-beta.8.tgz'
-    version: 4.4.0-beta.8
   registry.npmjs.org/react-router/5.0.0:
     dependencies:
       '@babel/runtime': registry.npmjs.org/@babel/runtime/7.4.3
@@ -12971,19 +12971,21 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/react/-/react-16.8.6.tgz'
     version: 16.8.6
-  registry.npmjs.org/reactive-react-redux/1.8.0:
+  registry.npmjs.org/reactive-react-redux/2.0.1:
     dependencies:
+      memoize-state: registry.npmjs.org/memoize-state/2.0.7
       proxyequal: registry.npmjs.org/proxyequal/2.0.6
+      with-known-usage: registry.npmjs.org/with-known-usage/1.0.0
     dev: false
     name: reactive-react-redux
     peerDependencies:
       react: '>=16.8.0'
       redux: '>=4.0.0'
     resolution:
-      integrity: sha512-baFKVPmVItX9F+xhayBFo2EaWTmlVWhQUgUJXO2W237rRe3WsRTJMjfo4hLHaVdifh1k+nKrlyCqQfLiCIShMA==
+      integrity: sha512-U2Q9nlOMuesOZsmmIUj8zf7gFptquiQ1fc5v3hrNWDxzGleVYJlYO/iSCn3W51bQtqQFzu1Gx+5zuzfdf3LLHg==
       registry: 'http://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.org/reactive-react-redux/-/reactive-react-redux-1.8.0.tgz'
-    version: 1.8.0
+      tarball: 'https://registry.npmjs.org/reactive-react-redux/-/reactive-react-redux-2.0.1.tgz'
+    version: 2.0.1
   registry.npmjs.org/read-pkg-up/2.0.0:
     dependencies:
       find-up: registry.npmjs.org/find-up/2.1.0
@@ -13253,14 +13255,14 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/relateurl/-/relateurl-0.2.7.tgz'
     version: 0.2.7
-  registry.npmjs.org/relative-time-format/0.1.3:
+  registry.npmjs.org/relative-time-format/0.2.2:
     dev: false
     name: relative-time-format
     resolution:
-      integrity: sha512-0O6i4fKjsx8qhz57zorG+LrIDnF9pSvP5s7H9R1Nb5nSqih5dvRyKzNKs6MxhL3bv4iwsz4DuDwAyw+c47QFIA==
+      integrity: sha512-/ac912YxdPcXifGRuClA9thfeEkEWGZ9dlhjmH7kJTtZZlX+F0dGGsPAyF9OzxblLGUQg/EiogjPzA9G8ekusw==
       registry: 'http://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.org/relative-time-format/-/relative-time-format-0.1.3.tgz'
-    version: 0.1.3
+      tarball: 'https://registry.npmjs.org/relative-time-format/-/relative-time-format-0.2.2.tgz'
+    version: 0.2.2
   registry.npmjs.org/remove-trailing-separator/1.1.0:
     dev: false
     name: remove-trailing-separator
@@ -15735,6 +15737,14 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/use/-/use-3.1.1.tgz'
     version: 3.1.1
+  registry.npmjs.org/util-arity/1.1.0:
+    dev: false
+    name: util-arity
+    resolution:
+      integrity: sha1-WdAa8f2z/t4KxOYysKtfbOl8kzA=
+      registry: 'http://registry.npmjs.com/'
+      tarball: 'https://registry.npmjs.org/util-arity/-/util-arity-1.1.0.tgz'
+    version: 1.1.0
   registry.npmjs.org/util-deprecate/1.0.2:
     dev: false
     name: util-deprecate
@@ -16226,6 +16236,16 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/wicg-inert/-/wicg-inert-2.1.0.tgz'
     version: 2.1.0
+  registry.npmjs.org/with-known-usage/1.0.0:
+    dev: false
+    engines:
+      node: '>=8.5.0'
+    name: with-known-usage
+    resolution:
+      integrity: sha512-CFYdEOoSBCpbi71NMdJd6mO7ZyMg56o7NDUyFUreVG4VWe9jllVcJEVc41VWRbUNppWkuqbfll3H4+4BWKu0xw==
+      registry: 'http://registry.npmjs.com/'
+      tarball: 'https://registry.npmjs.org/with-known-usage/-/with-known-usage-1.0.0.tgz'
+    version: 1.0.0
   registry.npmjs.org/wordwrap/0.0.3:
     dev: false
     engines:
@@ -16658,15 +16678,15 @@ specifiers:
   react-contextmenu: ^2.10.0
   react-dom: ^16.8.6
   react-icons: ^3.4.0
-  react-router: ^4.4.0-beta.8
+  react-router: ^5.0.0
   react-router-dom: ^5.0.0
   react-scripts: ^3.0.0
   react-spring: ^8.0.19
   react-use: ^8.1.4
   react-use-scroll-position: ^1.0.0
-  reactive-react-redux: ^1.7.0
+  reactive-react-redux: ^2.0.1
   redux: ^4.0.1
-  relative-time-format: ^0.1.3
+  relative-time-format: ^0.2.2
   slate: ^0.45.0
   slate-plain-serializer: ^0.6.38
   slate-prism: 'git+https://git@github.com/chrisbrownie55/slate-prism.git'
