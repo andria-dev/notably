@@ -24,11 +24,6 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
     value: isImportOpen
   } = useBoolean(false);
 
-  const openImportAndClose = useCallback(() => {
-    openImport();
-    close();
-  }, [openImport, close]);
-
   const importNotes = useCallback(() => {
     function handleData(noteString: string) {
       let noteJSON: INoteJSON[];
@@ -104,22 +99,6 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
     close();
   }, [dispatch, close]);
 
-  const springRef: RefObject<ReactSpringHook> = useRef(null);
-  const importButtonProps = useSpring({
-    // @ts-ignore
-    transform: isImportOpen
-      ? 'translateY(10rem) scale(2)'
-      : 'translateY(0rem) scale(1)',
-    ref: springRef
-  });
-
-  const transitionRef: RefObject<ReactSpringHook> = useRef(null);
-  const centerModalTransition = useCenterModalTransition(isImportOpen, {
-    ref: transitionRef
-  });
-
-  useChain([springRef, transitionRef]);
-
   return (
     <>
       <BottomModal
@@ -130,9 +109,7 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
         <Hx size={3} className="Home__settings-title">
           Settings
         </Hx>
-        <animated.button style={importButtonProps} onClick={openImportAndClose}>
-          Import notes
-        </animated.button>
+        <button onClick={openImport}>Import notes</button>
         <button onClick={exportNotes}>Export notes</button>
         <button onClick={deleteAll}>Delete all notes</button>
       </BottomModal>
@@ -141,7 +118,6 @@ export function SettingsMenu({ close, isOpen }: ISettingsMenuProps) {
         isOpen={isImportOpen}
         onRequestClose={closeImport}
         className="SettingsMenu__import-modal"
-        modalTransition={centerModalTransition}
       >
         <Hx size={3} className="SettingsMenu__import-title">
           Import Notes
