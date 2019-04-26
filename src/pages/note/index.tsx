@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -70,15 +70,13 @@ interface INotePageParams {
 function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
   const [state, dispatch] = useStore();
 
-  if (!match) {
-    /* TODO: Display 404 Not Found */
-    return null;
-  }
-
+  match = match!;
   const id = match.params.id;
-  if (state.activeNoteID !== id) {
-    dispatch(setActiveNoteID(id));
-  }
+  useEffect(() => {
+    if (state.activeNoteID !== id) {
+      dispatch(setActiveNoteID(id));
+    }
+  }, [match]);
 
   if (state.loadedFromDB && !(id in state.notes)) {
     return (

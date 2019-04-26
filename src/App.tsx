@@ -8,7 +8,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { animated, OpaqueInterpolation } from 'react-spring';
+import { animated } from 'react-spring';
 import { useTransition } from './hooks';
 
 import Home from './pages/home';
@@ -32,24 +32,19 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
 
 const App = () => {
   const { location }: { location: Location } = useContext(__RouterContext);
-  const transition = useTransition(
-    [location],
-    (currentLocation: Location) => currentLocation.pathname,
-    {
-      from: {
-        transform: 'translateX(100%)',
-        position: 'absolute',
-        width: '100%'
-      },
-      enter: { transform: 'translateX(0%)' },
-      leave: { transform: 'translateX(100%)' }
-    }
-  );
+  const transition = useTransition([location], ({ key }: Location) => key!, {
+    from: {
+      transform: 'translateX(100%)',
+      position: 'absolute',
+      width: '100%'
+    },
+    enter: { transform: 'translateX(0%)' },
+    leave: { transform: 'translateX(100%)' }
+  });
 
   return (
     <>
       {transition.map(({ item, key, props }) => (
-        // @ts-ignore
         <animated.div style={props} key={key}>
           <Switch location={item}>
             <Route exact path="/" component={Home} />
