@@ -30,7 +30,7 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
   meta[name="apple-mobile-web-app-status-bar-style"]
 `);
 
-const App = memo(() => {
+const App = () => {
   const { location }: { location: Location } = useContext(__RouterContext);
   const transition = useTransition(
     [location],
@@ -59,7 +59,7 @@ const App = memo(() => {
       ))}
     </>
   );
-});
+};
 
 function AppWrapper() {
   const darkMode = useDarkMode(false, {
