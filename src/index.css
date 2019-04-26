@@ -19,6 +19,8 @@ body {
 
   scrollbar-color: hsl(0, 0%, 90%) transparent;
   scrollbar-width: thin;
+
+  overflow-x: hidden;
 }
 
 body.dark-mode {
