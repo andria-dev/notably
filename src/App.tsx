@@ -36,45 +36,27 @@ const App = memo(() => {
     [location],
     (currentLocation: Location) => currentLocation.pathname,
     {
-      xOffset: 0,
-      from: { xOffset: 0, position: 'absolute', width: '100%' },
-      enter: { xOffset: 100 },
-      leave: { xOffset: 0 }
+      from: {
+        transform: 'translateX(100%)',
+        position: 'absolute',
+        width: '100%'
+      },
+      enter: { transform: 'translateX(0%)' },
+      leave: { transform: 'translateX(100%)' }
     }
   );
 
   return (
     <>
-      {transition.map(({ item, key, props: { xOffset, ...props } }) => {
-        const transform = xOffset.interpolate(x => {
-          debugger;
-          if (item.pathname === location.pathname) {
-            return `translateX(${100 - x}%)`; // Animating in
-          }
-          return `translateX(${x}%)`;
-        });
-
-        console.log(
-          `${item.pathname} === ${location.pathname}`,
-          item.pathname === location.pathname
-        );
-
-        return (
-          // @ts-ignore
-          <animated.div
-            style={{
-              transform,
-              ...props
-            }}
-            key={key}
-          >
-            <Switch location={item}>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/note/:id" component={Note} />
-            </Switch>
-          </animated.div>
-        );
-      })}
+      {transition.map(({ item, key, props }) => (
+        // @ts-ignore
+        <animated.div style={props} key={key}>
+          <Switch location={item}>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/note/:id" component={Note} />
+          </Switch>
+        </animated.div>
+      ))}
     </>
   );
 });
