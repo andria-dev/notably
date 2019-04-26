@@ -1,12 +1,14 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useContext, useEffect } from 'react';
 import {
+  // @ts-ignore
+  __RouterContext,
   BrowserRouter as Router,
   Route,
   RouteComponentProps,
   Switch
 } from 'react-router-dom';
 
-import { animated } from 'react-spring';
+import { animated, OpaqueInterpolation } from 'react-spring';
 import { useTransition } from './hooks';
 
 import Home from './pages/home';
@@ -29,24 +31,52 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
 `);
 
 const App = memo(() => {
+  const { location }: { location: Location } = useContext(__RouterContext);
   const transition = useTransition(
     [location],
     (currentLocation: Location) => currentLocation.pathname,
     {
-      from: { opacity: 0 },
-      enter: { opacity: 1 },
-      leave: { opacity: 0 }
+      xOffset: 0,
+      from: { xOffset: 0, position: 'absolute', width: '100%' },
+      enter: { xOffset: 100 },
+      leave: { xOffset: 0 }
     }
   );
 
-  return transition.map(({ item, key, props }) => (
-    <animated.div style={props} key={key}>
-      <Switch location={item}>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/note/:id" component={Note} />
-      </Switch>
-    </animated.div>
-  ));
+  return (
+    <>
+      {transition.map(({ item, key, props: { xOffset, ...props } }) => {
+        const transform = xOffset.interpolate(x => {
+          debugger;
+          if (item.pathname === location.pathname) {
+            return `translateX(${100 - x}%)`; // Animating in
+          }
+          return `translateX(${x}%)`;
+        });
+
+        console.log(
+          `${item.pathname} === ${location.pathname}`,
+          item.pathname === location.pathname
+        );
+
+        return (
+          // @ts-ignore
+          <animated.div
+            style={{
+              transform,
+              ...props
+            }}
+            key={key}
+          >
+            <Switch location={item}>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/note/:id" component={Note} />
+            </Switch>
+          </animated.div>
+        );
+      })}
+    </>
+  );
 });
 
 function AppWrapper() {
