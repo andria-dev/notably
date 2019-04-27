@@ -36,7 +36,8 @@ const App = () => {
     from: {
       transform: 'translateX(100%)',
       position: 'absolute',
-      width: '100%'
+      width: '100%',
+      minHeight: '100%'
     },
     enter: { transform: 'translateX(0%)' },
     leave: { transform: 'translateX(100%)' }
