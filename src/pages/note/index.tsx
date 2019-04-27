@@ -78,6 +78,10 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
     }
   }, [match]);
 
+  if (!state.activeNoteID) {
+    return null;
+  }
+
   if (state.loadedFromDB && !(id in state.notes)) {
     return (
       // TODO: replace `<main>` with a new component named `<Center>`
