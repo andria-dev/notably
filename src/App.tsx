@@ -32,8 +32,16 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
 `);
 
 const App = () => {
-  const { location }: { location: Location } = useContext(__RouterContext);
-  const previousLocation = useLastValue(location);
+  const { location, ...other }: { location: Location } = useContext(
+    __RouterContext
+  );
+  const previousLocation = useLastValue(location.pathname);
+
+  const noteRegex = /^\/note\/.+?$/;
+  const immediate =
+    !previousLocation ||
+    location.pathname.replace(noteRegex, '') ===
+      previousLocation.replace(noteRegex, '');
 
   const transition = useTransition([location], ({ key }: Location) => key!, {
     x: 100,
@@ -45,17 +53,17 @@ const App = () => {
     },
     enter: { x: 0 },
     leave: { x: 100 },
-    config: fast
+    config: fast,
+    immediate: () => immediate
   });
+
+  console.log(immediate);
 
   return (
     <>
       {transition.map(({ item, key, props: { x, ...props } }) => {
         let reverse = 1;
-        if (
-          location.pathname === '/' ||
-          (previousLocation && previousLocation.pathname === '/note/:id')
-        ) {
+        if (location.pathname === '/' || previousLocation === '/note/:id') {
           reverse *= -1;
         }
 

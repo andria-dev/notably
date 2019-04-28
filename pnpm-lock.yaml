@@ -14,7 +14,7 @@ dependencies:
   react-router: registry.npmjs.org/react-router/5.0.0
   react-router-dom: registry.npmjs.org/react-router-dom/5.0.0
   react-scripts: registry.npmjs.org/react-scripts/3.0.0
-  react-spring: registry.npmjs.org/react-spring/8.0.19
+  react-spring: registry.npmjs.org/react-spring/9.0.0-beta.3
   react-use: registry.npmjs.org/react-use/8.1.4
   react-use-scroll-position: registry.npmjs.org/react-use-scroll-position/1.0.0
   reactive-react-redux: registry.npmjs.org/reactive-react-redux/2.0.1
@@ -1312,6 +1312,16 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/@babel/runtime/-/runtime-7.4.3.tgz'
     version: 7.4.3
+  registry.npmjs.org/@babel/runtime/7.4.4:
+    dependencies:
+      regenerator-runtime: registry.npmjs.org/regenerator-runtime/0.13.2
+    dev: false
+    name: '@babel/runtime'
+    resolution:
+      integrity: sha512-w0+uT71b6Yi7i5SE0co4NioIpSYS6lLiXvCzWzGSKvpK5vdQtCbICHMj+gbAKAOtxiV6HsVh/MBdaF9EQ6faSg==
+      registry: 'http://registry.npmjs.com/'
+      tarball: 'https://registry.npmjs.org/@babel/runtime/-/runtime-7.4.4.tgz'
+    version: 7.4.4
   registry.npmjs.org/@babel/template/7.4.0:
     dependencies:
       '@babel/code-frame': registry.npmjs.org/@babel/code-frame/7.0.0
@@ -12901,20 +12911,20 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/react-scripts/-/react-scripts-3.0.0.tgz'
     version: 3.0.0
-  registry.npmjs.org/react-spring/8.0.19:
+  registry.npmjs.org/react-spring/9.0.0-beta.3:
     dependencies:
-      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.4.3
+      '@babel/runtime': registry.npmjs.org/@babel/runtime/7.4.4
+      prop-types: registry.npmjs.org/prop-types/15.7.2
     dev: false
     name: react-spring
     peerDependencies:
-      prop-types: 15.x.x
       react: '>= 16.8.0'
       react-dom: '>= 16.8.0'
     resolution:
-      integrity: sha512-DjrwjXqqVEitj6e6GqdW5dUp1BoVyeFQhEcXvPfoQxwyIVSJ9smNt8CNjSvoQqRujVllE7XKaJRWSZO/ewd1/A==
+      integrity: sha512-YkF5blWN+xhWd44ZynkM0NmnL5veeEn1AzLeklXl0A7jr7xhqk7FTWU0vxLxTTeB7dFBV11nkT0W6BdpMdoxXw==
       registry: 'http://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.org/react-spring/-/react-spring-8.0.19.tgz'
-    version: 8.0.19
+      tarball: 'https://registry.npmjs.org/react-spring/-/react-spring-9.0.0-beta.3.tgz'
+    version: 9.0.0-beta.3
   registry.npmjs.org/react-use-scroll-position/1.0.0:
     dev: false
     name: react-use-scroll-position
@@ -16681,7 +16691,7 @@ specifiers:
   react-router: ^5.0.0
   react-router-dom: ^5.0.0
   react-scripts: ^3.0.0
-  react-spring: ^8.0.19
+  react-spring: ^9.0.0-beta.3
   react-use: ^8.1.4
   react-use-scroll-position: ^1.0.0
   reactive-react-redux: ^2.0.1
