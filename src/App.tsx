@@ -32,9 +32,7 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
 `);
 
 const App = () => {
-  const { location, ...other }: { location: Location } = useContext(
-    __RouterContext
-  );
+  const { location }: { location: Location } = useContext(__RouterContext);
   const previousLocation = useLastValue(location.pathname);
 
   const noteRegex = /^\/note\/.+?$/;
@@ -54,10 +52,8 @@ const App = () => {
     enter: { x: 0 },
     leave: { x: 100 },
     config: fast,
-    immediate: () => immediate
+    immediate
   });
-
-  console.log(immediate);
 
   return (
     <>

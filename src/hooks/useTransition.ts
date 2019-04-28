@@ -10,8 +10,8 @@ function useTransition<TItem, DS extends CSSProperties>(
 ) {
   const reducedMotion = useMedia('(prefers-reduced-motion: reduce)');
   return useTransitionSpring(items, keys, {
-    ...values,
-    immediate: reducedMotion
+    immediate: reducedMotion,
+    ...values
   });
 }
 
