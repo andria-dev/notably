@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   // @ts-ignore
   __RouterContext,
@@ -9,7 +9,8 @@ import {
 } from 'react-router-dom';
 
 import { animated } from 'react-spring';
-import { useTransition } from './hooks';
+import { useLastValue, useTransition } from './hooks';
+import { fast } from './spring-configs';
 
 import Home from './pages/home';
 import Note from './pages/note';
@@ -32,6 +33,8 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
 
 const App = () => {
   const { location }: { location: Location } = useContext(__RouterContext);
+  const previousLocation = useLastValue(location);
+
   const transition = useTransition([location], ({ key }: Location) => key!, {
     x: 100,
     from: {
@@ -41,19 +44,28 @@ const App = () => {
       minHeight: '100%'
     },
     enter: { x: 0 },
-    leave: { x: 100 }
+    leave: { x: 100 },
+    config: fast
   });
 
   return (
     <>
       {transition.map(({ item, key, props: { x, ...props } }) => {
+        let reverse = 1;
+        if (
+          location.pathname === '/' ||
+          (previousLocation && previousLocation.pathname === '/note/:id')
+        ) {
+          reverse *= -1;
+        }
+
         const transform = x.interpolate(value => {
           if (item.pathname === location.pathname) {
             // animating in
-            return `translateX(${value}%)`;
+            return `translateX(${value * reverse}%)`;
           } else {
             // animating out
-            return `translateX(${value * -1}%)`;
+            return `translateX(${-value * reverse}%)`;
           }
         });
 
