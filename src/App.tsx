@@ -33,26 +33,39 @@ const themeMetaTags: NodeListOf<HTMLMetaElement> = document.querySelectorAll(`
 const App = () => {
   const { location }: { location: Location } = useContext(__RouterContext);
   const transition = useTransition([location], ({ key }: Location) => key!, {
+    x: 100,
     from: {
-      transform: 'translateX(100%)',
+      x: 100,
       position: 'absolute',
       width: '100%',
       minHeight: '100%'
     },
-    enter: { transform: 'translateX(0%)' },
-    leave: { transform: 'translateX(100%)' }
+    enter: { x: 0 },
+    leave: { x: 100 }
   });
 
   return (
     <>
-      {transition.map(({ item, key, props }) => (
-        <animated.div style={props} key={key}>
-          <Switch location={item}>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/note/:id" component={Note} />
-          </Switch>
-        </animated.div>
-      ))}
+      {transition.map(({ item, key, props: { x, ...props } }) => {
+        const transform = x.interpolate(value => {
+          if (item.pathname === location.pathname) {
+            // animating in
+            return `translateX(${value}%)`;
+          } else {
+            // animating out
+            return `translateX(${value * -1}%)`;
+          }
+        });
+
+        return (
+          <animated.div style={{ transform, ...props } as any} key={key}>
+            <Switch location={item}>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/note/:id" component={Note} />
+            </Switch>
+          </animated.div>
+        );
+      })}
     </>
   );
 };
