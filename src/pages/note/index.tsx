@@ -78,7 +78,7 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
     }
   }, [match]);
 
-  if (!state.activeNoteID) {
+  if (!state.activeNoteID || !state.notes[state.activeNoteID]) {
     return null;
   }
 
