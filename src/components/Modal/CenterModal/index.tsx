@@ -5,6 +5,7 @@ import { useTransition } from '../../../hooks';
 import BaseModal, { IBaseModalProps } from '../BaseModal';
 
 import classNames from '@chbphone55/classnames';
+import { fast } from '../../../spring-configs';
 import './style.css';
 
 interface IProps extends IBaseModalProps, ObjectOf<any> {
@@ -19,7 +20,7 @@ export function useCenterModalTransition(
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
-    config: { mass: 1, tension: 200, friction: 26 },
+    config: fast,
     ...props
   });
 }

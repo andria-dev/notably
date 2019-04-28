@@ -5,6 +5,7 @@ import BaseModal, { IBaseModalProps } from '../BaseModal';
 
 import classNames from '@chbphone55/classnames';
 import { ObjectOf } from '../../../generic-types';
+import { fast } from '../../../spring-configs';
 import './style.css';
 
 interface IProps extends IBaseModalProps, ObjectOf<any> {
@@ -21,7 +22,7 @@ function BottomModal({
     from: { transform: 'translateY(100%) translateX(-50%)' },
     enter: { transform: 'translateY(0%) translateX(-50%)' },
     leave: { transform: 'translateY(100%) translateX(-50%)' },
-    config: { mass: 1, tension: 200, friction: 26 }
+    config: fast
   }),
   ...props
 }: IProps) {

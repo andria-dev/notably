@@ -6,6 +6,7 @@ import ModalPortal from './ModalPortal';
 import useLockBodyScroll from 'react-use/lib/useLockBodyScroll';
 
 import 'wicg-inert';
+import { fast } from '../../spring-configs';
 
 const root = document.getElementById('root')!;
 function getFocusable(element: HTMLElement): NodeListOf<HTMLElement> {
@@ -31,7 +32,7 @@ function BaseModal({ isOpen, onRequestClose, children }: IBaseModalProps) {
     from: { '--opacity': 0 },
     enter: { '--opacity': 0.5 },
     leave: { '--opacity': 0 },
-    config: { mass: 1, tension: 200, friction: 26 },
+    config: fast,
     onRest() {
       if (modalRef.current && isOpen) {
         const focusableElements = getFocusable(modalRef.current);
