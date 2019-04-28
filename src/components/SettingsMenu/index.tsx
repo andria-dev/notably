@@ -1,5 +1,4 @@
-import React, { RefObject, useCallback, useRef } from 'react';
-import { animated, ReactSpringHook, useChain, useSpring } from 'react-spring';
+import React, { useCallback } from 'react';
 import { useBoolean } from '../../hooks';
 import { addNotes, removeAllNotes, useStore } from '../../store';
 
