@@ -5,14 +5,10 @@ import { List } from 'immutable';
 import { isKeyHotkey } from 'is-hotkey';
 
 // @ts-ignore
-import SlateReactPlaceholder from 'slate-react-placeholder';
-
-// @ts-ignore
 import PluginPrism from 'slate-prism';
 
 import 'prismjs/themes/prism-tomorrow.css';
 import { LabelledHx, ILabelledHxProps } from '../LabelledHx';
-import { ObjectOf } from '../../generic-types';
 
 export const plugins = [
   PluginPrism({
@@ -189,7 +185,7 @@ function getIndentation(text: string, position: number): number {
   const line = getLine(text, position);
   const indentation = line.match(/^(?:\s{2})*/)![0].length / 2;
   const endsInOpeningBracket = '{[('.includes(line[line.length - 1]);
-  const endsInOpenJSX = /<\w+[^>\/]*>\s*$/.test(line);
+  const endsInOpenJSX = /<\w+[^>/]*>\s*$/.test(line);
 
   if (endsInOpeningBracket || endsInOpenJSX) {
     return indentation + 1;

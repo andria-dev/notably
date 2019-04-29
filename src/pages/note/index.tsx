@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import Header from '../../components/Header';
 import Hx from '../../components/Hx';
@@ -76,7 +76,7 @@ function NotePage({ match, history }: RouteChildrenProps<INotePageParams>) {
     if (state.activeNoteID !== id) {
       dispatch(setActiveNoteID(id));
     }
-  }, [match]);
+  }, [dispatch, id, state.activeNoteID]);
 
   if (!state.activeNoteID || !state.notes[state.activeNoteID]) {
     return null;

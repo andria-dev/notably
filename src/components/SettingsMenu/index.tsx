@@ -5,7 +5,7 @@ import { addNotes, removeAllNotes, useStore } from '../../store';
 import Note, { INoteJSON } from '../../models/Note';
 import Hx from '../Hx';
 import BottomModal from '../Modal/BottomModal';
-import CenterModal, { useCenterModalTransition } from '../Modal/CenterModal';
+import CenterModal from '../Modal/CenterModal';
 
 import Button from '../Button';
 import './style.css';

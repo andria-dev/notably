@@ -1,4 +1,4 @@
-import { MarkJSON, Value, ValueJSON } from 'slate';
+import { Value, ValueJSON } from 'slate';
 
 const emptyState: ValueJSON = {
   object: 'value',

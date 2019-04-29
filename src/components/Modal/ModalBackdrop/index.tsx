@@ -1,5 +1,5 @@
 import classNames from '@chbphone55/classnames';
-import React, { forwardRef, useCallback, useRef } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import { animated } from 'react-spring';
 import './style.css';
 
@@ -10,7 +10,7 @@ function ModalBackdrop({ className, onClick, ...props }: any, ref: any) {
         onClick(event);
       }
     },
-    [onClick]
+    [onClick, ref]
   );
 
   return (

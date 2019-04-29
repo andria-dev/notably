@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback } from 'react';
 
 import Note from '../../models/Note';
-import { addNote, getNotes, removeAllNotes, useStore } from '../../store';
+import { addNote, useStore } from '../../store';
 
 import { MdAdd, MdSettings } from 'react-icons/md';
 import { RouteChildrenProps } from 'react-router';

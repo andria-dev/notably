@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { updateState, useStore } from '../../store';
 
-import { List } from 'immutable';
 import { Operation, Value } from 'slate';
 import { Editor as SlateEditor } from 'slate-react';
 import { useSaveHandler } from '../../hooks/';
