@@ -1,16 +1,25 @@
 import { CSSProperties } from 'react';
-import { useTransition as useTransitionSpring } from 'react-spring';
+import {
+  ItemKeys,
+  ItemsProp,
+  useTransition as useTransitionSpring,
+  UseTransitionProps
+} from 'react-spring';
 
 import { useMedia } from 'use-media';
+import { ObjectOf } from '../generic-types';
 
-function useTransition<TItem, DS extends CSSProperties>(
-  items: any,
-  keys: any,
-  values: any
+function useTransition<
+  Item,
+  Props extends ObjectOf<unknown> & UseTransitionProps<Item>
+>(
+  items: ItemsProp<Item>,
+  keys: ItemKeys<Item>,
+  { immediate, ...values }: Props
 ) {
   const reducedMotion = useMedia('(prefers-reduced-motion: reduce)');
   return useTransitionSpring(items, keys, {
-    immediate: reducedMotion,
+    immediate: immediate || reducedMotion,
     ...values
   });
 }
