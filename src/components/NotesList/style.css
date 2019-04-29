@@ -107,3 +107,17 @@
   max-width: 100%;
   max-height: 100%;
 }
+
+.NotesList__placeholder-svg {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1.25rem;
+}
+
+.NotesList__placeholder-text {
+  color: hsl(221, 20%, 78%);
+
+  font-size: 1.15rem;
+  text-align: center;
+  letter-spacing: 1.25px;
+}

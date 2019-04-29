@@ -132,7 +132,15 @@ function NotesList({
         );
       })}
       {!sortedNotes.length && (
-        <NotesListSVG className="NotesList__placeholder" />
+        <article className="NotesList__placeholder">
+          <figure>
+            <NotesListSVG className="NotesList__placeholder-svg" />
+            <figcaption className="NotesList__placeholder-text">
+              You don't have any notes yet. Try creating one using the "New
+              Note" button.
+            </figcaption>
+          </figure>
+        </article>
       )}
     </Component>
   );
