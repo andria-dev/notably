@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import Hx from '../Hx';
 import Tag from '../Tag';
 
+import { animated } from 'react-spring';
+import { useTransition } from '../../hooks';
 import { ReactComponent as NotesListSVG } from './notes-list.svg';
 
 import { removeNote, useStore } from '../../store';
@@ -54,6 +56,11 @@ function NotesList({
   );
 
   const Component = responsive ? 'main' : 'section';
+  const emptyTransition = useTransition(!sortedNotes.length, null, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 }
+  });
 
   return (
     <Component
@@ -131,16 +138,23 @@ function NotesList({
           </Fragment>
         );
       })}
-      {!sortedNotes.length && (
-        <article className="NotesList__placeholder">
-          <figure>
-            <NotesListSVG className="NotesList__placeholder-svg" />
-            <figcaption className="NotesList__placeholder-text">
-              You don't have any notes yet. Try creating one using the "New
-              Note" button.
-            </figcaption>
-          </figure>
-        </article>
+      {emptyTransition.map(
+        ({ item, key, props }) =>
+          item && (
+            <animated.article
+              className="NotesList__placeholder"
+              key={key}
+              style={props}
+            >
+              <figure>
+                <NotesListSVG className="NotesList__placeholder-svg" />
+                <figcaption className="NotesList__placeholder-text">
+                  You don't have any notes yet. Try creating one using the "New
+                  Note" button.
+                </figcaption>
+              </figure>
+            </animated.article>
+          )
       )}
     </Component>
   );
