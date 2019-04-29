@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import Hx from '../Hx';
 import Tag from '../Tag';
 
+import { ReactComponent as NotesListSVG } from './notes-list.svg';
+
 import { removeNote, useStore } from '../../store';
 import './contextmenu.css';
 import './style.css';
@@ -56,7 +58,8 @@ function NotesList({
   return (
     <Component
       className={classNames(className, 'NotesList', {
-        'NotesList--responsive': responsive
+        'NotesList--responsive': responsive,
+        'NotesList--empty': !sortedNotes.length
       })}
       {...props}
     >
@@ -128,6 +131,9 @@ function NotesList({
           </Fragment>
         );
       })}
+      {!sortedNotes.length && (
+        <NotesListSVG className="NotesList__placeholder" />
+      )}
     </Component>
   );
 }

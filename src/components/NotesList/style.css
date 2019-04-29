@@ -93,3 +93,14 @@
     width: auto;
   }
 }
+
+.NotesList--empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.NotesList__placeholder {
+  max-width: 100%;
+  max-height: 100%;
+}
