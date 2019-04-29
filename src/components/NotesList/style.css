@@ -98,9 +98,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  flex-grow: 1;
 }
 
 .NotesList__placeholder {
+  width: 30rem;
   max-width: 100%;
   max-height: 100%;
 }

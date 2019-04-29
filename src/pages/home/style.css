@@ -1,3 +1,10 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
 .Home__header-actions {
   display: flex;
   align-items: center;
