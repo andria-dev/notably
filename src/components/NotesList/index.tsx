@@ -33,7 +33,7 @@ function NotesList({
   activeID,
   ...props
 }: INotesListProps) {
-  const [{ notes, activeNoteID }, dispatch] = useStore();
+  const [{ notes, activeNoteID, loadedFromDB }, dispatch] = useStore();
 
   const sortedNotes = useMemo(
     () =>
@@ -56,11 +56,15 @@ function NotesList({
   );
 
   const Component = responsive ? 'main' : 'section';
-  const emptyTransition = useTransition(!sortedNotes.length, null, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 }
-  });
+  const emptyTransition = useTransition(
+    !sortedNotes.length && loadedFromDB,
+    null,
+    {
+      from: { opacity: 0 },
+      enter: { opacity: 1 },
+      leave: { opacity: 0 }
+    }
+  );
 
   return (
     <Component
