@@ -1,2 +1,2 @@
-import { storage } from '/node_modules/kv-storage-polyfill/dist/kv-storage-polyfill.umd.js';
+import { storage } from './polyfills/kv-storage-polyfill.m.js';
 window.kvStorage = storage;
