@@ -39,15 +39,22 @@
       <source src="/save-sound.webm" type="audio/webm" />
       <source src="/save-sound.mp3" type="audio/mp3" />
     </audio>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <!-- STANDARD LIBRARY -->
+    <script type="importmap">
+      {
+        "imports": {
+          "/node_modules/kv-storage-polyfill/dist/kv-storage-polyfill.umd.js": [
+            "std:kv-storage",
+            "/node_modules/kv-storage-polyfill/dist/kv-storage-polyfill.umd.js"
+          ]
+        }
+      }
+    </script>
+    <script type="module" src="standard-library.js"></script>
+    <script
+      nomodule
+      src="/node_modules/kv-storage-polyfill/dist/kv-storage-polyfill.umd.js"
+    ></script>
   </body>
 </html>

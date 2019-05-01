@@ -22,10 +22,9 @@ async function loadRelativeTimeFormat() {
 async function loadRequestIdleCallback() {
   // @ts-ignore
   if (!window.requestIdleCallback) {
-    const {
-      requestIdleCallback,
-      cancelIdleCallback
-    } = await import('./polyfills/requestIdleCallback');
+    const { requestIdleCallback, cancelIdleCallback } = await import(
+      './polyfills/requestIdleCallback'
+    );
     // @ts-ignore
     window.requestIdleCallback = requestIdleCallback;
     // @ts-ignore
@@ -40,13 +39,19 @@ async function loadClipboard() {
   }
 
   if (!navigator.clipboard.writeText) {
-    navigator.clipboard.writeText = (await import('./polyfills/clipboard-write')).writeText;
+    navigator.clipboard.writeText = (await import(
+      './polyfills/clipboard-write'
+    )).writeText;
   }
 }
 
 // wait for polyfills
 
-Promise.all([loadRelativeTimeFormat(), loadRequestIdleCallback(), loadClipboard()])
+Promise.all([
+  loadRelativeTimeFormat(),
+  loadRequestIdleCallback(),
+  loadClipboard()
+])
   .then(() => import('./App'))
   .then(({ default: App }) => {
     // then render

@@ -5,6 +5,7 @@ dependencies:
   idb-keyval: registry.npmjs.org/idb-keyval/3.2.0
   immutable: registry.npmjs.org/immutable/4.0.0-rc.12
   is-hotkey: registry.npmjs.org/is-hotkey/0.1.4
+  kv-storage-polyfill: registry.npmjs.org/kv-storage-polyfill/1.0.0
   mini-debounce: registry.npmjs.org/mini-debounce/1.0.5
   prismjs: registry.npmjs.org/prismjs/1.16.0
   prop-types: registry.npmjs.org/prop-types/15.7.2
@@ -10393,6 +10394,14 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz'
     version: 3.0.3
+  registry.npmjs.org/kv-storage-polyfill/1.0.0:
+    dev: false
+    name: kv-storage-polyfill
+    resolution:
+      integrity: sha512-MTroAaQbtFrfdlIaqC2QT3BxPzFMc34seARshigZ/yShZ2CdXcHy9yimuhboqlAYVCmLvOtbdpVifvEav+UQXA==
+      registry: 'http://registry.npmjs.com/'
+      tarball: 'https://registry.npmjs.org/kv-storage-polyfill/-/kv-storage-polyfill-1.0.0.tgz'
+    version: 1.0.0
   registry.npmjs.org/last-call-webpack-plugin/3.0.0:
     dependencies:
       lodash: registry.npmjs.org/lodash/4.17.11
@@ -17671,6 +17680,7 @@ specifiers:
   idb-keyval: ^3.1.0
   immutable: ^4.0.0-rc.12
   is-hotkey: ^0.1.4
+  kv-storage-polyfill: ^1.0.0
   mini-debounce: ^1.0.4
   prismjs: ^1.15.0
   prop-types: ^15.7.2

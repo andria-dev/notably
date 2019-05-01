@@ -9,6 +9,7 @@
     "idb-keyval": "^3.1.0",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
+    "kv-storage-polyfill": "^1.0.0",
     "mini-debounce": "^1.0.4",
     "prismjs": "^1.15.0",
     "prop-types": "^15.7.2",
