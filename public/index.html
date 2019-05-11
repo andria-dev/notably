@@ -56,6 +56,9 @@
         }
       }
     </script>
-    <script type="module" src="standard-library.js"></script>
+    <script type="module">
+      import { storage } from './polyfills/kv-storage-polyfill.m.js';
+      window.kvStorage = storage;
+    </script>
   </body>
 </html>
