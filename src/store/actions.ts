@@ -4,7 +4,6 @@ import Note from '../models/Note';
 import kvStorage from '../polyfills/kv-storage';
 
 import { arrayFromAsyncIterator } from '../lib/async-iterator-methods';
-import { ObjectOf } from '../lib/generic-types';
 import { IAction, IActionEmpty } from './';
 
 async function getNote(id: string): Promise<Note> {
@@ -24,7 +23,11 @@ function createError(message: string, instance: Error): IAction {
 
 export async function getNotes(): Promise<IAction> {
   try {
-    const noteEntries = await arrayFromAsyncIterator(kvStorage.entries());
+    const noteDataEntries = await arrayFromAsyncIterator(kvStorage.entries());
+    const noteEntries = noteDataEntries.map(([key, val]) => [
+      key,
+      Note.import(val)
+    ]) as Array<[string, Note]>;
     const notes = Object.fromEntries(noteEntries);
 
     return {
