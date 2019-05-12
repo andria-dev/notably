@@ -1,7 +1,7 @@
 import { Dispatch, ReducerState } from 'react';
 import { useReduxDispatch, useReduxState } from 'reactive-react-redux';
 import { createStore } from 'redux';
-import { ObjectOf } from '../generic-types';
+import { ObjectOf } from '../lib/generic-types';
 import Note from '../models/Note';
 
 export type IAction =

@@ -4,7 +4,7 @@ import { useTransition } from '../../../hooks';
 import BaseModal, { IBaseModalProps } from '../BaseModal';
 
 import classNames from '@chbphone55/classnames';
-import { ObjectOf } from '../../../generic-types';
+import { ObjectOf } from '../../../lib/generic-types';
 import { fast } from '../../../spring-configs';
 import './style.css';
 

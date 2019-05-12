@@ -6,7 +6,7 @@ import {
 } from 'react-spring';
 
 import { useMedia } from 'use-media';
-import { ObjectOf } from '../generic-types';
+import { ObjectOf } from '../lib/generic-types';
 
 function useTransition<
   Item,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { animated, ItemTransition } from 'react-spring';
-import { ObjectOf } from '../../../generic-types';
 import { useTransition } from '../../../hooks';
+import { ObjectOf } from '../../../lib/generic-types';
 import BaseModal, { IBaseModalProps } from '../BaseModal';
 
 import classNames from '@chbphone55/classnames';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ObjectOf, Omit } from '../../generic-types';
+import { ObjectOf, Omit } from '../../lib/generic-types';
 import HeadingLabel, { IHeadingLabelProps } from '../HeadingLabel';
 import Hx from '../Hx';
 import './style.css';

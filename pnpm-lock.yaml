@@ -2,7 +2,6 @@ dependencies:
   '@chbphone55/classnames': registry.npmjs.org/@chbphone55/classnames/1.0.3
   '@svgr/webpack': registry.npmjs.org/@svgr/webpack/4.2.0
   clipboard-polyfill: registry.npmjs.org/clipboard-polyfill/2.8.0
-  idb-keyval: registry.npmjs.org/idb-keyval/3.2.0
   immutable: registry.npmjs.org/immutable/4.0.0-rc.12
   is-hotkey: registry.npmjs.org/is-hotkey/0.1.4
   kv-storage-polyfill: registry.npmjs.org/kv-storage-polyfill/1.0.0
@@ -8512,14 +8511,6 @@ packages:
       registry: 'http://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.org/icss-utils/-/icss-utils-4.1.0.tgz'
     version: 4.1.0
-  registry.npmjs.org/idb-keyval/3.2.0:
-    dev: false
-    name: idb-keyval
-    resolution:
-      integrity: sha512-slx8Q6oywCCSfKgPgL0sEsXtPVnSbTLWpyiDcu6msHOyKOLari1TD1qocXVCft80umnkk3/Qqh3lwoFt8T/BPQ==
-      registry: 'http://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.org/idb-keyval/-/idb-keyval-3.2.0.tgz'
-    version: 3.2.0
   registry.npmjs.org/identity-obj-proxy/3.0.0:
     dependencies:
       harmony-reflect: registry.npmjs.org/harmony-reflect/1.6.1
@@ -17677,7 +17668,6 @@ specifiers:
   '@types/uuid': ^3.4.4
   clipboard-polyfill: ^2.7.0
   eslint-plugin-react-hooks: ^1.1.0-alpha.0
-  idb-keyval: ^3.1.0
   immutable: ^4.0.0-rc.12
   is-hotkey: ^0.1.4
   kv-storage-polyfill: ^1.0.0

@@ -6,7 +6,6 @@
     "@chbphone55/classnames": "^1.0.3",
     "@svgr/webpack": "^4.2.0",
     "clipboard-polyfill": "^2.7.0",
-    "idb-keyval": "^3.1.0",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
     "kv-storage-polyfill": "^1.0.0",

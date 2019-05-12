@@ -1,15 +1,18 @@
-import { clear, del, get, keys, set } from 'idb-keyval';
 import { Value } from 'slate';
 import uuid from 'uuid/v4';
 import Note from '../models/Note';
+import kvStorage from '../polyfills/kv-storage';
+
+import { arrayFromAsyncIterator } from '../lib/async-iterator-methods';
+import { ObjectOf } from '../lib/generic-types';
 import { IAction, IActionEmpty } from './';
 
 async function getNote(id: string): Promise<Note> {
-  return Note.import(await get(id));
+  return Note.import(await kvStorage.get(id));
 }
 
 function setNote(id: string, note: Note): Promise<void> {
-  return set(id, note.export());
+  return kvStorage.set(id, note.export());
 }
 
 function createError(message: string, instance: Error): IAction {
@@ -21,12 +24,8 @@ function createError(message: string, instance: Error): IAction {
 
 export async function getNotes(): Promise<IAction> {
   try {
-    const noteIDs = await keys();
-    const notes: { [s: string]: Note } = {};
-
-    for (const id of noteIDs as string[]) {
-      notes[id] = await getNote(id);
-    }
+    const noteEntries = await arrayFromAsyncIterator(kvStorage.entries());
+    const notes = Object.fromEntries(noteEntries);
 
     return {
       type: 'SET_NOTES',
@@ -42,7 +41,7 @@ export async function getNotes(): Promise<IAction> {
 
 export async function removeNote(noteID: string): Promise<IAction> {
   try {
-    await del(noteID);
+    await kvStorage.delete(noteID);
     return {
       type: 'REMOVE_NOTE',
       payload: noteID
@@ -133,7 +132,7 @@ export async function updateState(
 
 export async function removeAllNotes(): Promise<IAction | IActionEmpty> {
   try {
-    await clear();
+    await kvStorage.clear();
     return {
       type: 'REMOVE_ALL_NOTES'
     };

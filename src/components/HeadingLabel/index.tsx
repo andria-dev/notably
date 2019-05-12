@@ -1,7 +1,7 @@
 import classNames from '@chbphone55/classnames';
 import React from 'react';
 
-import { ObjectOf } from '../../generic-types';
+import { ObjectOf } from '../../lib/generic-types';
 import './style.css';
 
 export interface IHeadingLabelProps extends ObjectOf<any> {
