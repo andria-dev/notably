@@ -1,13 +1,15 @@
 .NotesList {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
 
+  max-width: 100%;
   height: calc(100% - 4rem);
   padding: 2rem;
 }
 
 .NotesList__note {
   width: 18rem;
+  max-width: calc(100% - 2rem);
   padding: 1rem;
   margin-bottom: 1rem;
 
@@ -82,16 +84,22 @@
 /* Responsive styles */
 @media only screen and (min-width: 700px) {
   .NotesList--responsive {
-    display: grid;
+    /*   2 items       gap  */
+    /* (width * 2) + (2rem) */
+    width: calc(18rem * 3 + 4rem);
+    margin: 0 auto;
+
+    /* OLD BELOW */
+    /* display: grid;
     grid-template-columns: 18rem 18rem;
     gap: 1rem 5%;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
   }
 
-  .NotesList--responsive .NotesList__note {
+  /* .NotesList--responsive .NotesList__note {
     width: auto;
-  }
+  } */
 }
 
 .NotesList--empty {

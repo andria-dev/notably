@@ -1,32 +1,29 @@
-import classNames from '@chbphone55/classnames';
-import React, { Fragment, useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 // @ts-ignore
 import { __RouterContext as RouterContext } from 'react-router';
-
-import Plain from 'slate-plain-serializer';
-
-import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
-import { Link } from 'react-router-dom';
-import Hx from '../Hx';
-import Tag from '../Tag';
+import { removeNote, useStore } from '../../store';
 
 import { animated } from 'react-spring';
+import { Grid } from 'react-spring-grid';
 import { useTransition } from '../../hooks';
+import createNoteRenderer, { INoteData } from './NoteRenderer';
 import { ReactComponent as NotesListSVG } from './notes-list.svg';
 
-import { removeNote, useStore } from '../../store';
+import { ObjectOf } from '../../lib/generic-types';
+
+import classNames from '@chbphone55/classnames';
 import './contextmenu.css';
 import './style.css';
 
-const LinkStyles = { color: 'unset', textDecoration: 'none' };
-
-interface INotesListProps {
+interface INotesListProps extends ObjectOf<any> {
   className?: any;
   responsive?: boolean;
   activeID?: string;
-  [s: string]: any;
 }
 
+const notesDataKeyMapper = (item: any) => item.id;
+
+const opaqueTransition = { from: { position: 'absolute', opacity: 1 } };
 function NotesList({
   className,
   responsive = false,
@@ -34,15 +31,6 @@ function NotesList({
   ...props
 }: INotesListProps) {
   const [{ notes, activeNoteID, loadedFromDB }, dispatch] = useStore();
-
-  const sortedNotes = useMemo(
-    () =>
-      Object.entries(notes).sort(
-        ([, noteA], [, noteB]) =>
-          noteB.lastModified.getTime() - noteA.lastModified.getTime()
-      ),
-    [notes]
-  );
 
   const { history } = useContext(RouterContext);
   const handleRemoveNote = useCallback(
@@ -52,12 +40,28 @@ function NotesList({
         history.replace('/');
       }
     },
-    [activeNoteID, dispatch, history]
+    [activeNoteID, history]
   );
+
+  const notesData: INoteData[] = useMemo(() => {
+    return Object.entries(notes)
+      .sort(([, noteA], [, noteB]) => {
+        return noteB.lastModified.getTime() - noteA.lastModified.getTime();
+      })
+      .map(([id, note]) => {
+        const data: INoteData = {
+          id,
+          note,
+          width: responsive ? 288 : 236,
+          height: 94
+        };
+        return data;
+      });
+  }, [notes]);
 
   const Component = responsive ? 'main' : 'section';
   const emptyTransition = useTransition(
-    !sortedNotes.length && loadedFromDB,
+    !notesData.length && loadedFromDB,
     null,
     {
       from: { opacity: 0 },
@@ -66,82 +70,28 @@ function NotesList({
     }
   );
 
+  const NoteRenderer = useMemo(
+    () => createNoteRenderer(handleRemoveNote, activeID),
+    []
+  );
+
   return (
     <Component
       className={classNames(className, 'NotesList', {
         'NotesList--responsive': responsive,
-        'NotesList--empty': !sortedNotes.length
+        'NotesList--empty': !notesData.length
       })}
       {...props}
     >
-      {sortedNotes.map(([id, note]) => {
-        /**
-         * Gets the first line as follows:
-         * * get the document
-         * * get its first block
-         * * get the leaves of the first node
-         * * join the text on each leaf together
-         */
-        const noteContentSnippet = Plain.serialize(note.state).slice(0, 200);
-        const menuID = `notes-list__${id}`;
-        const isActive = activeID === id;
-
-        return (
-          <Fragment key={id}>
-            <ContextMenuTrigger
-              id={menuID}
-              attributes={{
-                className: classNames('NotesList__note', {
-                  'NotesList__note--active': isActive
-                })
-              }}
-            >
-              <Link
-                to={`/note/${id}`}
-                style={LinkStyles}
-                aria-current={isActive}
-                aria-label={
-                  isActive
-                    ? `Current note, "${note.title}"`
-                    : `Go to note "${note.title}"`
-                }
-              >
-                <article>
-                  <Hx size={6} weight={2} className="note__title truncate">
-                    {note.title}
-                  </Hx>
-                  <Hx
-                    size={6}
-                    weight={5}
-                    type="h2"
-                    className="note__modified truncate"
-                  >
-                    Last modified {note.timeSinceModified()}
-                  </Hx>
-                  {noteContentSnippet.length ? (
-                    <p className="note__content truncate" aria-hidden>
-                      {noteContentSnippet}
-                    </p>
-                  ) : (
-                    <Tag aria-hidden>No content</Tag>
-                  )}
-                </article>
-              </Link>
-            </ContextMenuTrigger>
-            <ContextMenu className="shadow" id={menuID}>
-              <MenuItem data={{ id }} onClick={handleRemoveNote}>
-                Delete note
-              </MenuItem>
-              <MenuItem
-                data={{ url: `${window.location.origin}/note/${id}` }}
-                onClick={handleCopyToClipboard}
-              >
-                Copy link
-              </MenuItem>
-            </ContextMenu>
-          </Fragment>
-        );
-      })}
+      <Grid
+        items={notesData}
+        keys={notesDataKeyMapper}
+        renderer={NoteRenderer}
+        wrapper="div"
+        columnGap={32}
+        rowGap={16}
+        transitionProps={opaqueTransition}
+      />
       {emptyTransition.map(
         ({ item, key, props }) =>
           item && (
@@ -162,18 +112,6 @@ function NotesList({
       )}
     </Component>
   );
-}
-
-function handleCopyToClipboard(event: Event, { url }: { url: string }) {
-  // @ts-ignore
-  navigator.clipboard
-    .writeText(url)
-    .then(() => {
-      alert('Copied to clipboard!');
-    })
-    .catch(() => {
-      alert(`Unable to copy, here is the value: ${url}`);
-    });
 }
 
 export default NotesList;
