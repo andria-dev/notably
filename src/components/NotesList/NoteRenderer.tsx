@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { ContextMenu, ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { RequiredItemFields } from 'react-spring-grid/dist/components/Grid';
 import Plain from 'slate-plain-serializer';
 
 import classNames from '@chbphone55/classnames';
+import { NoteRendererContext } from '../../contexts';
 import { ObjectOf } from '../../lib/generic-types';
 import Note from '../../models/Note';
 
@@ -26,20 +27,9 @@ interface INoteRendererProps {
   index: number;
 }
 
-type handleRemoveNoteSignature = (
-  event: Event,
-  {
-    id
-  }: {
-    id: string;
-  }
-) => Promise<void>;
-
-const createNoteRenderer = (
-  handleRemoveNote: handleRemoveNoteSignature,
-  activeID?: string
-) => ({ data, style }: INoteRendererProps) => {
+function NoteRenderer({ data, style }: INoteRendererProps) {
   const { id, note } = data;
+  const { handleRemoveNote, activeID } = useContext(NoteRendererContext);
 
   /**
    * Gets the first line as follows:
@@ -107,7 +97,7 @@ const createNoteRenderer = (
       </ContextMenu>
     </animated.div>
   );
-};
+}
 
 function handleCopyToClipboard(event: Event, { url }: { url: string }) {
   // @ts-ignore
@@ -121,4 +111,4 @@ function handleCopyToClipboard(event: Event, { url }: { url: string }) {
     });
 }
 
-export default createNoteRenderer;
+export default NoteRenderer;

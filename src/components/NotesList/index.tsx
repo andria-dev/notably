@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 // @ts-ignore
 import { __RouterContext as RouterContext } from 'react-router';
 import { removeNote, useStore } from '../../store';
@@ -6,12 +6,13 @@ import { removeNote, useStore } from '../../store';
 import { animated } from 'react-spring';
 import { Grid } from 'react-spring-grid';
 import { useTransition } from '../../hooks';
-import createNoteRenderer, { INoteData } from './NoteRenderer';
+import NoteRenderer, { INoteData } from './NoteRenderer';
 import { ReactComponent as NotesListSVG } from './notes-list.svg';
 
 import { ObjectOf } from '../../lib/generic-types';
 
 import classNames from '@chbphone55/classnames';
+import { NoteRendererContext } from '../../contexts';
 import './contextmenu.css';
 import './style.css';
 
@@ -23,7 +24,11 @@ interface INotesListProps extends ObjectOf<any> {
 
 const notesDataKeyMapper = (item: any) => item.id;
 
-const opaqueTransition = { from: { position: 'absolute', opacity: 1 } };
+/**
+ * TODO:
+ * I think that `activeID` and `activeNoteID` are the _same_
+ * So I should probably stop using `activeID`
+ */
 function NotesList({
   className,
   responsive = false,
@@ -31,17 +36,7 @@ function NotesList({
   ...props
 }: INotesListProps) {
   const [{ notes, activeNoteID, loadedFromDB }, dispatch] = useStore();
-
   const { history } = useContext(RouterContext);
-  const handleRemoveNote = useCallback(
-    async (event: Event, { id }: { id: string }) => {
-      dispatch(await removeNote(id));
-      if (activeNoteID === id) {
-        history.replace('/');
-      }
-    },
-    [activeNoteID, history]
-  );
 
   const notesData: INoteData[] = useMemo(() => {
     return Object.entries(notes)
@@ -57,7 +52,7 @@ function NotesList({
         };
         return data;
       });
-  }, [notes]);
+  }, [notes, responsive]);
 
   const Component = responsive ? 'main' : 'section';
   const emptyTransition = useTransition(
@@ -70,10 +65,19 @@ function NotesList({
     }
   );
 
-  const NoteRenderer = useMemo(
-    () => createNoteRenderer(handleRemoveNote, activeID),
-    []
-  );
+  const noteRendererContextValue = useMemo(() => {
+    async function handleRemoveNote(event: Event, { id }: { id: string }) {
+      dispatch(await removeNote(id));
+      if (activeNoteID === id) {
+        history.replace('/');
+      }
+    }
+
+    return {
+      handleRemoveNote,
+      activeID
+    };
+  }, [activeID, activeNoteID, history, dispatch]);
 
   return (
     <Component
@@ -83,15 +87,16 @@ function NotesList({
       })}
       {...props}
     >
-      <Grid
-        items={notesData}
-        keys={notesDataKeyMapper}
-        renderer={NoteRenderer}
-        wrapper="div"
-        columnGap={32}
-        rowGap={16}
-        transitionProps={opaqueTransition}
-      />
+      <NoteRendererContext.Provider value={noteRendererContextValue}>
+        <Grid
+          items={notesData}
+          keys={notesDataKeyMapper}
+          renderer={NoteRenderer}
+          wrapper="div"
+          columnGap={32}
+          rowGap={16}
+        />
+      </NoteRendererContext.Provider>
       {emptyTransition.map(
         ({ item, key, props }) =>
           item && (
