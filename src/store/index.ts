@@ -39,7 +39,7 @@ export interface IActionEmpty {
   type: 'REMOVE_ALL_NOTES' | 'CLOSE_ERROR';
 }
 
-interface IState extends ReducerState<any> {
+interface IState {
   error: { message: string; instance: Error } | null;
   loadedFromDB: boolean;
   notes: { [s: string]: Note };
