@@ -36,7 +36,7 @@ const App = () => {
   const previousLocation = useLastValue(location.pathname);
 
   const noteRegex = /^\/note\/.+?$/;
-  const immediate =
+  const fade =
     !previousLocation ||
     location.pathname.replace(noteRegex, '') ===
       previousLocation.replace(noteRegex, '');
@@ -44,16 +44,24 @@ const App = () => {
   const transition = useTransition([location], ({ key }: Location) => key!, {
     x: 100,
     from: {
-      x: 100,
+      x: fade ? 0 : 100,
       position: 'absolute',
       width: '100%',
-      minHeight: '100%'
+      minHeight: '100%',
+      opacity: fade ? 0 : 1
     },
-    enter: { x: 0 },
-    leave: { x: 100 },
-    config: fast,
-    immediate
+    enter: {
+      x: 0,
+      opacity: 1
+    },
+    leave: {
+      x: fade ? 0 : 100,
+      opacity: fade ? 0 : 1
+    },
+    config: fast
   });
+
+  console.log(transition);
 
   return (
     <>
@@ -71,6 +79,13 @@ const App = () => {
             // animating out
             return `translateX(${-value * reverse}%)`;
           }
+        });
+
+        props.opacity.interpolate(() => {
+          // @ts-ignore
+          props.opacity.value = 0;
+          // @ts-ignore
+          props.opacity.flush();
         });
 
         return (

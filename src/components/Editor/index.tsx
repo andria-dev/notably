@@ -20,17 +20,16 @@ saveSound.volume = 0.25;
 
 const isSaveHotkey = isHotkey('mod+s');
 
-function Editor() {
+function Editor({ activeID }: { activeID: string }) {
   const [state] = useStore();
 
-  const id = state.activeNoteID;
-  const idRef = useRef(id);
-  const note = state.notes[id];
+  const idRef = useRef(activeID);
+  const note = state.notes[activeID];
 
   const [editorState, setEditorState] = useState(fixValue(note.state));
   const [debouncedSave, save] = useSaveHandler<Value>(
     2000,
-    id,
+    activeID,
     updateState,
     true
   );
@@ -54,13 +53,13 @@ function Editor() {
   // Once unmounted, or id has changed again, run immediate save
   useEffect(() => {
     // check current id against past id
-    if (id !== idRef.current) {
+    if (activeID !== idRef.current) {
       setEditorState(fixValue(note.state));
     }
-    idRef.current = id;
+    idRef.current = activeID;
 
     return save;
-  }, [id, save, note.state, setEditorState]);
+  }, [activeID, save, note.state, setEditorState]);
 
   const saveListener = useCallback(
     (event: KeyboardEvent) => {

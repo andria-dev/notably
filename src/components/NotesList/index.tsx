@@ -24,11 +24,6 @@ interface INotesListProps extends ObjectOf<any> {
 
 const notesDataKeyMapper = (item: any) => item.id;
 
-/**
- * TODO:
- * I think that `activeID` and `activeNoteID` are the _same_
- * So I should probably stop using `activeID`
- */
 function NotesList({
   className,
   responsive = false,

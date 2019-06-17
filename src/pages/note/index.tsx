@@ -57,7 +57,7 @@ const Note = memo(({ id, history }: INoteProps) => {
           </div>
         </Header>
         <SavedContext.Provider value={setSaved}>
-          <Editor />
+          <Editor activeID={id} />
         </SavedContext.Provider>
       </div>
     </div>
