@@ -61,8 +61,6 @@ const App = () => {
     config: fast
   });
 
-  console.log(transition);
-
   return (
     <>
       {transition.map(({ item, key, props: { x, ...props } }) => {
