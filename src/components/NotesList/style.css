@@ -4,7 +4,39 @@
 
   max-width: calc(100% - 4rem);
   height: calc(100% - 4rem);
-  padding: 2rem;
+  padding: 0 2rem;
+}
+
+.NotesList__Grid {
+  width: 100%;
+  height: calc(100vh - 4rem);
+  min-width: unset;
+
+  padding: 0 2rem;
+
+  overflow-y: scroll;
+  scrollbar-color: hsl(0, 0%, 90%) transparent;
+  scrollbar-width: thin;
+}
+
+.dark-mode .NotesList__Grid {
+  scrollbar-color: hsl(0, 0%, 20%) transparent;
+}
+
+.NotesList__Grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.NotesList__Grid::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 90%);
+}
+
+.dark-mode .NotesList__Grid::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 20%);
+}
+
+.NotesList__Grid::-webkit-scrollbar-track {
+  box-shadow: none;
 }
 
 .NotesList__note {

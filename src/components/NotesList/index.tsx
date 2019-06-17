@@ -90,6 +90,7 @@ function NotesList({
           wrapper="div"
           columnGap={64}
           rowGap={32}
+          className="NotesList__Grid"
         />
       </NoteRendererContext.Provider>
       {emptyTransition.map(

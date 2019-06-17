@@ -8,7 +8,7 @@
 .Editor {
   position: relative;
   display: block;
-  min-height: 100%;
+  min-height: calc(100% - 1.5rem);
 }
 
 .Editor__code-block * {

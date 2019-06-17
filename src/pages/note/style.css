@@ -1,7 +1,5 @@
 .Note {
   --sidebar-width: calc(13rem + 8vw);
-
-  display: flex;
   padding-left: var(--sidebar-width);
 }
 
@@ -37,32 +35,6 @@
   border-right: solid 1px rgba(0, 0, 0, 0.15);
 }
 
-.Note__sidebar > .NotesList {
-  overflow-y: scroll;
-  scrollbar-color: hsl(0, 0%, 90%) transparent;
-  scrollbar-width: thin;
-}
-
-.dark-mode .Note__sidebar > .NotesList {
-  scrollbar-color: hsl(0, 0%, 20%) transparent;
-}
-
-.Note__sidebar > .NotesList::-webkit-scrollbar {
-  width: 6px;
-}
-
-.Note__sidebar > .NotesList::-webkit-scrollbar-thumb {
-  background-color: hsl(0, 0%, 90%);
-}
-
-.dark-mode .Note__sidebar > .NotesList::-webkit-scrollbar-thumb {
-  background-color: hsl(0, 0%, 20%);
-}
-
-.Note__sidebar > .NotesList::-webkit-scrollbar-track {
-  box-shadow: none;
-}
-
 .Note__sidebar-header {
   position: fixed;
   top: 0;
@@ -84,6 +56,10 @@
 
 .Note__sidebar > .NotesList > * {
   max-width: calc(100% - 2rem);
+}
+
+.Note__sidebar .NotesList__Grid {
+  height: 100%;
 }
 
 @media (max-width: 800px) {

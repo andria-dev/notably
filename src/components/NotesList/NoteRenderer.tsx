@@ -42,6 +42,8 @@ function NoteRenderer({ data, style }: INoteRendererProps) {
   const menuID = `notes-list__${id}`;
   const isActive = activeID === id;
 
+  style.transform = 'translateY(2rem)';
+
   return (
     <animated.div style={style}>
       <ContextMenuTrigger
