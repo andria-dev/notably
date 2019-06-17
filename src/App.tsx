@@ -62,9 +62,12 @@ const App = () => {
     config: fast,
     onStart() {
       setResting(false);
+      document.body.style.overflow = 'hidden';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     onRest() {
       setResting(true);
+      document.body.style.overflow = '';
     }
   });
 
