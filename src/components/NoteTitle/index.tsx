@@ -5,14 +5,16 @@ import { updateTitle, useStore } from '../../store';
 import { LabelledHx } from '../LabelledHx';
 import './style.css';
 
-function NoteTitle() {
+function NoteTitle({ activeID }: { activeID: string }) {
   const [state] = useStore();
-
-  const id = state.activeNoteID;
-  const note = state.notes[id];
+  const note = state.notes[activeID];
 
   const [title, setTitle] = useState(note.title);
-  const [debouncedSave, save] = useSaveHandler<string>(2000, id, updateTitle);
+  const [debouncedSave, save] = useSaveHandler<string>(
+    2000,
+    activeID,
+    updateTitle
+  );
 
   useEffect(() => {
     setTitle(note.title);
@@ -31,10 +33,10 @@ function NoteTitle() {
           debouncedSave(value);
         },
         className: 'NoteTitle',
-        id,
+        id: activeID,
         'aria-label': 'Title of note'
       }}
-      labelProps={{ htmlFor: id, className: 'NoteTitle__label' }}
+      labelProps={{ htmlFor: activeID, className: 'NoteTitle__label' }}
       className="NoteTitle__wrapper"
     />
   );

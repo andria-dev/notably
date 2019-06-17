@@ -37,7 +37,7 @@ const Note = memo(({ id, history }: INoteProps) => {
       <div className="Note__main">
         <Header style={HeaderStyles}>
           <SavedContext.Provider value={setSaved}>
-            <NoteTitle />
+            <NoteTitle activeID={id} />
           </SavedContext.Provider>
           <div className="Note__header-actions">
             <svg
