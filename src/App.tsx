@@ -63,11 +63,13 @@ const App = () => {
     onStart() {
       setResting(false);
       document.body.style.overflow = 'hidden';
+      document.body.style.pointerEvents = 'none';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     onRest() {
       setResting(true);
       document.body.style.overflow = '';
+      document.body.style.pointerEvents = '';
     }
   });
 

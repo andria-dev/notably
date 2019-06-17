@@ -59,11 +59,16 @@
 }
 
 .Note__sidebar .NotesList__Grid {
+  width: 100%;
   height: 100%;
 
   overflow-y: scroll;
   scrollbar-color: hsl(0, 0%, 90%) transparent;
   scrollbar-width: thin;
+}
+
+.Note__sidebar .NotesList__Grid > div {
+  width: calc(100% - 1.5rem) !important;
 }
 
 .dark-mode .Note__sidebar .NotesList__Grid {
