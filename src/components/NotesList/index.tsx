@@ -88,8 +88,8 @@ function NotesList({
           keys={notesDataKeyMapper}
           renderer={NoteRenderer}
           wrapper="div"
-          columnGap={32}
-          rowGap={16}
+          columnGap={64}
+          rowGap={32}
         />
       </NoteRendererContext.Provider>
       {emptyTransition.map(
