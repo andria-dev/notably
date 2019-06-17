@@ -60,6 +60,30 @@
 
 .Note__sidebar .NotesList__Grid {
   height: 100%;
+
+  overflow-y: scroll;
+  scrollbar-color: hsl(0, 0%, 90%) transparent;
+  scrollbar-width: thin;
+}
+
+.dark-mode .Note__sidebar .NotesList__Grid {
+  scrollbar-color: hsl(0, 0%, 20%) transparent;
+}
+
+.Note__sidebar .NotesList__Grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.Note__sidebar .NotesList__Grid::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 90%);
+}
+
+.dark-mode .Note__sidebar .NotesList__Grid::-webkit-scrollbar-thumb {
+  background-color: hsl(0, 0%, 20%);
+}
+
+.Note__sidebar .NotesList__Grid::-webkit-scrollbar-track {
+  box-shadow: none;
 }
 
 @media (max-width: 800px) {
