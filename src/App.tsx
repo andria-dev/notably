@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   // @ts-ignore
   __RouterContext,
@@ -8,7 +8,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { animated } from 'react-spring';
+import { animated, AnimatedValue } from 'react-spring';
 import { useLastValue, useTransition } from './hooks';
 import { fast } from './spring-configs';
 
@@ -41,6 +41,7 @@ const App = () => {
     location.pathname.replace(noteRegex, '') ===
       previousLocation.replace(noteRegex, '');
 
+  const [resting, setResting] = useState(false);
   const transition = useTransition([location], ({ key }: Location) => key!, {
     x: 100,
     from: {
@@ -58,7 +59,13 @@ const App = () => {
       x: fade ? 0 : 100,
       opacity: fade ? 0 : 1
     },
-    config: fast
+    config: fast,
+    onStart() {
+      setResting(false);
+    },
+    onRest() {
+      setResting(true);
+    }
   });
 
   return (
@@ -69,7 +76,7 @@ const App = () => {
           reverse *= -1;
         }
 
-        const transform = x.interpolate(value => {
+        let transform: AnimatedValue<string> | null = x.interpolate(value => {
           if (item.pathname === location.pathname) {
             // animating in
             return `translateX(${value * reverse}%)`;
@@ -79,12 +86,9 @@ const App = () => {
           }
         });
 
-        props.opacity.interpolate(() => {
-          // @ts-ignore
-          props.opacity.value = 0;
-          // @ts-ignore
-          props.opacity.flush();
-        });
+        if (resting) {
+          transform = null;
+        }
 
         return (
           <animated.div style={{ transform, ...props } as any} key={key}>
