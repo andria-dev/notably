@@ -8,7 +8,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { animated, AnimatedValue } from 'react-spring';
+import { animated } from 'react-spring';
 import { useLastValue, useTransition } from './hooks';
 import { fast } from './spring-configs';
 
@@ -19,6 +19,7 @@ import { getNotes, ReduxProvider, store } from './store';
 
 import useDarkMode from 'use-dark-mode';
 import { DarkModeContext } from './contexts';
+import { ObjectOf } from './lib/generic-types';
 
 /* Global CSS + Utilities */
 import './App.css';
@@ -81,7 +82,7 @@ const App = () => {
           reverse *= -1;
         }
 
-        let transform: AnimatedValue<string> | null = x.interpolate(value => {
+        let transform: ObjectOf<any> | null = x.interpolate(value => {
           if (item.pathname === location.pathname) {
             // animating in
             return `translateX(${value * reverse}%)`;
